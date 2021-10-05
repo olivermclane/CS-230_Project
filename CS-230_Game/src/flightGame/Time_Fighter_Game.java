@@ -7,7 +7,7 @@ package flightGame;
  * @author dustin, oliver
  *
  */
-public class Final_Fighter_Game {
+public class Time_Fighter_Game {
 
 	/**
 	 * @param args
