@@ -1,22 +1,16 @@
 
 package flightGame;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Paint;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SpriteSheet {
+public class SpriteSheet extends JPanel {
 
+	public static void main(String[] args) {
+
+	}
 	public BufferedImage sprite;
 	public BufferedImage[] sprites;
 	int width;
@@ -24,6 +18,7 @@ public class SpriteSheet {
 	int rows;
 	int columns;
 	int xPos;
+
 	int yPos;
 
 	public SpriteSheet() {
@@ -44,78 +39,73 @@ public class SpriteSheet {
 			}
 		}
 	}
+
 	public void actionPerformed(ActionEvent e) {
-		
-	}
-	public int getxPos() {
-		return xPos;
-	}
 
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
-	}
-
-	public int getyPos() {
-		return yPos;
-	}
-
-	public void setyPos(int yPos) {
-		this.yPos = yPos;
-	}
-
-	public BufferedImage getSprite() {
-		return sprite;
-	}
-
-	public void setSprite(BufferedImage sprite) {
-		this.sprite = sprite;
-	}
-
-	public BufferedImage[] getSprites() {
-		return sprites;
-	}
-
-	public void setSprites(BufferedImage[] sprites) {
-		this.sprites = sprites;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getRows() {
-		return rows;
-	}
-
-	public void setRows(int rows) {
-		this.rows = rows;
 	}
 
 	public int getColumns() {
 		return columns;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public BufferedImage getSprite() {
+		return sprite;
+	}
+
+	public BufferedImage[] getSprites() {
+		return sprites;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getxPos() {
+		return xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
 	public void setColumns(int columns) {
 		this.columns = columns;
 	}
 
-	public static void main(String[] args) {
-
-		
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
 
-	
+	public void setSprite(BufferedImage sprite) {
+		this.sprite = sprite;
+	}
+
+	public void setSprites(BufferedImage[] sprites) {
+		this.sprites = sprites;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
 }

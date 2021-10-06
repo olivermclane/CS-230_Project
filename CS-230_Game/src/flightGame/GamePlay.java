@@ -3,43 +3,33 @@
  */
 package flightGame;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * @author dusti
  *
  */
-public class GamePlay extends JFrame{
+public class GamePlay extends JPanel {
+
+	public static void main(String[] args) {
+
+		GamePlay ex = new GamePlay();
+
+	}
 
 	public GamePlay() {
-		initUI();
+
+		initGamePlay();
 
 	}
-	
-	private void initUI() {
-		add(new GameWindow());
-		setTitle("Test");
-		setSize(700,700);
-		setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		JFrame frame = new JFrame();
-//		frame.setSize(700, 700);
-//		JPanel panel = new JPanel();
-//		panel.setBackground(Color.BLACK);
-//		PlaneSprite help = new PlaneSprite();
-//		panel.add(help);
-//		frame.add(panel);
-//		frame.setVisible(true);
-	    
-	}
-	public static void main(String[] args) {
-		 EventQueue.invokeLater(() -> {
-	            GamePlay ex = new GamePlay();
-	            ex.setVisible(true);
-	        });
+
+	public void initGamePlay() {
+		JFrame frame = new GameFrame();
+		JPanel panel = new GameJPanel();
+		frame.add(panel);
+		frame.setVisible(true);
+
 	}
 
 }
