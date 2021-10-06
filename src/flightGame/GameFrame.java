@@ -6,7 +6,7 @@ package flightGame;
 import javax.swing.JFrame;
 
 /**
- * @author dusti
+ * 
  *
  */
 public class GameFrame extends JFrame {
