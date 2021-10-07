@@ -179,7 +179,7 @@ public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObs
 
 	private void loadImage() {
 		try {
-			originalImg = ImageIO.read(new File("src/Time_Fighter/Plane-assets/Plane3.png"));
+			originalImg = ImageIO.read(new File("src/Plane-assets/Plane3.png"));
 			planeImage = new SpriteSheet(originalImg, 200, 134, 5, 1);
 			sprites1 = planeImage.getSprites();
 			img1 = sprites1[2];
