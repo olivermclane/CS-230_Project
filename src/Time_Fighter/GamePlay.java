@@ -1,7 +1,7 @@
 /**
  * 
  */
-package flightGame;
+package Testing;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

@@ -1,5 +1,5 @@
 
-package flightGame;
+package Testing;
 
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
