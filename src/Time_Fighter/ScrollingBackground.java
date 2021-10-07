@@ -1,7 +1,7 @@
 /**
  * 
  */
-package Testing;
+package Time_Fighter;
 
 import java.awt.Canvas;
 import java.awt.Color;
