@@ -1,5 +1,5 @@
 
-package Testing;
+package Time_Fighter;
 
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
