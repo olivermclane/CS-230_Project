@@ -1,7 +1,7 @@
 /**
  * 
  */
-package flightGame;
+package Testing;
 
 import java.awt.Graphics;
 import java.awt.Image;
