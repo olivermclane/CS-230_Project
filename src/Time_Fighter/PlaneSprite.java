@@ -40,7 +40,7 @@ public class PlaneSprite extends SpriteSheet
 	private boolean atLeftEdge;
 	private SpriteSheet planeImage;
 	private BufferedImage originalImg;
-	private JLabel planeImage1;
+	
 	private BufferedImage img;
 	private BufferedImage img1;
 	private Image img2;

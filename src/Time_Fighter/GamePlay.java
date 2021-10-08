@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * @author dusti
  *
  */
-public class GamePlay extends JPanel {
+public class GamePlay extends SpriteSheet {
 
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {

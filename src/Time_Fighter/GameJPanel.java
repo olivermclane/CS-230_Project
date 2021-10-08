@@ -42,6 +42,8 @@ public class GameJPanel extends JPanel implements Runnable{
 
 	ScrollingBackground back1 = new ScrollingBackground();
 	PlaneSprite plane = new PlaneSprite();
+	Bullets bullet = new Bullets();
+	
 	public Runnable runnable;
 	public Thread t;
 
@@ -66,6 +68,7 @@ public class GameJPanel extends JPanel implements Runnable{
 		super.paintComponent(g);
 		back1.loadBackground(g);
 		plane.doDrawing(g);
+		bullet.doDrawing1(g);
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();
 	}
