@@ -6,8 +6,10 @@ package Time_Fighter;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -17,7 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObserver {
+public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObserver, Runnable, KeyListener {
 	private static BufferedImage[] sprites1;
 	private BufferedImage[] bankLeft;
 	private BufferedImage[] leftLevelout;
@@ -46,16 +48,62 @@ public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObs
 	private int y = 500;
 	private int w;
 	private int h;
+	private boolean planeRight;
+	private boolean planeLeft;
+	private boolean planeUp;
+	private boolean planeDown;
+	
 
 	public PlaneSprite() {
 		loadImage();
-
+		new Thread(this).start();
+		addKeyListener(this);
 	}
+	@Override
+	public void run() {
 
+		while (true) {
+			try {
+				repaint();
+				Thread.currentThread().sleep(8);
+
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		doDrawing(g);
+		g.dispose();
+		Toolkit.getDefaultToolkit().sync();
+	}
+	
 	public void doDrawing(Graphics g) {
-
+		
 		g.drawImage(getPlane(), getxPosition(), getyPosition(), this);
-
+		if (planeRight)
+		{
+			moveRight();
+		}
+		if (planeLeft)
+		{
+			moveLeft();
+		}
+		
+		if (planeUp)
+		{
+			moveUp();
+		}
+		if (planeDown)
+		{
+			moveDown();
+		}
+		
+		
 	}
 
 	public BufferedImage[] getBankLeft() {
@@ -120,7 +168,11 @@ public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObs
 	}
 
 	public boolean isAtLeftEdge() {
-		return atLeftEdge;
+		if(getxPosition()<=0) {
+			
+			return true;
+		}
+		return false;
 	}
 
 	public boolean isAtRightEdge() {
@@ -134,47 +186,117 @@ public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObs
 	public boolean isPlaneHit() {
 		return planeHit;
 	}
+	
+	
 
 	public void keyPressed(KeyEvent e) {
-
-		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_LEFT) {
-			dx = -2;
+		// if keys are pressed the move that direction
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			planeRight = true;
+			
+			
 		}
-
-		if (key == KeyEvent.VK_RIGHT) {
-			dx = 2;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			planeLeft = true;
+			
+			}
+		
+		if(e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			planeUp = true;
+			
 		}
-
-		if (key == KeyEvent.VK_UP) {
-			dy = -2;
-		}
-
-		if (key == KeyEvent.VK_DOWN) {
-			dy = 2;
+		if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			planeDown = true;
+			
 		}
 	}
-
+	
+	public void moveLeft()
+	{
+		if(x <= -10)
+		{
+			x = -10;
+		}
+		else
+		{
+			x -= 3;
+		}
+		
+		
+		
+	}
+	//same as player 1
+	public void moveRight()
+	{
+		if(x >=580)
+		{
+			x = 580;
+		}
+		else
+		{
+			x += 3;
+		}
+		
+		
+	}
+	
+	public void moveUp()
+	{
+		if(y <=0)
+		{
+			y = 0;
+		}
+		else
+		{
+			y -= 3;
+		}
+		
+		
+	}
+	
+	public void moveDown()
+	{
+		if(y >=680)
+		{
+			y = 680;
+		}
+		else
+		{
+			y += 3;
+		}
+		
+		
+	}
+		
+	
 	public void keyReleased(KeyEvent e) {
-
-		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_LEFT) {
-			dx = 0;
+		//when keys are released then stop moving
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			planeRight = false;
+			
+			
 		}
-
-		if (key == KeyEvent.VK_RIGHT) {
-			dx = 0;
+		if(e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			planeLeft = false;
+			
+			}
+		if(e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			planeUp = false;
+			
+			
 		}
-
-		if (key == KeyEvent.VK_UP) {
-			dy = 0;
-		}
-
-		if (key == KeyEvent.VK_DOWN) {
-			dy = 0;
-		}
+		if(e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			planeDown = false;
+			
+			}
 	}
 
 	private void loadImage() {
@@ -192,14 +314,7 @@ public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObs
 			e.printStackTrace();
 		}
 
-		Timer timer = new Timer(8, this);
-		timer.start();
-	}
-
-	public void move() {
-		x += dx;
-		y += dy;
-		repaint(getxPosition() - 1, getyPosition() - 1, getW() + 2, getH() + 2);
+		
 	}
 
 	public void setAtLeftEdge(boolean atLeftEdge) {
@@ -256,6 +371,11 @@ public class PlaneSprite extends SpriteSheet implements ActionListener, ImageObs
 
 	public void setxPosition(int xPosition) {
 		this.x = xPosition;
+	}
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

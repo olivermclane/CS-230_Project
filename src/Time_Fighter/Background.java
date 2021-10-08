@@ -4,10 +4,12 @@
 package Time_Fighter;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import javax.imageio.ImageIO;
-public class Background {
+public class Background implements ImageObserver {
     private BufferedImage image;
  
     private int x;
@@ -23,7 +25,7 @@ public class Background {
 	 
 	        // Try to open the image file background.png
 	        try {
-	            image = ImageIO.read(new File("background.png"));
+	            image = ImageIO.read(new File("src/Plane-assets/back1.png"));
 	        }
 	        catch (Exception e) { System.out.println(e); }
 	 
@@ -33,20 +35,20 @@ public class Background {
 	     * Method that draws the image onto the Graphics object passed
 	     * @param window
 	     */
-	    public void draw(Graphics window) {
+	    public void draw(Graphics g) {
 	 
 	        // Draw the image onto the Graphics reference
-	        window.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), null);
+	        g.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), this);
 	 
 	        // Move the x position left for next time
-	        this.x -= 5;
+	        this.y += 2;
 	 
 	        // Check to see if the image has gone off stage left
-	        if (this.x <= -1 * image.getWidth()) {
+	        if (this.y >= image.getHeight()-700) {
 	 
 	            // If it has, line it back up so that its left edge is
 	            // lined up to the right side of the other background image
-	            this.x = this.x + image.getWidth() * 2;
+	            this.y = (this.y - image.getHeight() *2);
 	        }
 	 
 	    }
@@ -62,12 +64,23 @@ public class Background {
 	    }
 	    public int getImageWidth() {
 	        return image.getWidth();
+	        
 	    }
+	    public int getImageHight() {
+	    	return image.getHeight();
+	    }
+	    
 	 
 	  
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

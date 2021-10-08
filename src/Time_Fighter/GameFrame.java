@@ -18,7 +18,7 @@ public class GameFrame extends JFrame {
 
 	private void initFrame() {
 		setTitle("Test");
-		setSize(700, 700);
+		setSize(700, 800);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
