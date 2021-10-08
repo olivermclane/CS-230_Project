@@ -27,5 +27,4 @@ public class ScrollingBackground extends SpriteSheet {
 
 	}
 
-	
 }
