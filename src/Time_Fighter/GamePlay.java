@@ -13,12 +13,12 @@ import javax.swing.JPanel;
  * @author dusti
  *
  */
-public class GamePlay extends SpriteSheet {
+public class GamePlay extends GameJPanel {
 
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	GamePlay ex = new GamePlay();   
+            	GamePlay ex = new GamePlay();  
             }
         });
     }

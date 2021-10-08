@@ -22,6 +22,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
+
+import Time_Fighter.PlaneSprite.Missile;
+
 import java.awt.Robot;
 import javafx.*;
 
@@ -42,7 +45,7 @@ public class GameJPanel extends JPanel implements Runnable{
 
 	ScrollingBackground back1 = new ScrollingBackground();
 	PlaneSprite plane = new PlaneSprite();
-	Bullets bullet = new Bullets();
+	
 	
 	public Runnable runnable;
 	public Thread t;
@@ -67,8 +70,8 @@ public class GameJPanel extends JPanel implements Runnable{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		back1.loadBackground(g);
+		
 		plane.doDrawing(g);
-		bullet.doDrawing1(g);
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();
 	}
