@@ -27,6 +27,7 @@ public class GamePlay extends JPanel {
 	public void initGamePlay() {
 		JFrame frame = new GameFrame();
 		JPanel panel = new GameJPanel();
+		PlaneSprite plane = new PlaneSprite();
 		frame.add(panel);
 		frame.setVisible(true);
 
