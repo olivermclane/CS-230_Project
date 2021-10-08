@@ -11,6 +11,7 @@ public class SpriteSheet extends JPanel {
 	public static void main(String[] args) {
 
 	}
+
 	public BufferedImage sprite;
 	public BufferedImage[] sprites;
 	int width;

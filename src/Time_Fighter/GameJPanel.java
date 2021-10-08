@@ -3,18 +3,29 @@
  */
 package Time_Fighter;
 
+import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
+import java.awt.Robot;
 import javafx.*;
+
+
 public class GameJPanel extends JPanel implements Runnable{
 	private class TAdapter extends KeyAdapter {
 
@@ -33,17 +44,22 @@ public class GameJPanel extends JPanel implements Runnable{
 	PlaneSprite plane = new PlaneSprite();
 	public Runnable runnable;
 	public Thread t;
+
 	public GameJPanel() {
 
 		intiGamePanel();
 	}
 
 	private void intiGamePanel() {
-
+		
 		setFocusable(true);
 		addKeyListener(new TAdapter());
 		new Thread(this).start();
+		addMouseMotionListener(new MAdapter());
+		setCursor(Toolkit.getDefaultToolkit()
+				.createCustomCursor(new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0,0), "custom cursor"));
 	}
+
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -53,6 +69,7 @@ public class GameJPanel extends JPanel implements Runnable{
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();
 	}
+
 	@Override
 	public void run() {
 
@@ -68,5 +85,77 @@ public class GameJPanel extends JPanel implements Runnable{
 		}
 	}
 
+		private class MAdapter extends GameFrame implements MouseMotionListener, MouseInputListener {
+//		@Override
+//		public void mouseClicked(MouseEvent e) {
+//			// TODO Auto-generated method stub
+//
+//		}
+//
+//		@Override
+//		public void mouseEntered(MouseEvent e) {
+//			// TODO Auto-generated method stub
+//
+//		}
+//
+//		@Override
+//		public void mouseExited(MouseEvent e) {
+//			// TODO Auto-generated method stub
+//
+//		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			plane.mousePressed(e);
+
+		}
+//
+//		@Override
+//		public void mouseReleased(MouseEvent e) {
+//			// TODO Auto-generated method stub
+//
+//		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			plane.mouseDragged(e);
+
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			plane.mouseMoved(e);
+			
+			
+			;
+
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			plane.mouseClicked(e);
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	}
 
 }
+

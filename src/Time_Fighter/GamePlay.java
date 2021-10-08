@@ -3,6 +3,9 @@
  */
 package Time_Fighter;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -13,10 +16,15 @@ import javax.swing.JPanel;
 public class GamePlay extends JPanel {
 
 	public static void main(String[] args) {
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	GamePlay ex = new GamePlay();   
+            }
+        });
+    }
+		
 
-		GamePlay ex = new GamePlay();
-
-	}
+	
 
 	public GamePlay() {
 
@@ -27,7 +35,14 @@ public class GamePlay extends JPanel {
 	public void initGamePlay() {
 		JFrame frame = new GameFrame();
 		JPanel panel = new GameJPanel();
-		PlaneSprite plane = new PlaneSprite();
+		try {
+			Robot robot = new Robot();
+			robot.mouseMove(frame.getX()+210+48,frame.getY()+500+34);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		frame.add(panel);
 		frame.setVisible(true);
 
