@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package Time_Fighter;
 
@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
+
 import javax.imageio.ImageIO;
 
 public class Background implements ImageObserver {
@@ -35,7 +36,7 @@ public class Background implements ImageObserver {
 
 	/**
 	 * Method that draws the image onto the Graphics object passed
-	 * 
+	 *
 	 * @param window
 	 */
 	public void draw(Graphics g) {
