@@ -1,8 +1,6 @@
 /**
  *
  */
-package Time_Fighter;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;

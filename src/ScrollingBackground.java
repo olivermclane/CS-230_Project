@@ -1,7 +1,6 @@
 /**
  *
  */
-package Time_Fighter;
 
 import java.awt.Graphics;
 
