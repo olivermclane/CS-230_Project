@@ -11,5 +11,13 @@ public class Menu implements Runnable {
 
 
     }
-    
+
+    public void startGame() {
+
+    }
+
+    public void exitGame() {
+
+    }
+
 }
