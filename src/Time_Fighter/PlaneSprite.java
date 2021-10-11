@@ -1,12 +1,11 @@
 /**
- * 
+ *
  */
 package Time_Fighter;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,9 +14,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 
@@ -40,7 +40,7 @@ public class PlaneSprite extends SpriteSheet
 	private boolean atLeftEdge;
 	private SpriteSheet planeImage;
 	private BufferedImage originalImg;
-	private JLabel planeImage1;
+
 	private BufferedImage img;
 	private BufferedImage img1;
 	private Image img2;
@@ -55,34 +55,31 @@ public class PlaneSprite extends SpriteSheet
 	private boolean planeLeft;
 	private boolean planeUp;
 	private boolean planeDown;
+	private BufferedImage originalImg1;
+	private SpriteSheet planeImage11;
+	private BufferedImage[] sprites11;
+	private BufferedImage img11;
+	private int w1;
+	private int h1;
+	private int x1;
+	private int y1;
+	private boolean didPlaneFire;
+	private Missile missile;
+	private List<Missile> missiles = new ArrayList<>();
 
 	public PlaneSprite() {
 		loadImage();
 		new Thread(this).start();
 		addKeyListener(this);
+
 	}
 
-	@Override
-	public void run() {
+	public boolean fire() {
+		missiles.add(new Missile());
+		return true;
+//		bullets.add(new Missile());
+//		return true;
 
-		while (true) {
-			try {
-				repaint();
-				Thread.currentThread().sleep(8);
-
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		doDrawing(g);
-		g.dispose();
-		Toolkit.getDefaultToolkit().sync();
 	}
 
 	public void doDrawing(Graphics g) {
@@ -101,7 +98,22 @@ public class PlaneSprite extends SpriteSheet
 		if (planeDown) {
 			moveDown();
 		}
+		if (didPlaneFire) {
+			for(Missile x:missiles) {
+				x.doDrawing1(g);
+				if(x.getY1()<0) {
+					missiles.remove(x);
+				}
+			}
+		}
+//		if (didPlaneFire) {
+//			bullets.stream().forEach(bullet -> bullet.doDrawing1(g));
+//		}
+//		bullets.removeIf(Missile::getX1()<0);
+	}
 
+	public boolean didPlaneFire() {
+		return didPlaneFire;
 	}
 
 	public BufferedImage[] getBankLeft() {
@@ -116,6 +128,7 @@ public class PlaneSprite extends SpriteSheet
 		return boom;
 	}
 
+	@Override
 	public Rectangle getBounds() {
 		return bounds;
 	}
@@ -149,6 +162,7 @@ public class PlaneSprite extends SpriteSheet
 		return rightMovement;
 	}
 
+	@Override
 	public BufferedImage[] getSprites() {
 		return sprites1;
 	}
@@ -160,7 +174,6 @@ public class PlaneSprite extends SpriteSheet
 	public int getxPosition() {
 		return x;
 	}
-	
 
 	public int getyPosition() {
 		return y;
@@ -186,6 +199,7 @@ public class PlaneSprite extends SpriteSheet
 		return planeHit;
 	}
 
+	@Override
 	public void keyPressed(KeyEvent e) {
 		// if keys are pressed the move that direction
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -205,6 +219,13 @@ public class PlaneSprite extends SpriteSheet
 			planeDown = true;
 
 		}
+		if (e.getKeyCode() == KeyEvent.VK_A) {
+			fire();
+			x1 = getxPosition();
+			y1 = getyPosition();
+			didPlaneFire = true;
+
+		}
 	}
 
 	public void moveLeft() {
@@ -216,7 +237,7 @@ public class PlaneSprite extends SpriteSheet
 
 	}
 
-	// same as player 1
+	
 	public void moveRight() {
 		if (x >= 580) {
 			x = 580;
@@ -244,8 +265,9 @@ public class PlaneSprite extends SpriteSheet
 
 	}
 
+	@Override
 	public void keyReleased(KeyEvent e) {
-		// when keys are released then stop moving
+		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			planeRight = false;
 
@@ -262,6 +284,9 @@ public class PlaneSprite extends SpriteSheet
 			planeDown = false;
 
 		}
+//		if (e.getKeyCode()== KeyEvent.VK_A) {
+//			didPlaneFire = false;
+//		}
 	}
 
 	private void loadImage() {
@@ -301,6 +326,7 @@ public class PlaneSprite extends SpriteSheet
 		this.boom = boom;
 	}
 
+	@Override
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}
@@ -334,68 +360,152 @@ public class PlaneSprite extends SpriteSheet
 	}
 
 	public void setxPosition(int xPosition) {
-		
+
 		this.x = xPosition;
 	}
+
 	public void setyPosition(int yPosition) {
 		this.y = yPosition;
 	}
 
-	
-	public void keyTyped(KeyEvent arg0) {
+	@Override
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
-	
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		this.setxPosition(e.getX());
 		this.setyPosition(e.getY());
-		System.out.println("test");
 		
+
 	}
 
-	
+	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
+	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
+	@Override
 	public void mousePressed(MouseEvent e) {
 		this.setxPosition(e.getX());
 		this.setyPosition(e.getY());
-		System.out.println("test");
 		
+
 	}
 
-	
+	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
+	@Override
 	public void mouseDragged(MouseEvent e) {
 		this.setxPosition(e.getX());
+		x1 = e.getX();
+		y1 = e.getY();
 		this.setyPosition(e.getY());
-		System.out.println("test");
+		
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+
+		this.setxPosition(e.getX());
+		this.setyPosition(e.getY());
+
 		
 	}
 
-	
-	public void mouseMoved(MouseEvent e) {
-		
-		this.setxPosition(e.getX());
-		this.setyPosition(e.getY());
-		System.out.println("test");
-		
-	}
+//	public class Missile extends PlaneSprite {
+//		private BufferedImage originalImg1;
+//		private SpriteSheet planeImage11;
+//		private BufferedImage[] sprites11;
+//		private BufferedImage img11;
+//		private int w1;
+//		private int h1;
+//		private Missile shoot;
+//		public Missile() {
+//			loadImage1();
+//			
+//		}
+//
+//		private void loadImage1() {
+//			try {
+//
+//				originalImg1 = ImageIO.read(new File("src/Plane-assets/Missile2.png"));
+//				w1 = originalImg1.getWidth();
+//				h1 = originalImg1.getHeight();
+//
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//		}
+//
+//		public void doDrawing1(Graphics r) {
+//			if (didPlaneFire) {
+//
+//				r.drawImage(getOriginalImg1(), x1 - 55, y1 - 70, getOriginalImg1().getWidth(),
+//						getOriginalImg1().getHeight(), this);
+//				
+//				y1 -= 2;
+//			}
+//
+////				// Draw the image onto the Graphics reference
+////				g.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), this);
+////
+////				// Move the x position left for next time
+////				this.y += 2;
+////
+////				// Check to see if the image has gone off stage left
+////				if (this.y >= image.getHeight() - 700) {
+////
+////					// If it has, line it back up so that its left edge is
+////					// lined up to the right side of the other background image
+////					this.y = (this.y - image.getHeight() * 2);
+//			else {
+//
+//			}
+//		}
+//
+//		public int getX1() {
+//			return x1;
+//		}
+//
+//		public void setX1(int x) {
+//			x1 = x;
+//		}
+//
+//		public int getY1() {
+//			return y1;
+//		}
+//
+//		public void setY1(int y) {
+//			y1 = y;
+//		}
+//
+//		public BufferedImage getOriginalImg1() {
+//			return originalImg1;
+//		}
+//
+//	}
+//
+//	@Override
+//	public void run() {
+//		// TODO Auto-generated method stub
+//
+//	}
+
 }
-	

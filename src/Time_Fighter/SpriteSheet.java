@@ -49,6 +49,7 @@ public class SpriteSheet extends JPanel {
 		return columns;
 	}
 
+	@Override
 	public int getHeight() {
 		return height;
 	}
@@ -65,6 +66,7 @@ public class SpriteSheet extends JPanel {
 		return sprites;
 	}
 
+	@Override
 	public int getWidth() {
 		return width;
 	}

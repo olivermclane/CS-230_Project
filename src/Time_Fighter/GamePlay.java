@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package Time_Fighter;
 
@@ -13,18 +13,16 @@ import javax.swing.JPanel;
  * @author dusti
  *
  */
-public class GamePlay extends JPanel {
+public class GamePlay extends GameJPanel {
 
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	GamePlay ex = new GamePlay();   
-            }
-        });
-    }
-		
-
-	
+			@Override
+			public void run() {
+				GamePlay ex = new GamePlay();
+			}
+		});
+	}
 
 	public GamePlay() {
 
@@ -37,12 +35,12 @@ public class GamePlay extends JPanel {
 		JPanel panel = new GameJPanel();
 		try {
 			Robot robot = new Robot();
-			robot.mouseMove(frame.getX()+210+48,frame.getY()+500+34);
+			robot.mouseMove(frame.getX() + 210 + 48, frame.getY() + 500 + 34);
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		frame.add(panel);
 		frame.setVisible(true);
 
