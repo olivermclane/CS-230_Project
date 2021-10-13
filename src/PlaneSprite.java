@@ -62,24 +62,19 @@ public class PlaneSprite extends SpriteSheet
 	private int h1;
 	private int x1;
 	private int y1;
-	private boolean didPlaneFire;
+	private boolean didPlaneFire = false;
 	private Missile missile;
 	private List<Missile> missiles = new ArrayList<>();
+	private Missile projectile;
+	
 
 	public PlaneSprite() {
 		loadImage();
 		new Thread(this).start();
 		addKeyListener(this);
-
+		
 	}
 
-	public boolean fire() {
-		missiles.add(new Missile());
-		return true;
-//		bullets.add(new Missile());
-//		return true;
-
-	}
 
 	public void doDrawing(Graphics g) {
 
@@ -97,23 +92,20 @@ public class PlaneSprite extends SpriteSheet
 		if (planeDown) {
 			moveDown();
 		}
-		if (didPlaneFire) {
-			for(Missile x:missiles) {
-				x.doDrawing1(g);
-				if(x.getY1()<0) {
-					missiles.remove(x);
-				}
-			}
+		if(didPlaneFire()) {
+			
+			projectile.doDrawing1(g);
+			
 		}
-//		if (didPlaneFire) {
-//			bullets.stream().forEach(bullet -> bullet.doDrawing1(g));
-//		}
-//		bullets.removeIf(Missile::getX1()<0);
+	
+
 	}
 
 	public boolean didPlaneFire() {
 		return didPlaneFire;
 	}
+	
+	
 
 	public BufferedImage[] getBankLeft() {
 		return bankLeft;
@@ -179,11 +171,7 @@ public class PlaneSprite extends SpriteSheet
 	}
 
 	public boolean isAtLeftEdge() {
-		if (getxPosition() <= 0) {
-
-			return true;
-		}
-		return false;
+		return getxPosition() <=0;
 	}
 
 	public boolean isAtRightEdge() {
@@ -219,10 +207,12 @@ public class PlaneSprite extends SpriteSheet
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_A) {
-			fire();
-			x1 = getxPosition();
-			y1 = getyPosition();
+			projectile = new Missile(getxPosition(), getyPosition());
+			missiles.add(projectile);
 			didPlaneFire = true;
+			
+			
+			
 
 		}
 	}
@@ -283,12 +273,9 @@ public class PlaneSprite extends SpriteSheet
 			planeDown = false;
 
 		}
-//		if (e.getKeyCode()== KeyEvent.VK_A) {
-//			didPlaneFire = false;
-//		}
+		
 	}
-
-	private void loadImage() {
+		private void loadImage() {
 		try {
 			originalImg = ImageIO.read(new File("src/Plane-assets/PlaneResize.png"));
 			planeImage = new SpriteSheet(originalImg, 96, 68, 5, 1);
@@ -423,6 +410,12 @@ public class PlaneSprite extends SpriteSheet
 		this.setxPosition(e.getX());
 		this.setyPosition(e.getY());
 
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		
 	}
 
