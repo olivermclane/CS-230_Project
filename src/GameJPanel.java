@@ -30,9 +30,9 @@ public class GameJPanel extends JPanel implements Runnable {
 
 	ScrollingBackground back1 = new ScrollingBackground();
 	PlaneSprite plane = new PlaneSprite();
-
+	
 	public Runnable runnable;
-	public Thread t;
+;	public Thread t;
 
 	public GameJPanel() {
 
@@ -47,14 +47,19 @@ public class GameJPanel extends JPanel implements Runnable {
 		addMouseMotionListener(new MAdapter());
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
 				new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
+		Sound_effects back = new Sound_effects();
+		back.backGround();
+		
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
 		back1.loadBackground(g);
 
 		plane.doDrawing(g);
+		
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();
 	}
