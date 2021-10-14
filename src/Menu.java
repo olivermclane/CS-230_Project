@@ -1,19 +1,26 @@
-import javax.swing.BoxLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Font;
+
 /**
  * 
  */
+
 public class Menu extends JFrame implements ActionListener {
 
     //name of game
-    private JTextField timeFigtherTitle; 
+    private JLabel timeFigtherTitle; 
 
     //the background color
     private static final Color backGC = new Color(46, 94, 135);
@@ -27,55 +34,73 @@ public class Menu extends JFrame implements ActionListener {
        
         //basic configs for JFrame Menu
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(700,800);
         setBackground(backGC);
-        
+
         //create Title Panel & Layout by default: Flowlayout 
-        JPanel TitlePanel = new JPanel();
-        TitlePanel.setBackground(Color.DARK_GRAY);
+        JPanel CentralPanel = new JPanel();     
+        CentralPanel.setBorder(new EmptyBorder(10,10,10,10)); 
+        CentralPanel.setLayout(new GridBagLayout());  
+        CentralPanel.setBackground(backGC);
     
+        GridBagConstraints menuLayout = new GridBagConstraints();
+        menuLayout.gridwidth = GridBagConstraints.REMAINDER;
+        menuLayout.anchor = GridBagConstraints.NORTH;
+
+        
         //temporary placement until I get an Icon
-        JLabel TimeIcon = null; // change this in next version
-        TitlePanel.add(TimeIcon);
+        // JLabel TimeIcon = null; // change this in next version
+        // TitlePanel.add(TimeIcon);
 
-        add(TitlePanel, BorderLayout.NORTH);
-
-        //central panel will contain most elements
-        JPanel centralPanel = new JPanel();
-        centralPanel.setLayout(new BorderLayout());
+        menuLayout.anchor = GridBagConstraints.CENTER;
+        menuLayout.fill = GridBagConstraints.HORIZONTAL;
 
 
         //creating JPanel for the buttons
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.LINE_AXIS));
-        buttonsPanel.setBackground(Color.DARK_GRAY);
-        centralPanel.add(buttonsPanel, BorderLayout.NORTH);
+        JPanel buttonsPanel = new JPanel(new GridBagLayout());
+        buttonsPanel.setLayout(new GridBagLayout());
+        buttonsPanel.setBackground(backGC);
+        buttonsPanel.setSize(700, 200);
 
         //adding game title label
-        timeFigtherTitle = new JTextField(" Time Fighters");
-        timeFigtherTitle.setForeground(Color.WHITE);
-        timeFigtherTitle.setBackground(Color.DARK_GRAY);
-        timeFigtherTitle.setHorizontalAlignment(JTextField.CENTER);
-        buttonsPanel.add(timeFigtherTitle);
-
-        // Creating play game label
-        JLabel playGame = new JLabel("Play Game");
-        playGame.setFont(null);
-        playGame.setHorizontalAlignment(null);
-        playGame.setForeground(null);
-        buttonsPanel.add(playGame);
+        timeFigtherTitle = new JLabel("Time Fighters");
+        timeFigtherTitle.setFont(new Font("Verdana", Font.PLAIN, 18));
+        timeFigtherTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        timeFigtherTitle.setForeground(Color.DARK_GRAY);
+        timeFigtherTitle.setVisible(true);
+        CentralPanel.add(timeFigtherTitle);
         
-        // Creating play game button
+
+        // Creating play game button 
         JButton playGButton = new JButton("Play Game");
+        playGButton.setFont(new Font("Verdana", Font.PLAIN, 18));
+        playGButton.setForeground(Color.WHITE);
+        playGButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                startGame();
+            }
+        }); 
+        playGButton.setBorderPainted(false);
+        buttonsPanel.add(playGButton, menuLayout);
 
-        // Creating quit game label
-        JLabel quitGame = new JLabel("Quit Game");
-        quitGame.setFont(null);
-        quitGame.setHorizontalAlignment(null);
-        quitGame.setForeground(null);
-        buttonsPanel.add(quitGame);
 
-        // Creating quit game button
+        // Creating quit game button 
         JButton quitGButton = new JButton("Quit Game");
+        quitGButton.setFont(new Font("Verdana", Font.PLAIN, 18));
+        quitGButton.setForeground(Color.WHITE);
+        quitGButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                exitGame();
+            }
+        });
+        quitGButton.setBorderPainted(false);
+        buttonsPanel.add(quitGButton, menuLayout);
+
+        menuLayout.weighty = 1;
+
+        CentralPanel.add(buttonsPanel, menuLayout);
+        add(CentralPanel);
+        setVisible(true);
 
     }
 
@@ -84,11 +109,13 @@ public class Menu extends JFrame implements ActionListener {
     }
 
     public void exitGame() {
-
+        System.exit(0);
     }
 
     public void actionPerformed(ActionEvent a){
 
     }
-
+    public static void main(String[] args) {
+       new Menu();
+    }
 }
