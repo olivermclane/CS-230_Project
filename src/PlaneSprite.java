@@ -502,9 +502,9 @@ public class PlaneSprite extends SpriteSheet
 //	}
 //
 //	@Override
-//	public void run() {
-//		// TODO Auto-generated method stub
-//
-//	}
+	public void run() {
+	// TODO Auto-generated method stub
+
+	}
 
 }
