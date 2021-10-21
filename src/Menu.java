@@ -7,14 +7,14 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Robot;
 import java.awt.AWTException;
-
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.awt.FontFormatException;
 
 
 /**
@@ -27,7 +27,7 @@ public class Menu extends GameJPanel implements ActionListener {
     private JLabel timeFigtherTitle; 
 
     //the background color
-    private static final Color backGC = new Color(46, 94, 135);
+    private static final Color backGC = new Color(88, 148, 173);
     
     public Menu() {
         drawMenu();
@@ -35,6 +35,32 @@ public class Menu extends GameJPanel implements ActionListener {
 
     public void drawMenu() {
         JFrame menu = new JFrame("Time Fighters -- Main Menu");
+        
+        //creating my buttons
+        JButton quitGButton = new JButton("Quit Game");
+        JButton playGButton = new JButton("Play Game");
+
+        //creating Jlabel Title
+        timeFigtherTitle = new JLabel("Time Fighters");
+
+
+        //creating font and appending it to the compents
+        Font RetroGame;
+        try{
+            RetroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
+            RetroGame = RetroGame.deriveFont(Font.PLAIN,20);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
+            ge.registerFont(RetroGame);
+            playGButton.setFont(RetroGame);
+            quitGButton.setFont(RetroGame);
+            timeFigtherTitle.setFont(RetroGame);
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(FontFormatException e){
+            e.printStackTrace();
+        }
+        
+
         //basic configs for JFrame Menu
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setLocationRelativeTo(null);
@@ -66,20 +92,15 @@ public class Menu extends GameJPanel implements ActionListener {
         buttonsPanel.setBackground(backGC);
         buttonsPanel.setSize(700, 200);
 
-        //adding game title label
-        timeFigtherTitle = new JLabel("Time Fighters");
-        timeFigtherTitle.setFont(new Font("Verdana", Font.PLAIN, 18));
+        //adding game title label        
         timeFigtherTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         timeFigtherTitle.setForeground(Color.DARK_GRAY);
         timeFigtherTitle.setVisible(true);
-        CentralPanel.add(timeFigtherTitle);
+        CentralPanel.add(timeFigtherTitle, menuLayout);
         
-        //creating my buttons
-        JButton quitGButton = new JButton("Quit Game");
-        JButton playGButton = new JButton("Play Game");
+        
 
         // Creating play game button 
-        playGButton.setFont(new Font("Verdana", Font.PLAIN, 18));
         playGButton.setForeground(Color.WHITE);
         playGButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -93,7 +114,6 @@ public class Menu extends GameJPanel implements ActionListener {
 
 
         // Creating quit game button 
-        quitGButton.setFont(new Font("Verdana", Font.PLAIN, 18));
         quitGButton.setForeground(Color.WHITE);
         quitGButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
