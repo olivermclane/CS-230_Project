@@ -12,12 +12,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Robot;
+import java.awt.AWTException;
+
+
 
 /**
  * 
  */
 
-public class Menu extends JFrame implements ActionListener {
+public class Menu extends GameJPanel implements ActionListener {
 
     //name of game
     private JLabel timeFigtherTitle; 
@@ -26,16 +30,16 @@ public class Menu extends JFrame implements ActionListener {
     private static final Color backGC = new Color(46, 94, 135);
     
     public Menu() {
-        super("Time Fighters - Menu");
         drawMenu();
     }
 
     public void drawMenu() {
-       
+        JFrame menu = new JFrame("Time Fighters -- Main Menu");
         //basic configs for JFrame Menu
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700,800);
-        setBackground(backGC);
+        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menu.setLocationRelativeTo(null);
+        menu.setSize(700,800);
+        menu.setBackground(backGC);
 
         //create Title Panel & Layout by default: Flowlayout 
         JPanel CentralPanel = new JPanel();     
@@ -70,14 +74,18 @@ public class Menu extends JFrame implements ActionListener {
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle);
         
+        //creating my buttons
+        JButton quitGButton = new JButton("Quit Game");
+        JButton playGButton = new JButton("Play Game");
 
         // Creating play game button 
-        JButton playGButton = new JButton("Play Game");
         playGButton.setFont(new Font("Verdana", Font.PLAIN, 18));
         playGButton.setForeground(Color.WHITE);
         playGButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                startGame();
+                startGame(menu);
+                playGButton.setVisible(false);
+                quitGButton.setVisible(false);
             }
         }); 
         playGButton.setBorderPainted(false);
@@ -85,7 +93,6 @@ public class Menu extends JFrame implements ActionListener {
 
 
         // Creating quit game button 
-        JButton quitGButton = new JButton("Quit Game");
         quitGButton.setFont(new Font("Verdana", Font.PLAIN, 18));
         quitGButton.setForeground(Color.WHITE);
         quitGButton.addActionListener(new ActionListener(){
@@ -99,13 +106,23 @@ public class Menu extends JFrame implements ActionListener {
         menuLayout.weighty = 1;
 
         CentralPanel.add(buttonsPanel, menuLayout);
-        add(CentralPanel);
-        setVisible(true);
+        menu.add(CentralPanel);
+        menu.setVisible(true);
 
     }
 
-    public void startGame() {
+    public void startGame(JFrame j) {
+        JPanel panel = new GameJPanel();
+		try {
+			Robot robot = new Robot();
+			robot.mouseMove(this.getX() + 210 + 48, this.getY() + 500 + 34);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		j.add(panel);
+		j.setVisible(true);
     }
 
     public void exitGame() {
@@ -116,6 +133,11 @@ public class Menu extends JFrame implements ActionListener {
 
     }
     public static void main(String[] args) {
-       new Menu();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new Menu();			
+            }
+		});
+       
     }
 }
