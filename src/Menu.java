@@ -1,9 +1,11 @@
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.GridBagConstraints;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.AWTException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
@@ -64,7 +67,7 @@ public class Menu extends GameJPanel implements ActionListener {
 
         //basic configs for JFrame Menu
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu.setLocationRelativeTo(null);
+        
         menu.setSize(700,800);
         menu.setBackground(backGC);
 
@@ -128,22 +131,27 @@ public class Menu extends GameJPanel implements ActionListener {
 
         CentralPanel.add(buttonsPanel, menuLayout);
         menu.add(CentralPanel);
+        menu.setLocationRelativeTo(null);
+        
         menu.setVisible(true);
-
+        
     }
 
     //start game method
     public void startGame(JFrame j) {
         JPanel panel = new GameJPanel();
+		
+
+		j.add(panel);
 		try {
 			Robot robot = new Robot();
-			robot.mouseMove(this.getX() + 210 + 48, this.getY() + 500 + 34);
+			robot.mouseMove(j.getX() + 350 , j.getY() + 700);
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		j.add(panel);
+		j.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+				new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
 		j.setVisible(true);
     }
 
