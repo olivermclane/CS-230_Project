@@ -54,8 +54,7 @@ private Rectangle enemyArea;
 		addKeyListener(new TAdapter());
 		new Thread(this).start();
 		addMouseMotionListener(new MAdapter());
-		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-				new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
+		
 		Sound_effects back = new Sound_effects();
 		back.backGround();
 		back1 = new ScrollingBackground();

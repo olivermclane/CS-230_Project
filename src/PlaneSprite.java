@@ -37,8 +37,8 @@ public class PlaneSprite extends SpriteSheet
 	private SpriteSheet planeImage;
 	private BufferedImage originalImg;
 	private BufferedImage img1;
-	private int x = 210;
-	private int y = 500;
+	private int x = 350;
+	private int y = 600;
 	private int w;
 	private int h;
 	private boolean planeRight;
@@ -366,8 +366,8 @@ public class PlaneSprite extends SpriteSheet
 	@Override
 	public void mouseMoved(MouseEvent e) {
 
-		setxPosition(e.getX());
-		setyPosition(e.getY());
+		setxPosition(e.getX()-55);
+		setyPosition(e.getY()-34);
 
 		
 	}
