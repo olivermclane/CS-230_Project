@@ -4,11 +4,13 @@
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.sql.Time;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -38,6 +40,9 @@ public PlaneSprite plane;
 private Missile mis;
 private Missile[] array;
 private Missile[] miss;
+private EnemySprite enemy;
+private Rectangle misArea;
+private Rectangle enemyArea;
 
 	public GameJPanel() {
 
@@ -56,7 +61,7 @@ private Missile[] miss;
 		back1 = new ScrollingBackground();
 		plane = new PlaneSprite();
 		plane.missiles.add(new Missile());
-		
+		enemy = new EnemySprite();
 	}
 
 	@Override
@@ -64,7 +69,7 @@ private Missile[] miss;
 		
 		super.paintComponent(g);
 		back1.loadBackground(g);
-
+		
 		plane.doDrawing(g);
 		if (plane.missileFired()) {
 			mis = plane.projectile();
@@ -78,9 +83,15 @@ private Missile[] miss;
 				miss = plane.array();
 				for(Missile m: miss) {
 					m.doDrawing1(g);
+					
 				}
 			}
-				
+		enemy.doDrawing(g);	
+//		misArea = mis.getBounds();
+//		enemyArea = enemy.getBounds();
+//		if (misArea.intersects(enemyArea)) {
+//			enemy.setVisible(false);
+//		}
 		
 		
 		g.dispose();

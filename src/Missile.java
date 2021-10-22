@@ -4,7 +4,10 @@
  */
 
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +18,7 @@ import javax.imageio.ImageIO;
  *
  */
 
-public class Missile extends PlaneSprite {
+public class Missile implements ImageObserver{
 	private int width;
 	private int height;
 	private BufferedImage missile;
@@ -52,7 +55,7 @@ public class Missile extends PlaneSprite {
 
 	public void doDrawing1(Graphics r) {
 
-		r.drawImage(getMissile(), getX(), getY(), getWidth(), getHeight(), this);
+		r.drawImage(getMissile(), getX(), getY(), width, height, this);
 
 		y -= 2;
 	}
@@ -80,6 +83,11 @@ public class Missile extends PlaneSprite {
 	public int getHeight() {
 		return height;
 	}
+	
+	public Rectangle getBounds() {
+		System.out.println(x+" "+ y + " " + width + " " + height);
+		return new Rectangle(x, y, width, height);
+	}
 
 	public BufferedImage getMissile() {
 		return missile;
@@ -87,6 +95,12 @@ public class Missile extends PlaneSprite {
 
 	public void setMissile(BufferedImage missile) {
 		this.missile = missile;
+	}
+
+	@Override
+	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
