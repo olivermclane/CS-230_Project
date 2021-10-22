@@ -38,8 +38,9 @@ public class Menu extends GameJPanel implements ActionListener {
         JFrame menu = new JFrame("Time Fighters -- Main Menu");
         
         //creating my buttons
+        JButton quitGButton = new JButton("  Quit Game   ");
         JButton playGButton = new JButton("Play Game");
-        JButton quitGButton = new JButton("Quit Game");
+       
 
         //creating Jlabel Title
         timeFigtherTitle = new JLabel("Time Fighters");
