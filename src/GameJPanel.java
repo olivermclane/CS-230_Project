@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -28,11 +29,15 @@ public class GameJPanel extends JPanel implements Runnable {
 		}
 	}
 
-	ScrollingBackground back1 = new ScrollingBackground();
-	PlaneSprite plane = new PlaneSprite();
 	
-	public Runnable runnable;
-;	public Thread t;
+	
+public Runnable runnable;
+public Thread t;
+private ScrollingBackground back1;
+public PlaneSprite plane;
+private Missile mis;
+private Missile[] array;
+private Missile[] miss;
 
 	public GameJPanel() {
 
@@ -40,7 +45,6 @@ public class GameJPanel extends JPanel implements Runnable {
 	}
 
 	private void intiGamePanel() {
-
 		setFocusable(true);
 		addKeyListener(new TAdapter());
 		new Thread(this).start();
@@ -49,6 +53,9 @@ public class GameJPanel extends JPanel implements Runnable {
 				new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
 		Sound_effects back = new Sound_effects();
 		back.backGround();
+		back1 = new ScrollingBackground();
+		plane = new PlaneSprite();
+		plane.missiles.add(new Missile());
 		
 	}
 
@@ -59,6 +66,22 @@ public class GameJPanel extends JPanel implements Runnable {
 		back1.loadBackground(g);
 
 		plane.doDrawing(g);
+		if (plane.missileFired()) {
+			mis = plane.projectile();
+			mis.setX(plane.getxPosition()-54);
+			mis.setY(plane.getyPosition()-70);
+			plane.missiles.add(mis);
+			
+			
+		}
+		if (plane.didPlaneFire()) {
+				miss = plane.array();
+				for(Missile m: miss) {
+					m.doDrawing1(g);
+				}
+			}
+				
+		
 		
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();

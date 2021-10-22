@@ -4,7 +4,7 @@
 
 import java.awt.Graphics;
 
-public class ScrollingBackground extends SpriteSheet {
+public class ScrollingBackground {
 
 	// Two copies of the background image to scroll
 	private Background backOne;
@@ -12,7 +12,7 @@ public class ScrollingBackground extends SpriteSheet {
 
 	public ScrollingBackground() {
 		backOne = new Background(0, -700);
-		backTwo = new Background(0, -backOne.getImageHight() - 700);
+		backTwo = new Background(0, -backOne.getImageHeight() - 700);
 	}
 
 	public void loadBackground(Graphics g) {

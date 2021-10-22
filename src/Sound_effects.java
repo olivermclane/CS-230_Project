@@ -37,8 +37,5 @@ public class Sound_effects {
 			
 		
 	}
-	public static void main(String[] args) {
 	
-	}
-
 }

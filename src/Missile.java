@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -9,67 +10,83 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-
-
 /**
  * @author dusti
  *
  */
 
-
 public class Missile extends PlaneSprite {
 	private int width;
 	private int height;
-	
-	private Missile shoot;
 	private BufferedImage missile;
-	int x ;
-	int y;
-	
-	public Missile(int planex,int planey) {
-		x = planex - 55;
-		y = planey - 70;
+	private int x;
+	private int y;
+
+	public Missile() {
+
 		loadImage1();
-		
-		
+
 	}
 
-		private void loadImage1() {
-			try {
+	private void loadImage1() {
+		try {
 
-				missile = ImageIO.read(new File("src/Plane-assets/Missile2.png"));
-				width = missile.getWidth();
-				height = missile.getHeight();
+			missile = ImageIO.read(new File("src/Plane-assets/Missile2.png"));
+			width = missile.getWidth();
+			height = missile.getHeight();
 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		public void doDrawing1(Graphics r) {
-			
-				r.drawImage(missile, getX(),getY(),missile.getWidth(),
-						missile.getHeight(), this);
-				
-				y -= 2;
-			}
+	}
 
-		
-		
-
-		public int getX() {
-			return x;
+	public boolean isOffScreen() {
+		if (y < 0) {
+			return true;
+		} else {
+			return false;
 		}
+	}
 
-	
-		
+	public void doDrawing1(Graphics r) {
 
-		public int getY() {
-			return y;
-		}
+		r.drawImage(getMissile(), getX(), getY(), getWidth(), getHeight(), this);
 
-	
+		y -= 2;
+	}
+
+	public void setX(int newx) {
+		x = newx;
+	}
+
+	public void setY(int newy) {
+		y = newy;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public BufferedImage getMissile() {
+		return missile;
+	}
+
+	public void setMissile(BufferedImage missile) {
+		this.missile = missile;
+	}
 
 }

@@ -9,7 +9,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-public class Background implements ImageObserver {
+public class Background implements ImageObserver  {
 	private BufferedImage image;
 
 	private int x;
@@ -41,29 +41,26 @@ public class Background implements ImageObserver {
 
 		// Draw the image onto the Graphics reference
 		g.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), this);
-
+		
 		// Move the x position left for next time
 		this.y += 2;
 
 		// Check to see if the image has gone off stage left
 		if (this.y >= image.getHeight() - 700) {
-
+			g.dispose();
 			// If it has, line it back up so that its left edge is
 			// lined up to the right side of the other background image
 			this.y = (this.y - image.getHeight() * 2);
 		}
-
+		
 	}
 
-	public void setX(int x) {
-		this.x = x;
-	}
 
-	public int getX() {
+	private int getX() {
 		return this.x;
 	}
 
-	public int getY() {
+	private int getY() {
 		return this.y;
 	}
 
@@ -72,13 +69,8 @@ public class Background implements ImageObserver {
 
 	}
 
-	public int getImageHight() {
+	public int getImageHeight() {
 		return image.getHeight();
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -86,5 +78,7 @@ public class Background implements ImageObserver {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 
 }
