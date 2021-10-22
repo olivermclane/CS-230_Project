@@ -19,6 +19,7 @@ public class GamePlay extends GameJPanel {
 			@Override
 			public void run() {
 				GamePlay ex = new GamePlay();
+				
 			}
 		});
 	}
