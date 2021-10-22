@@ -34,11 +34,12 @@ public class Menu extends GameJPanel implements ActionListener {
     }
 
     public void drawMenu() {
+        //creating the gameFrame
         JFrame menu = new JFrame("Time Fighters -- Main Menu");
         
         //creating my buttons
-        JButton quitGButton = new JButton("Quit Game");
-        JButton playGButton = new JButton("Play Game");
+        JButton quitGButton = new JButton("   Quit Game  ");
+        JButton playGButton = new JButton(" Play Game");
 
         //creating Jlabel Title
         timeFigtherTitle = new JLabel("Time Fighters");
@@ -131,6 +132,7 @@ public class Menu extends GameJPanel implements ActionListener {
 
     }
 
+    //start game method
     public void startGame(JFrame j) {
         JPanel panel = new GameJPanel();
 		try {
@@ -145,6 +147,7 @@ public class Menu extends GameJPanel implements ActionListener {
 		j.setVisible(true);
     }
 
+    //exit game method
     public void exitGame() {
         System.exit(0);
     }
@@ -152,6 +155,8 @@ public class Menu extends GameJPanel implements ActionListener {
     public void actionPerformed(ActionEvent a){
 
     }
+
+    //main 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
