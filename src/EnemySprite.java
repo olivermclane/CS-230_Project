@@ -1,7 +1,3 @@
-/**
- *
- */
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -21,8 +17,8 @@ import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 
-public class PlaneSprite extends SpriteSheet
-		implements ActionListener, ImageObserver, Runnable, KeyListener, MouseInputListener {
+public class EnemySprite extends SpriteSheet
+		implements ActionListener, ImageObserver, Runnable {
 	private static BufferedImage[] sprites1;
 	private BufferedImage[] bankLeft;
 	private BufferedImage[] leftLevelout;
@@ -37,8 +33,8 @@ public class PlaneSprite extends SpriteSheet
 	private SpriteSheet planeImage;
 	private BufferedImage originalImg;
 	private BufferedImage img1;
-	private int x = 210;
-	private int y = 500;
+	private int x = 250;
+	private int y = 100;
 	private int w;
 	private int h;
 	private boolean planeRight;
@@ -51,14 +47,17 @@ public class PlaneSprite extends SpriteSheet
 	private Missile mis;
 	private boolean missileFired;
 	private Missile[] miss;
+	private BufferedImage enemy;
+	private int width;
+	private int height;
 	
 	
 	
 
-	public PlaneSprite() {
+	public EnemySprite() {
 		loadImage();
 		new Thread(this).start();
-		addKeyListener(this);
+		
 		missiles = new ArrayList<>();
 		
 	}
@@ -115,8 +114,8 @@ public class PlaneSprite extends SpriteSheet
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(getxPosition(), getyPosition(),
-				getH(),
-				getH());
+				getWidth(),
+				getHeight());
 	}
 
 	public int getH() {
@@ -130,7 +129,7 @@ public class PlaneSprite extends SpriteSheet
 
 	public BufferedImage getPlane() {
 
-		return img1;
+		return enemy;
 	}
 
 	public BufferedImage[] getRightLevelout() {
@@ -170,36 +169,7 @@ public class PlaneSprite extends SpriteSheet
 		return planeHit;
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// if keys are pressed the move that direction
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			planeRight = true;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			planeLeft = true;
-
-		}
-
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			planeUp = true;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			planeDown = true;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_A) {
-			
-			didPlaneFire = true;
-			missileFired = true;
-			
-			
-
-		}
-	}
-
+	
 	public void moveLeft() {
 		if (x <= -10) {
 			x = -10;
@@ -237,51 +207,22 @@ public class PlaneSprite extends SpriteSheet
 
 	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			planeRight = false;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			planeLeft = false;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			planeUp = false;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			planeDown = false;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_A) {
-			
-			missileFired = false;
-			
-			
-			
-
-		}
-		
-	}
+	
 		private void loadImage() {
-		try {
-			originalImg = ImageIO.read(new File("src/Plane-assets/PlaneResize.png"));
-			planeImage = new SpriteSheet(originalImg, 96, 68, 5, 1);
-			sprites1 = planeImage.getSprites();
-			img1 = sprites1[2];
+			
+				try {
 
-			w = img1.getWidth();
-			h = img1.getHeight();
+					enemy = ImageIO.read(new File("src/Plane-assets/Enemy.png"));
+					setWidth(enemy.getWidth());
+					setHeight(enemy.getHeight());
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-	}
+			}
+	
 
 
 	@Override
@@ -315,64 +256,6 @@ public class PlaneSprite extends SpriteSheet
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		setxPosition(e.getX());
-		setyPosition(e.getY());
-		
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		setxPosition(e.getX());
-		setyPosition(e.getY());
-		
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		setxPosition(e.getX());
-		
-		setyPosition(e.getY());
-		
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-
-		setxPosition(e.getX());
-		setyPosition(e.getY());
-
-		
-	}
-
-	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
@@ -391,6 +274,34 @@ public class PlaneSprite extends SpriteSheet
 	 */
 	public void setAtLeftEdge(boolean atLeftEdge) {
 		this.atLeftEdge = atLeftEdge;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int newheight) {
+		height = newheight;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(int newwidth) {
+		width = newwidth;
 	}
 
 
