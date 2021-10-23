@@ -43,6 +43,12 @@ private Missile[] miss;
 private EnemySprite enemy;
 private Rectangle misArea;
 private Rectangle enemyArea;
+private Missile mis2;
+private Rectangle planeArea;
+private int enemyCount;
+private Missile[] miss2;
+private Rectangle misArea2;
+private Sound_effects back;
 
 	public GameJPanel() {
 
@@ -55,12 +61,14 @@ private Rectangle enemyArea;
 		new Thread(this).start();
 		addMouseMotionListener(new MAdapter());
 		
-		Sound_effects back = new Sound_effects();
+		back = new Sound_effects();
 		back.backGround();
 		back1 = new ScrollingBackground();
 		plane = new PlaneSprite();
 		plane.missiles.add(new Missile());
 		enemy = new EnemySprite();
+		enemy.enemyMissiles.add(new Missile());
+		
 	}
 
 	@Override
@@ -69,30 +77,83 @@ private Rectangle enemyArea;
 		super.paintComponent(g);
 		back1.loadBackground(g);
 		
-		plane.doDrawing(g);
-		if (plane.missileFired()) {
-			mis = plane.projectile();
-			mis.setX(plane.getxPosition()-54);
-			mis.setY(plane.getyPosition()-70);
-			plane.missiles.add(mis);
-			
+		
+		
+		if(!enemy.isEnemyHit())	{
+			enemy.doDrawing(g);
 			
 		}
+		else {
+			enemy.setVisible(false);
+		}
+		if(!plane.isPlaneHit())	{
+			plane.doDrawing(g);
+			
+		}
+		else {
+			plane.setVisible(false);
+		}
+		enemyArea = enemy.getBounds();
+		planeArea = plane.getBounds();
 		if (plane.didPlaneFire()) {
+			back.missileFired();
+			mis = plane.projectile();
+			mis.setX(plane.getxPosition()+51);
+			mis.setY(plane.getyPosition());
+			plane.missiles.add(mis);
+			plane.didPlaneFire=false;
+			
+		}
+		if (plane.missileFired()) {
+				
 				miss = plane.array();
 				for(Missile m: miss) {
-					m.doDrawing1(g);
 					
+					m.doDrawing1(g);
+					misArea = m.getBounds();
+					
+					if (misArea.intersects(enemyArea)) {
+						plane.missiles.remove(m);
+						enemy.setisEnemyHit();
+					}
+					if(m.isOffScreen()) {
+						plane.missiles.remove(m);
+					}
 				}
 			}
-		enemy.doDrawing(g);	
-//		misArea = mis.getBounds();
-//		enemyArea = enemy.getBounds();
-//		if (misArea.intersects(enemyArea)) {
-//			enemy.setVisible(false);
-//		}
+			
+		if (enemyCount == 100) {
+			mis2 = plane.projectile();
+			mis2.setX2(enemy.getxPosition()+60);
+			mis2.setY2(enemy.getyPosition()+150);
+			enemy.enemyMissiles.add(mis2);
+			enemy.didPlaneFire(true);
+		}
+
 		
 		
+		if (enemy.didPlaneFire) {
+			
+			miss2 = enemy.array();
+			for (Missile m2 : miss2) {
+				misArea2 = m2.getBounds();
+				planeArea = plane.getBounds();
+				m2.doDrawing2(g);
+				
+				
+				if (misArea2.intersects(planeArea)) {
+					enemy.enemyMissiles.remove(m2);
+					plane.setisPlaneHit();
+				}
+				if (m2.isOffScreen2()) {
+					enemy.enemyMissiles.remove(m2);
+				
+				}
+				
+			} 
+			
+		}
+	
 		g.dispose();
 		Toolkit.getDefaultToolkit().sync();
 	}
@@ -104,8 +165,11 @@ private Rectangle enemyArea;
 			try {
 				repaint();
 				Thread.currentThread();
-				Thread.sleep(15);
-
+				Thread.sleep(10);
+				enemyCount+=1;
+				if(enemyCount==200) {
+					enemyCount=0;
+				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
