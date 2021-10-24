@@ -111,13 +111,13 @@ public class PlaneSprite extends SpriteSheet
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(getxPosition()+5, getyPosition(),
-				getPlane().getWidth()-8,
-				getPlane().getHeight()-100);
+		return new Rectangle(getxPosition()+10, getyPosition()+30,
+				getW()-20,
+				getH()-50);
 	}
 
 	public int getH() {
-		return h;
+		return getPlane().getHeight();
 	}
 
 	public BufferedImage[] getLeftLevelout() {
@@ -140,7 +140,7 @@ public class PlaneSprite extends SpriteSheet
 	}
 
 	public int getW() {
-		return w;
+		return getPlane().getWidth();
 	}
 
 	public int getxPosition() {
@@ -235,7 +235,7 @@ public class PlaneSprite extends SpriteSheet
 	private void loadImage() {
 	try {
 		originalImg = ImageIO.read(new File("src/Plane-assets/PlaneResize.png"));
-		planeImage = new SpriteSheet(originalImg, 96, 68, 5, 1);
+		planeImage = new SpriteSheet(originalImg, 98, 68, 5, 1);
 		sprites1 = planeImage.getSprites();
 		img1 = sprites1[2];
 
@@ -263,21 +263,19 @@ public class PlaneSprite extends SpriteSheet
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		setxPosition(e.getX());
 		
-		setyPosition(e.getY());
 		
 
 	}
 		@Override
-		public void mouseEntered(MouseEvent arg0) {
+		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
 
 		}
 
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
 	}
@@ -296,16 +294,17 @@ public class PlaneSprite extends SpriteSheet
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		setxPosition(e.getX());
-		setyPosition(e.getY());
+		didPlaneFire = false;
+		
 		
 
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-
+		missileFired = true;
+		didPlaneFire = true;
 	}
 
 

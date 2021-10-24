@@ -120,7 +120,12 @@ public class Missile implements ImageObserver{
 		return new Rectangle(getX(), getY(), getWidth(), getHeight());
 		
 	}
-
+	
+	public Rectangle getBounds2() {
+		
+		return new Rectangle(getX2(), getY2(), getWidth(), getHeight());
+		
+	}
 	public BufferedImage getMissile() {
 		return missile;
 	}

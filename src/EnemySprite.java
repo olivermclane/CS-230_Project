@@ -26,7 +26,7 @@ public class EnemySprite extends SpriteSheet
 	private BufferedImage[] rightLevelout;
 	private Rectangle bounds;
 	private boolean planeHit;
-	private boolean planeDestroyed;
+	private boolean enemyDestroyed = false;
 	private BufferedImage[] boom;
 	private boolean atRightEdge;
 	private boolean atLeftEdge;
@@ -169,8 +169,8 @@ public class EnemySprite extends SpriteSheet
 		return atRightEdge;
 	}
 
-	public boolean isPlaneDestroyed() {
-		return planeDestroyed;
+	public boolean isEnemyDestroyed() {
+		return enemyDestroyed;
 	}
 
 	public boolean isPlaneHit() {
@@ -250,8 +250,8 @@ public class EnemySprite extends SpriteSheet
 
 	
 
-	public void setPlaneDestroyed(boolean planeDestroyed) {
-		this.planeDestroyed = planeDestroyed;
+	public void setEnemyDestroyed(boolean newplaneDestroyed) {
+		enemyDestroyed = newplaneDestroyed;
 	}
 
 	public void setPlaneHit(boolean newplaneHit) {

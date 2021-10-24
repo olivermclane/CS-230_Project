@@ -51,7 +51,7 @@ public class Menu extends GameJPanel implements ActionListener {
         //creating font and appending it to the compents
         Font RetroGame;
         try{
-            RetroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/RetroGaming.ttf"));
+            RetroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
             RetroGame = RetroGame.deriveFont(Font.PLAIN,20);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
             ge.registerFont(RetroGame);

@@ -28,9 +28,9 @@ public class SpriteSheet extends JPanel {
 		this.columns = columns;
 		this.sprite = fullImage;
 		sprites = new BufferedImage[rows * columns];
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
-				sprites[(i * columns) + j] = sprite.getSubimage(i * width, j * height, width, height);
+		for (int i = 0; i < columns; i++) {
+			for (int j = 0; j < rows; j++) {
+				sprites[(i * columns) + j] = sprite.getSubimage(j * width,i * height, width, height);
 
 			}
 		}
