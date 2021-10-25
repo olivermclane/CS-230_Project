@@ -12,8 +12,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.sql.Time;
 import java.util.List;
+import javax.swing.JLabel;
+import java.awt.GraphicsEnvironment;
+import java.awt.Font;
+import java.io.IOException;
+import java.awt.FontFormatException;
+
+
+
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
@@ -54,6 +63,8 @@ private ExplosionSprite explosion;
 private int explosionCount;
 private int explosionTic = 0;
 private SmallEnemySprite smallEnemy;
+public JLabel lifeCounter = new JLabel();
+
 
 	public GameJPanel() {
 
@@ -61,6 +72,18 @@ private SmallEnemySprite smallEnemy;
 	}
 
 	private void intiGamePanel() {
+		try{
+            Font retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
+         	retroGame = retroGame.deriveFont(Font.PLAIN,20);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
+			ge.registerFont(retroGame);
+			lifeCounter.setFont(retroGame);
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(FontFormatException e){
+            e.printStackTrace();
+        }
+
 		setFocusable(true);
 		addKeyListener(new TAdapter());
 		new Thread(this).start();
@@ -79,7 +102,6 @@ private SmallEnemySprite smallEnemy;
 
 	@Override
 	public void paintComponent(Graphics g) {
-		
 		super.paintComponent(g);
 		back1.loadBackground(g);
 		explosion.setX(enemy.getxPosition());
@@ -119,7 +141,7 @@ private SmallEnemySprite smallEnemy;
 		}
 		explosion.setX(plane.getxPosition());
 		explosion.setY(plane.getyPosition());
-		if(plane.isPlaneHit()) {
+		if(plane.isPlaneHit() && plane.isDead()) {
 			explosion.doDrawing(g);
 			if (explosionTic < 8  && explosionCount == 0) {
 				explosion.setExpCount(explosionTic);
@@ -139,7 +161,7 @@ private SmallEnemySprite smallEnemy;
 			
 		}
 		else {
-			plane.setVisible(false);
+			plane.isHit();
 		}
 		enemyArea = enemy.getBounds();
 		planeArea = plane.getBounds();
@@ -198,7 +220,8 @@ private SmallEnemySprite smallEnemy;
 				if (misArea2.intersects(planeArea)) {
 					enemy.enemyMissiles.remove(m2);
 					back.planeHitsound();
-					plane.setisPlaneHit();
+					plane.isHit();
+					plane.isDead();
 				}
 				if (m2.isOffScreen2()) {
 					enemy.enemyMissiles.remove(m2);

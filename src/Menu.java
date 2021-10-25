@@ -41,8 +41,10 @@ public class Menu extends GameJPanel implements ActionListener {
         JFrame menu = new JFrame("Time Fighters -- Main Menu");
         
         //creating my buttons
+        JButton quitGButton = new JButton("  Quit Game   ");
         JButton playGButton = new JButton("Play Game");
-        JButton quitGButton = new JButton("Quit Game");
+
+
 
         //creating Jlabel Title
         timeFigtherTitle = new JLabel("Time Fighters");
@@ -113,7 +115,7 @@ public class Menu extends GameJPanel implements ActionListener {
                 playGButton.setVisible(false);
                 quitGButton.setVisible(false);
             }
-        }); 
+        });
         playGButton.setBorderPainted(false);
         playGButton.setFocusPainted(false);
         playGButton.setContentAreaFilled(false);
@@ -138,7 +140,6 @@ public class Menu extends GameJPanel implements ActionListener {
         CentralPanel.add(buttonsPanel, menuLayout);
         menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
-        
         menu.setVisible(true);
         
     }
