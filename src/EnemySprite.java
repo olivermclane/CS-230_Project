@@ -51,6 +51,7 @@ public class EnemySprite extends SpriteSheet
 	private int width;
 	private int height;
 	private boolean isEnemyHit =false;
+	private BufferedImage smallEnemy;
 	
 	
 	
@@ -226,7 +227,7 @@ public class EnemySprite extends SpriteSheet
 			
 				try {
 
-					enemy = ImageIO.read(new File("src/Plane-assets/enemy.png"));
+					enemy = ImageIO.read(new File("src/Plane-assets/Enemies.png"));
 					
 
 				} catch (IOException e) {

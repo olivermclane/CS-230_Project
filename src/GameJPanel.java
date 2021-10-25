@@ -62,7 +62,9 @@ private Sound_effects back;
 private ExplosionSprite explosion;
 private int explosionCount;
 private int explosionTic = 0;
+private SmallEnemySprite smallEnemy;
 public JLabel lifeCounter = new JLabel();
+
 
 	public GameJPanel() {
 
@@ -93,6 +95,7 @@ public JLabel lifeCounter = new JLabel();
 		plane = new PlaneSprite();
 		plane.missiles.add(new Missile());
 		enemy = new EnemySprite();
+		smallEnemy = new SmallEnemySprite();
 		enemy.enemyMissiles.add(new Missile());
 		explosion = new ExplosionSprite();
 	}
@@ -117,6 +120,15 @@ public JLabel lifeCounter = new JLabel();
 			
 			explosion.setVisible(false);
 			
+		}
+		if(!smallEnemy.isEnemyDestroyed())	{
+			smallEnemy.doDrawing(g);
+			
+		}
+		else {
+			smallEnemy.setEnemyDestroyed(true);
+			
+			smallEnemy.setVisible(false);
 		}
 		if(!enemy.isEnemyDestroyed())	{
 			enemy.doDrawing(g);
