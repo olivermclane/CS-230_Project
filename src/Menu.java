@@ -106,6 +106,7 @@ public class Menu extends GameJPanel implements ActionListener {
 
         // Creating play game button 
         playGButton.setForeground(Color.WHITE);
+        playGButton.setBackground(backGC);
         playGButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 startGame(menu);
@@ -114,17 +115,22 @@ public class Menu extends GameJPanel implements ActionListener {
             }
         }); 
         playGButton.setBorderPainted(false);
+        playGButton.setFocusPainted(false);
+        playGButton.setContentAreaFilled(false);
         buttonsPanel.add(playGButton, menuLayout);
 
 
         // Creating quit game button 
         quitGButton.setForeground(Color.WHITE);
+        quitGButton.setBackground(backGC);
         quitGButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 exitGame();
             }
         });
         quitGButton.setBorderPainted(false);
+        quitGButton.setFocusPainted(false);
+        quitGButton.setContentAreaFilled(false);
         buttonsPanel.add(quitGButton, menuLayout);
 
         menuLayout.weighty = 1;

@@ -22,7 +22,7 @@ public class Sound_effects {
 			try
 			{
 				
-				String filepath = ("src/Plane-assets/STORM.wav");
+				String filepath = ("src/Plane-assets/background.wav");
 				AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile());
 				clip = AudioSystem.getClip();	
 				clip.open(audioInput);
