@@ -30,6 +30,7 @@ public class PlaneSprite extends SpriteSheet
 	private BufferedImage[] rightLevelout;
 	private Rectangle bounds;
 	private boolean planeHit;
+	public int planeLife;
 	private boolean planeDestroyed;
 	private BufferedImage[] boom;
 	private boolean atRightEdge;
@@ -61,6 +62,7 @@ public class PlaneSprite extends SpriteSheet
 		new Thread(this).start();
 		addKeyListener(this);
 		missiles = new ArrayList<>();
+		planeLife = 3;
 		
 	}
 
@@ -379,8 +381,28 @@ public class PlaneSprite extends SpriteSheet
 	public boolean isPlaneHit() {
 		return isPlaneHit;
 	}
-	public void setPlaneHit(boolean newplaneHit) {
-		planeHit = true;
+	public void isHit() {
+		if(planeLife == 0){
+			this.setVisible(false);
+		}
+		else{
+			planeLife--;
+		}
+	}
+	
+	public int getLife(){
+		return planeLife;
+	}
+	public boolean isDead(){
+		if(planeLife == 0){
+			isPlaneHit = true;
+			return true;
+		}
+		return false;
+	}
+	
+	public void addPlaneLife(int x){
+		planeLife += x;
 	}
 
 	public void setxPosition(int xPosition) {
@@ -388,20 +410,11 @@ public class PlaneSprite extends SpriteSheet
 		x = xPosition;
 	}
 
-	
 
 	public void setyPosition(int yPosition) {
 		y = yPosition;
 	}
 
-	/**
-	 * 
-	 */
-	public void setisPlaneHit() {
-		isPlaneHit = true;
-		// TODO Auto-generated method stub
-		
-	}	
 }
 	
 
