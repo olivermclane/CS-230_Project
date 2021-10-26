@@ -180,12 +180,12 @@ public class EnemySprite extends SpriteSheet
 
 	
 	public void moveLeft() {
-		if (x <= -10) {
-			x = -10;
+		if (x <= 2) {
+			x = 2;
 			planeLeft = false;
 			planeRight = true;
 		} else {
-			x -= 1;
+			x -= 2;
 			planeLeft = true;
 		}
 
@@ -193,12 +193,12 @@ public class EnemySprite extends SpriteSheet
 
 	
 	public void moveRight() {
-		if (x >= 580) {
-			x = 580;
+		if (x >= 700 - getW()-10) {
+			x = 700 - getW()-10;
 			planeLeft = true;
 			planeRight = false;
 		} else {
-			x += 1;
+			x += 2;
 			planeRight = true;
 		}
 

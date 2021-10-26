@@ -59,7 +59,7 @@ public class PlaneSprite extends SpriteSheet
 
 	public PlaneSprite() {
 		loadImage();
-		new Thread(this).start();
+		
 		addKeyListener(this);
 		missiles = new ArrayList<>();
 		planeLife = 3;
@@ -96,7 +96,7 @@ public class PlaneSprite extends SpriteSheet
 			moveDown();
 		}
 		
-
+		
 	}
 	 
 	public BufferedImage[] getBankLeft() {

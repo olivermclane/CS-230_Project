@@ -11,8 +11,8 @@ public class ScrollingBackground {
 	private Background backTwo;
 
 	public ScrollingBackground() {
-		backOne = new Background(0, -700);
-		backTwo = new Background(0, -backOne.getImageHeight() - 700);
+		backOne = new Background(0, +700);
+		backTwo = new Background(0, +backOne.getImageHeight() + 700);
 	}
 
 	public void loadBackground(Graphics g) {

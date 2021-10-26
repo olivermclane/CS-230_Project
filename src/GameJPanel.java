@@ -64,6 +64,7 @@ private int explosionCount;
 private int explosionTic = 0;
 private SmallEnemySprite smallEnemy;
 public JLabel lifeCounter = new JLabel();
+private tankEnemySprite tankEnemy;
 
 
 	public GameJPanel() {
@@ -96,6 +97,7 @@ public JLabel lifeCounter = new JLabel();
 		plane.missiles.add(new Missile());
 		enemy = new EnemySprite();
 		smallEnemy = new SmallEnemySprite();
+		tankEnemy = new tankEnemySprite();
 		enemy.enemyMissiles.add(new Missile());
 		explosion = new ExplosionSprite();
 	}
@@ -129,6 +131,15 @@ public JLabel lifeCounter = new JLabel();
 			smallEnemy.setEnemyDestroyed(true);
 			
 			smallEnemy.setVisible(false);
+		}
+		if(!tankEnemy.isEnemyDestroyed())	{
+			tankEnemy.doDrawing(g);
+			
+		}
+		else {
+			tankEnemy.setEnemyDestroyed(true);
+			
+			tankEnemy.setVisible(false);
 		}
 		if(!enemy.isEnemyDestroyed())	{
 			enemy.doDrawing(g);
@@ -240,22 +251,19 @@ public JLabel lifeCounter = new JLabel();
 	public void run() {
 
 		while (true) {
-			try {
+			
 				repaint();
-				Thread.currentThread();
-				Thread.sleep(10);
+				
+				
 				enemyCount+=1;
-				if(enemyCount==200) {
+				if(enemyCount==100) {
 					enemyCount=0;
 				}
 				explosionCount+=1;
-				if(explosionCount==10) {
+				if(explosionCount==4) {
 					explosionCount=0;
 				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 	}
 

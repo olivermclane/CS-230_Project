@@ -25,7 +25,7 @@ public class Background implements ImageObserver  {
 
 		// Try to open the image file background.png
 		try {
-			image = ImageIO.read(new File("src/Plane-assets/back1.png"));
+			image = ImageIO.read(new File("src/Plane-assets/background.png"));
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -40,13 +40,13 @@ public class Background implements ImageObserver  {
 	public void draw(Graphics g) {
 
 		// Draw the image onto the Graphics reference
-		g.drawImage(image, getX(), getY(), image.getWidth(), image.getHeight(), this);
+		g.drawImage(image, getX()-25, getY()+1475, image.getWidth(), image.getHeight(), this);
 		
 		// Move the x position left for next time
-		this.y += 2;
+		this.y += 1;
 
 		// Check to see if the image has gone off stage left
-		if (this.y >= image.getHeight() - 700) {
+		if (this.y >= image.getHeight()-1475) {
 			g.dispose();
 			// If it has, line it back up so that its left edge is
 			// lined up to the right side of the other background image
