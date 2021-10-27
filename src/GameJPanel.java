@@ -68,7 +68,7 @@ private tankEnemySprite tankEnemy;
 
 
 	public GameJPanel() {
-
+		
 		intiGamePanel();
 	}
 

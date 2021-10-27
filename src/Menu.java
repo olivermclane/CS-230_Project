@@ -24,7 +24,7 @@ import java.awt.FontFormatException;
  * 
  */
 
-public class Menu extends GameJPanel implements ActionListener {
+public class Menu implements ActionListener {
 
     //name of game
     private JLabel timeFigtherTitle; 
