@@ -59,7 +59,7 @@ public class PlaneSprite extends SpriteSheet
 
 	public PlaneSprite() {
 		loadImage();
-		new Thread(this).start();
+		
 		addKeyListener(this);
 		missiles = new ArrayList<>();
 		planeLife = 3;
@@ -80,13 +80,16 @@ public class PlaneSprite extends SpriteSheet
 		return didPlaneFire;
 	}
 	public void doDrawing(Graphics g) {
-
-		g.drawImage(getPlane(), getxPosition(), getyPosition(), this);
+		if(!planeRight && !planeLeft) {
+			g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
+		}
 		if (planeRight) {
 			moveRight();
+			g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
 		}
 		if (planeLeft) {
 			moveLeft();
+			g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
 		}
 
 		if (planeUp) {
@@ -96,7 +99,7 @@ public class PlaneSprite extends SpriteSheet
 			moveDown();
 		}
 		
-
+		
 	}
 	 
 	public BufferedImage[] getBankLeft() {

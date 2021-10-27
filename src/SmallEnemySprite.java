@@ -120,8 +120,8 @@ public class SmallEnemySprite extends SpriteSheet
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(getxPosition()+5, getyPosition(),
-				getW()-8,
-				getH()-100);
+				getW(),
+				getH());
 	}
 
 	public boolean isEnemyHit() {
@@ -180,10 +180,10 @@ public class SmallEnemySprite extends SpriteSheet
 
 	
 	public void moveLeft() {
-		if (x <= -10) {
-			x = -10;
-			planeLeft = true;
-			planeRight = false;
+		if (x <= 0) {
+			x = 0;
+			planeLeft = false;
+			planeRight = true;
 		} else {
 			x -= 2;
 			planeLeft = true;
@@ -193,10 +193,10 @@ public class SmallEnemySprite extends SpriteSheet
 
 	
 	public void moveRight() {
-		if (x >= 580) {
-			x = 580;
-			planeLeft = false;
-			planeRight = true;
+		if (x >= 700-getW()-10) {
+			x = 700-getW()-10;
+			planeLeft = true;
+			planeRight = false;
 		} else {
 			x += 2;
 			planeRight = true;

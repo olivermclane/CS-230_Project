@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  * @author dusti
  *
  */
-public class ExplosionSprite extends SpriteSheet implements ImageObserver, Runnable {
+public class ExplosionSprite extends SpriteSheet implements ImageObserver {
 	
 	private BufferedImage originalImg;
 	private SpriteSheet explosionImages;
@@ -131,11 +131,7 @@ public class ExplosionSprite extends SpriteSheet implements ImageObserver, Runna
 		this.y = y;
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 		
