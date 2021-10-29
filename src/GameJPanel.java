@@ -176,6 +176,7 @@ private tankEnemySprite tankEnemy;
 		}
 		enemyArea = enemy.getBounds();
 		planeArea = plane.getBounds();
+		
 		if (plane.didPlaneFire()) {
 			back.missileFired();
 			mis = plane.projectile();
@@ -193,6 +194,7 @@ private tankEnemySprite tankEnemy;
 					m.doDrawing1(g);
 					
 					misArea = m.getBounds();
+				
 					
 					if (misArea.intersects(enemyArea)) {
 						plane.missiles.remove(m);
@@ -265,6 +267,9 @@ private tankEnemySprite tankEnemy;
 				if(explosionCount==4) {
 					explosionCount=0;
 				}
+
+				
+
 				nextTime = System.currentTimeMillis() + frameRate;
 			}
 		}

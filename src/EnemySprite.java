@@ -52,6 +52,8 @@ public class EnemySprite extends SpriteSheet
 	private int height;
 	private boolean isEnemyHit =false;
 	private BufferedImage smallEnemy;
+	private BufferedImage enemyLeft;
+	private BufferedImage enemyRight;
 	
 	
 	
@@ -73,12 +75,16 @@ public class EnemySprite extends SpriteSheet
 	}
 	public void doDrawing(Graphics g) {
 
-		g.drawImage(getPlane(), getxPosition(), getyPosition(), this);
+//		if (!planeRight && !planeLeft) {
+			g.drawImage(enemy, getxPosition(), getyPosition(), this);
+//		}
 		if (planeRight) {
 			moveRight();
+//			g.drawImage(enemyLeft, getxPosition(), getyPosition(), this);
 		}
 		if (planeLeft) {
 			moveLeft();
+//			g.drawImage(enemyRight, getxPosition(), getyPosition(), this);
 		}
 		
 		
@@ -228,8 +234,8 @@ public class EnemySprite extends SpriteSheet
 				try {
 
 					enemy = ImageIO.read(new File("src/Plane-assets/Enemies.png"));
-					
-
+					enemyLeft = ImageIO.read(new File("src/Plane-assets/EnemiesLeft.png"));
+					enemyRight = ImageIO.read(new File("src/Plane-assets/EnemiesRight.png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

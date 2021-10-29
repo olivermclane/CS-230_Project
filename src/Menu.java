@@ -118,7 +118,7 @@ public class Menu implements ActionListener {
         });
         playGButton.setBorderPainted(false);
         playGButton.setFocusPainted(false);
-        playGButton.setContentAreaFilled(false);
+       
         buttonsPanel.add(playGButton, menuLayout);
 
 
