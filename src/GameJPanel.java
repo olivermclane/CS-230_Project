@@ -251,9 +251,11 @@ private tankEnemySprite tankEnemy;
 
 	@Override
 	public void run() {
+		int frameRate = 1000/40;
+		long nextTime = System.currentTimeMillis() + frameRate;
 
 		while (true) {
-			
+			if (System.currentTimeMillis()> nextTime){
 				repaint();
 				
 				
@@ -265,7 +267,11 @@ private tankEnemySprite tankEnemy;
 				if(explosionCount==4) {
 					explosionCount=0;
 				}
+
 				
+
+				nextTime = System.currentTimeMillis() + frameRate;
+			}
 		}
 	}
 
