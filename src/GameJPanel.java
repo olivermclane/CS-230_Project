@@ -1,111 +1,70 @@
-/**
- *
- */
-
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.sql.Time;
-import java.util.List;
-import javax.swing.JLabel;
-import java.awt.GraphicsEnvironment;
-import java.awt.Font;
 import java.io.IOException;
-import java.awt.FontFormatException;
-
-
-
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
+import java.util.List;
 
 public class GameJPanel extends JPanel implements Runnable {
-	private class TAdapter extends KeyAdapter {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			plane.keyPressed(e);
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			plane.keyReleased(e);
-		}
-	}
-
-	
-	
-public Runnable runnable;
-public Thread t;
-private ScrollingBackground back1;
-public PlaneSprite plane;
-private Missile mis;
-private Missile[] array;
-private Missile[] miss;
-private EnemySprite enemy;
-private Rectangle misArea;
-private Rectangle enemyArea;
-private Missile mis2;
-private Rectangle planeArea;
-private int enemyCount;
-private Missile[] miss2;
-private Rectangle misArea2;
-private Sound_effects back;
-private ExplosionSprite explosion;
-private int explosionCount;
-private int explosionTic = 0;
-private SmallEnemySprite smallEnemy;
-public JLabel lifeCounter = new JLabel();
-private tankEnemySprite tankEnemy;
 
 
-	public GameJPanel() {
-		
-		intiGamePanel();
-	}
+    public PlaneSprite plane;
+    public JLabel lifeCounter = new JLabel();
+    private ScrollingBackground back1;
 
-	private void intiGamePanel() {
-		try{
+    private EnemySprite enemy;
+    private int enemyCount;
+    private Sound_effects back;
+    private ExplosionSprite explosion;
+    private int explosionCount;
+    private int explosionTic = 0;
+    private SmallEnemySprite smallEnemy;
+    private tankEnemySprite tankEnemy;
+    public GameJPanel() {
+
+        intiGamePanel();
+    }
+
+    private void intiGamePanel() {
+        try {
             Font retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
-         	retroGame = retroGame.deriveFont(Font.PLAIN,20);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
-			ge.registerFont(retroGame);
-			lifeCounter.setFont(retroGame);
-        }catch(IOException e){
+            retroGame = retroGame.deriveFont(Font.PLAIN, 20);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(retroGame);
+            lifeCounter.setFont(retroGame);
+        } catch (IOException e) {
             e.printStackTrace();
-        }catch(FontFormatException e){
+        } catch (FontFormatException e) {
             e.printStackTrace();
         }
 
-		setFocusable(true);
-		addKeyListener(new TAdapter());
-		new Thread(this).start();
-		addMouseMotionListener(new MAdapter());
-		addMouseListener(new MAdapter());
-		back = new Sound_effects();
-		back.backGround();
-		back1 = new ScrollingBackground();
-		plane = new PlaneSprite();
-		plane.missiles.add(new Missile());
-		enemy = new EnemySprite();
-		smallEnemy = new SmallEnemySprite();
-		tankEnemy = new tankEnemySprite();
-		enemy.enemyMissiles.add(new Missile());
-		explosion = new ExplosionSprite();
-	}
+
+        setFocusable(true);
+        addKeyListener(new TAdapter());
+        new Thread(this).start();
+        addMouseMotionListener(new MAdapter());
+        addMouseListener(new MAdapter());
+        back = new Sound_effects();
+        back.backGround();
+        back1 = new ScrollingBackground();
+        plane = new PlaneSprite();
+        plane.missiles.add(new Missile());
+        enemy = new EnemySprite();
+        smallEnemy = new SmallEnemySprite();
+        tankEnemy = new tankEnemySprite();
+
+        explosion = new ExplosionSprite();
+    }
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		back1.loadBackground(g);
+
 		explosion.setX(enemy.getxPosition());
 		explosion.setY(enemy.getyPosition());
 		if(enemy.isEnemyDestroyed()) {
@@ -174,12 +133,15 @@ private tankEnemySprite tankEnemy;
 		else {
 			plane.isHit();
 		}
-		enemyArea = enemy.getBounds();
-		planeArea = plane.getBounds();
-		
+        Rectangle enemyArea = enemy.getBounds();
+
+        Rectangle planeArea = plane.getBounds();
+        Rectangle enemyArea2 = enemy.getBounds2();
+        Rectangle planeArea2 = plane.getBounds2();
+
 		if (plane.didPlaneFire()) {
 			back.missileFired();
-			mis = plane.projectile();
+            Missile mis = plane.projectile();
 			mis.setX(plane.getxPosition()+51);
 			mis.setY(plane.getyPosition());
 			plane.missiles.add(mis);
@@ -187,16 +149,17 @@ private tankEnemySprite tankEnemy;
 			
 		}
 		if (plane.missileFired()) {
-				
-				miss = plane.array();
+
+            Missile[] miss = plane.array();
 				for(Missile m: miss) {
 					
 					m.doDrawing1(g);
-					
-					misArea = m.getBounds();
+
+                    Rectangle misArea = m.getBounds();
+
 				
 					
-					if (misArea.intersects(enemyArea)) {
+					if (misArea.intersects(enemyArea)||misArea.intersects(enemyArea2)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
 						enemy.setEnemyDestroyed(true);
@@ -208,8 +171,8 @@ private tankEnemySprite tankEnemy;
 				}
 			}
 			
-		if (enemyCount == 100 && !enemy.isEnemyDestroyed()) {
-			mis2 = plane.projectile();
+		if (enemyCount >= 99 && !enemy.isEnemyDestroyed()) {
+            Missile mis2 = plane.projectile();
 			mis2.setX2(enemy.getxPosition()+60);
 			mis2.setY2(enemy.getyPosition()+150);
 			enemy.enemyMissiles.add(mis2);
@@ -217,108 +180,119 @@ private tankEnemySprite tankEnemy;
 			enemy.didPlaneFire(true);
 		}
 
-		
-		
-		if (enemy.didPlaneFire ) {
-			
-			miss2 = enemy.array();
-			for (Missile m2 : miss2) {
-				
-				
-				m2.doDrawing2(g);
-				misArea2 = m2.getBounds2();
-				
-				
-				
-				if (misArea2.intersects(planeArea)) {
-					enemy.enemyMissiles.remove(m2);
-					back.planeHitsound();
-					plane.isHit();
-					plane.isDead();
-				}
-				if (m2.isOffScreen2()) {
-					enemy.enemyMissiles.remove(m2);
-				
-				}
-				
-			} 
-			
-		}
-	
-		g.dispose();
-		Toolkit.getDefaultToolkit().sync();
-	}
 
-	@Override
-	public void run() {
-		int frameRate = 1000/40;
-		long nextTime = System.currentTimeMillis() + frameRate;
+        if (enemy.didPlaneFire) {
 
-		while (true) {
-			if (System.currentTimeMillis()> nextTime){
-				repaint();
-				
-				
-				enemyCount+=1;
-				if(enemyCount==100) {
-					enemyCount=0;
-				}
-				explosionCount+=1;
-				if(explosionCount==4) {
-					explosionCount=0;
-				}
+            List<Missile> miss2 = enemy.array();
+            for (Missile m2 : miss2) {
 
-				
 
-				nextTime = System.currentTimeMillis() + frameRate;
-			}
-		}
-	}
+                m2.doDrawing2(g);
+                Rectangle misArea2 = m2.getBounds2();
 
-	private class MAdapter extends MouseInputAdapter implements MouseMotionListener, MouseInputListener {
 
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+//                if (misArea2.intersects(planeArea)||misArea2.intersects(planeArea2)) {
+//                    enemy.enemyMissiles.remove(m2);
+//                    back.planeHitsound();
+//                    plane.isHit();
+//                    plane.isDead();
+//                }
+                if (m2.isOffScreen2()) {
+                    enemy.enemyMissiles.remove(m2);
 
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+                }
 
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+            }
 
-	
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			plane.mousePressed(e);
-		}
+        }
 
-		
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			plane.mouseReleased(e);
-		}
+        g.dispose();
+        Toolkit.getDefaultToolkit().sync();
+    }
 
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+    @Override
+    public void run() {
+        int frameRate = 1000 / 40;
+        long nextTime = System.currentTimeMillis() + frameRate;
 
-		@Override
-		public void mouseMoved(MouseEvent e) {
-			// TODO Auto-generated method stub
-			plane.mouseMoved(e);
-		}
+        while (true) {
+            if (System.currentTimeMillis() > nextTime) {
 
-	}	
+
+
+                enemyCount += 1;
+                if (enemyCount >= 100) {
+                    enemyCount = 0;
+                }
+                explosionCount += 1;
+                if (explosionCount == 6) {
+                    explosionCount = 0;
+                }
+
+                repaint();
+
+                nextTime = System.currentTimeMillis() + frameRate;
+            }
+        }
+    }
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            plane.keyPressed(e);
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            plane.keyReleased(e);
+        }
+    }
+
+    private class MAdapter extends MouseInputAdapter implements MouseMotionListener, MouseInputListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+
+        public void mousePressed(MouseEvent e) {
+            // TODO Auto-generated method stub
+            plane.mousePressed(e);
+        }
+
+
+        public void mouseReleased(MouseEvent e) {
+            // TODO Auto-generated method stub
+            plane.mouseReleased(e);
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // TODO Auto-generated method stub
+            plane.mouseMoved(e);
+        }
+
+    }
 
 }

@@ -1,11 +1,5 @@
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -13,81 +7,53 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.Timer;
-import javax.swing.event.MouseInputListener;
-
 public class EnemySprite extends SpriteSheet
-		implements ActionListener, ImageObserver, Runnable {
-	private static BufferedImage[] sprites1;
-	private BufferedImage[] bankLeft;
-	private BufferedImage[] leftLevelout;
-	private BufferedImage[] bankRight;
-	private BufferedImage[] rightLevelout;
-	private Rectangle bounds;
-	private boolean planeHit;
-	private boolean enemyDestroyed = false;
-	private BufferedImage[] boom;
-	private boolean atRightEdge;
-	private boolean atLeftEdge;
-	private SpriteSheet planeImage;
-	private BufferedImage originalImg;
-	private BufferedImage img1;
-	private int x = 250;
-	private int y = 100;
-	private int w;
-	private int h;
-	private boolean planeRight = true;
-	private boolean planeLeft = false;
-	private boolean planeUp;
-	private boolean planeDown;
-	public boolean didPlaneFire = false;
-	
-	public List<Missile> enemyMissiles;
-	private Missile mis;
-	private boolean missileFired;
-	private Missile[] miss;
-	private BufferedImage enemy;
-	private int width;
-	private int height;
-	private boolean isEnemyHit =false;
-	private BufferedImage smallEnemy;
-	private BufferedImage enemyLeft;
-	private BufferedImage enemyRight;
-	
-	
-	
+        implements ImageObserver {
 
-	public EnemySprite() {
-		loadImage();
-		
-		enemyMissiles = new ArrayList<>();
-		
-	}
-	public void setisEnemyHit() {
-		isEnemyHit = true;
-	}
+    public boolean didPlaneFire = false;
+    public List<Missile> enemyMissiles;
+    private boolean planeHit;
+    private int x = 250;
+    private boolean planeRight = true;
+    private boolean planeLeft = false;
+    private boolean planeUp;
+    private boolean planeDown;
+    private BufferedImage enemy;
+    private int height;
+    private boolean enemyDestroyed;
+    private boolean missileFired;
 
-	public Missile projectile() {
-		mis = new Missile();
-		
-		return mis;
-	}
-	public void doDrawing(Graphics g) {
+
+    public EnemySprite() {
+        loadImage();
+
+        enemyMissiles = new ArrayList<>();
+
+    }
+
+    public void setisEnemyHit() {
+        boolean isEnemyHit = true;
+    }
+
+    public Missile projectile() {
+
+        return new Missile();
+    }
+
+    public void doDrawing(Graphics g) {
 
 //		if (!planeRight && !planeLeft) {
-			g.drawImage(enemy, getxPosition(), getyPosition(), this);
+        g.drawImage(enemy, getxPosition(), getyPosition(), this);
 //		}
-		if (planeRight) {
-			moveRight();
+        if (planeRight) {
+//            moveRight();
 //			g.drawImage(enemyLeft, getxPosition(), getyPosition(), this);
-		}
-		if (planeLeft) {
-			moveLeft();
+        }
+        if (planeLeft) {
+//            moveLeft();
 //			g.drawImage(enemyRight, getxPosition(), getyPosition(), this);
-		}
-		
-		
+        }
+
 
 //		if (planeUp) {
 //			moveUp();
@@ -95,120 +61,82 @@ public class EnemySprite extends SpriteSheet
 //		if (planeDown) {
 //			moveDown();
 //		}
-		
-
-	}
-
-	public boolean didPlaneFire(boolean x) {
-		return didPlaneFire = x;
-	}
-	public boolean missileFired() {
-		return missileFired;
-	}
-	 
-	public Missile[] array() {
-		miss = enemyMissiles.toArray(new Missile[0]);
-		return miss;
-	}
-
-	public BufferedImage[] getBankLeft() {
-		return bankLeft;
-	}
-
-	public BufferedImage[] getBankRight() {
-		return bankRight;
-	}
-
-	public BufferedImage[] getBoom() {
-		return boom;
-	}
-
-	@Override
-	public Rectangle getBounds() {
-		return new Rectangle(getxPosition()+5, getyPosition(),
-				getW()-8,
-				getH()-100);
-	}
-
-	public boolean isEnemyHit() {
-		return isEnemyHit ;
-	}
-	public int getH() {
-		return enemy.getHeight();
-	}
-
-	public BufferedImage[] getLeftLevelout() {
-		return leftLevelout;
-	}
 
 
-	public BufferedImage getPlane() {
+    }
 
-		return enemy;
-	}
+    public boolean didPlaneFire(boolean x) {
+        return didPlaneFire = x;
+    }
 
-	public BufferedImage[] getRightLevelout() {
-		return rightLevelout;
-	}
+    public boolean missileFired() {
+        
+        return missileFired;
+    }
 
-	@Override
-	public BufferedImage[] getSprites() {
-		return sprites1;
-	}
+    public List<Missile> array() {
+        return enemyMissiles;
+    }
 
-	public int getW() {
-		return enemy.getWidth();
-	}
 
-	public int getxPosition() {
-		return x;
-	}
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle(getxPosition() + 74, getyPosition(),
+                getW() - 73,
+                getH() - 14);
+    }
+    public Rectangle getBounds2(){
+        return new Rectangle(getxPosition()+3 , getyPosition()+74,
+                getW()-3,
+                getH()- 104);
+    }
 
-	public int getyPosition() {
-		return y;
-	}
 
-	public boolean isAtLeftEdge() {
-		return getxPosition() <=0;
-	}
 
-	public boolean isAtRightEdge() {
-		return atRightEdge;
-	}
+    public int getH() {
+        return enemy.getHeight();
+    }
+
+
+    public BufferedImage getPlane() {
+
+        return enemy;
+    }
+
+
+    public int getW() {
+        return enemy.getWidth();
+    }
+
+    public int getxPosition() {
+        return x;
+    }
+
+    public int getyPosition() {
+        int y = 100;
+        return y;
+    }
+
 
 	public boolean isEnemyDestroyed() {
 		return enemyDestroyed;
 	}
 
-	public boolean isPlaneHit() {
-		return planeHit;
-	}
+    public void setEnemyDestroyed(boolean b) {
+        enemyDestroyed = b;
+    }
 
-	
-	public void moveLeft() {
-		if (x <= 2) {
-			x = 2;
-			planeLeft = false;
-			planeRight = true;
-		} else {
-			x -= 2;
-			planeLeft = true;
-		}
+    public void moveLeft() {
+        if (x <= 2) {
+            x = 2;
+            planeLeft = false;
+            planeRight = true;
+        } else {
+            x -= 2;
+            planeLeft = true;
+        }
 
-	}
-
-	
-	public void moveRight() {
-		if (x >= 700 - getW()-10) {
-			x = 700 - getW()-10;
-			planeLeft = true;
-			planeRight = false;
-		} else {
-			x += 2;
-			planeRight = true;
-		}
-
-	}
+    }
 
 //	public void moveUp() {
 //		if (y <= 0) {
@@ -228,102 +156,29 @@ public class EnemySprite extends SpriteSheet
 //
 //	}
 
-	
-		private void loadImage() {
-			
-				try {
+    public void moveRight() {
+        if (x >= 700 - getW() - 10) {
+            x = 700 - getW() - 10;
+            planeLeft = true;
+            planeRight = false;
+        } else {
+            x += 2;
+            planeRight = true;
+        }
 
-					enemy = ImageIO.read(new File("src/Plane-assets/Enemies.png"));
-					enemyLeft = ImageIO.read(new File("src/Plane-assets/EnemiesLeft.png"));
-					enemyRight = ImageIO.read(new File("src/Plane-assets/EnemiesRight.png"));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+    }
 
-			}
-	
+    private void loadImage() {
 
+        try {
 
-	@Override
-	public void setBounds(Rectangle bounds) {
-		this.bounds = bounds;
-	}
+            enemy = ImageIO.read(new File("src/Plane-assets/Enemies.png"));
+            BufferedImage enemyLeft = ImageIO.read(new File("src/Plane-assets/EnemiesLeft.png"));
+            BufferedImage enemyRight = ImageIO.read(new File("src/Plane-assets/EnemiesRight.png"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-
-	public void setLeftLevelout(BufferedImage[] leftLevelout) {
-		this.leftLevelout = leftLevelout;
-	}
-
-	
-
-	public void setEnemyDestroyed(boolean newplaneDestroyed) {
-		enemyDestroyed = newplaneDestroyed;
-	}
-
-	public void setPlaneHit(boolean newplaneHit) {
-		planeHit = newplaneHit;
-	}
-
-
-	public void setxPosition(int xPosition) {
-
-		x = xPosition;
-	}
-
-	public void setyPosition(int yPosition) {
-		y = yPosition;
-	}
-
-	@Override
-	public void run() {
-		
-	}
-		
-	
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-
-	/**
-	 * @param atLeftEdge the atLeftEdge to set
-	 */
-	public void setAtLeftEdge(boolean atLeftEdge) {
-		this.atLeftEdge = atLeftEdge;
-	}
-
-	/**
-	 * @return the height
-	 */
-	public int getHeight() {
-		return height;
-	}
-
-	/**
-	 * @param height the height to set
-	 */
-	public void setHeight(int newheight) {
-		height = newheight;
-	}
-
-	/**
-	 * @return the width
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-	/**
-	 * @param width the width to set
-	 */
-	public void setWidth(int newwidth) {
-		width = newwidth;
-	}
-
-
+    }
 }

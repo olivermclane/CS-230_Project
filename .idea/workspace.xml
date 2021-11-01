@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85a0dac9-bf40-4a55-880e-9da713426518" name="Changes" comment="">
+    <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Background.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Background.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EnemySprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EnemySprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ExplosionSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExplosionSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Missile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Missile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlaneSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlaneSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ScrollingBackground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ScrollingBackground.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SmallEnemySprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SmallEnemySprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sound_effects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sound_effects.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SpriteSheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SpriteSheet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tankEnemySprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tankEnemySprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="200sme8zxq2nN2nHK9P13umgVJa" />
+  <component name="ProjectId" id="20CKvSWCL2MnC0lHBY5sK4qDpKf" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -20,25 +44,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
   </component>
   <component name="RunManager">
     <configuration name="Menu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Menu" />
       <module name="GameTest" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="GameTest" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="GameTest" />
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -52,12 +68,24 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="85a0dac9-bf40-4a55-880e-9da713426518" name="Changes" comment="" />
-      <created>1635193005559</created>
+      <changelist id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="" />
+      <created>1635543367023</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1635193005559</updated>
+      <updated>1635543367023</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
