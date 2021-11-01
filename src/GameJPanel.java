@@ -24,6 +24,11 @@ public class GameJPanel extends JPanel implements Runnable {
     private int explosionTic = 0;
     private SmallEnemySprite smallEnemy;
     private tankEnemySprite tankEnemy;
+    private JLabel health;
+    private int healthX = 200;
+
+    private Font retroGame;
+
     public GameJPanel() {
 
         intiGamePanel();
@@ -31,7 +36,7 @@ public class GameJPanel extends JPanel implements Runnable {
 
     private void intiGamePanel() {
         try {
-            Font retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
+            retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
             retroGame = retroGame.deriveFont(Font.PLAIN, 20);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(retroGame);
@@ -48,9 +53,11 @@ public class GameJPanel extends JPanel implements Runnable {
         new Thread(this).start();
         addMouseMotionListener(new MAdapter());
         addMouseListener(new MAdapter());
+        setDoubleBuffered(true);
         back = new Sound_effects();
         back.backGround();
         back1 = new ScrollingBackground();
+
         plane = new PlaneSprite();
         plane.missiles.add(new Missile());
         enemy = new EnemySprite();
@@ -64,6 +71,11 @@ public class GameJPanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		back1.loadBackground(g);
+        g.setColor(Color.white);
+        g.setFont(retroGame);
+        g.drawString("Health: ", 10,20);
+        g.setColor(Color.GREEN);
+        g.fillRect(10,25,healthX,20);
 
 		explosion.setX(enemy.getxPosition());
 		explosion.setY(enemy.getyPosition());
@@ -137,7 +149,7 @@ public class GameJPanel extends JPanel implements Runnable {
 
         Rectangle planeArea = plane.getBounds();
         Rectangle enemyArea2 = enemy.getBounds2();
-        Rectangle planeArea2 = plane.getBounds2();
+
 
 		if (plane.didPlaneFire()) {
 			back.missileFired();
@@ -191,15 +203,18 @@ public class GameJPanel extends JPanel implements Runnable {
                 Rectangle misArea2 = m2.getBounds2();
 
 
-//                if (misArea2.intersects(planeArea)||misArea2.intersects(planeArea2)) {
-//                    enemy.enemyMissiles.remove(m2);
-//                    back.planeHitsound();
-//                    plane.isHit();
-//                    plane.isDead();
-//                }
+                if (misArea2.intersects(planeArea)) {
+                    enemy.enemyMissiles.remove(m2);
+                    back.planeHitsound();
+                    plane.isHit();
+                    plane.isDead();
+                    healthX -=70;
+                    break;
+
+                }
                 if (m2.isOffScreen2()) {
                     enemy.enemyMissiles.remove(m2);
-
+                    break;
                 }
 
             }
@@ -223,6 +238,7 @@ public class GameJPanel extends JPanel implements Runnable {
                 enemyCount += 1;
                 if (enemyCount >= 100) {
                     enemyCount = 0;
+
                 }
                 explosionCount += 1;
                 if (explosionCount == 6) {

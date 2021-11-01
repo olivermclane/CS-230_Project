@@ -123,6 +123,7 @@ public class Menu implements ActionListener {
         CentralPanel.add(buttonsPanel, menuLayout);
         menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
+
         menu.setVisible(true);
 
     }
