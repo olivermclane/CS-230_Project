@@ -104,6 +104,7 @@ public class Missile implements ImageObserver {
 
     }
 
+
     public Rectangle getBounds2() {
 
         return new Rectangle(getX2(), getY2(), getWidth(), getHeight());
