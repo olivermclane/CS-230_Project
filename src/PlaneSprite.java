@@ -26,17 +26,30 @@ public class PlaneSprite extends SpriteSheet
     private boolean planeDown;
     private boolean missileFired;
     private boolean isPlaneHit = false;
+    private int maxAmmo = 5;
+    private List<Missile> Ammo;
 
 
     public PlaneSprite() {
         loadImage();
-
+        Ammo = new ArrayList<>();
+        ammoLoad();
         addKeyListener(this);
         missiles = new ArrayList<>();
         planeLife = 3;
 
     }
+    public void ammoLoad(){
 
+        for(int i = 0; i< maxAmmo; i++){
+            Ammo.add(new Missile());
+        }
+
+
+    }
+    public List<Missile> ammo(){
+        return Ammo;
+    }
     @Override
     public void actionPerformed(ActionEvent arg0) {
         // TODO Auto-generated method stub

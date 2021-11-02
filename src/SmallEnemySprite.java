@@ -74,14 +74,19 @@ public class SmallEnemySprite extends SpriteSheet
         return missileFired;
     }
 
-    public Missile[] array() {
-        return enemyMissiles.toArray(new Missile[0]);
+    public List<Missile> array() {
+        return enemyMissiles;
     }
 
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(getxPosition() + 5, getyPosition(),
+        return new Rectangle(getxPosition(), getyPosition(),
+                getW(),
+                getH());
+    }
+    public Rectangle getBounds2(){
+        return new Rectangle(getxPosition() , getyPosition(),
                 getW(),
                 getH());
     }
