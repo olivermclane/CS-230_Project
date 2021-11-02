@@ -73,6 +73,9 @@ public class Missile implements ImageObserver {
 
         y2 += 4;
     }
+    public void doImageDraw(Graphics i){
+        i.drawImage(getEnemyMissile(), getX2(), getY2(), getWidth2(), getHeight2(), this);
+    }
 
     public int getY() {
         return y;
