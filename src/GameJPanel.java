@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import java.awt.GraphicsEnvironment;
@@ -65,6 +66,9 @@ private int explosionTic = 0;
 private SmallEnemySprite smallEnemy;
 public JLabel lifeCounter = new JLabel();
 private tankEnemySprite tankEnemy;
+public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
+//public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
+
 
 
 	public GameJPanel() {
@@ -115,6 +119,16 @@ private tankEnemySprite tankEnemy;
 				
 				
 				explosionTic++;
+			}
+			
+		}
+		for(LifePowerup p: LifeUpList){
+			p.getBounds();
+			p.collisionCheck(plane.getBounds());
+			if(p.isCollided()){
+				p.addLife(plane);
+			}else{
+				p.draw(g);
 			}
 			
 		}
@@ -197,6 +211,9 @@ private tankEnemySprite tankEnemy;
 					if (misArea.intersects(enemyArea)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
+						LifeUpList.add(new LifePowerup(enemy));
+						System.out.println(enemy.getxPosition());
+						System.out.println(enemy.getyPosition());
 						enemy.setEnemyDestroyed(true);
 						
 					}

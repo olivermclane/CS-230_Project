@@ -12,12 +12,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.io.File;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.event.MouseInputListener;
 
@@ -83,13 +85,17 @@ public class PlaneSprite extends SpriteSheet
 		if(!planeRight && !planeLeft) {
 			g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
 		}
-		if (planeRight) {
+
+		if (planeRight && !planeLeft) {
 			moveRight();
 			g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
 		}
-		if (planeLeft) {
+		if (planeLeft && !planeRight) {
 			moveLeft();
 			g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
+		}
+		if (planeRight && planeLeft){
+			g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
 		}
 
 		if (planeUp) {

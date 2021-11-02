@@ -38,12 +38,11 @@ public class Background implements ImageObserver  {
 	 * @param window
 	 */
 	public void draw(Graphics g) {
-
 		// Draw the image onto the Graphics reference
 		g.drawImage(image, getX()-25, getY()+1475, image.getWidth(), image.getHeight(), this);
 		
 		// Move the x position left for next time
-		this.y += 1;
+		this.y += 2;
 
 		// Check to see if the image has gone off stage left
 		if (this.y >= image.getHeight()-1475) {
