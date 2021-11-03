@@ -4,9 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,7 @@ public class PlaneSprite extends SpriteSheet
     private boolean isPlaneHit = false;
     private int maxAmmo = 5;
     private List<Missile> Ammo;
+    private List<Missile> Missiles;
 
 
     public PlaneSprite() {
@@ -57,8 +57,8 @@ public class PlaneSprite extends SpriteSheet
 
     }
 
-    public Missile[] array() {
-        return missiles.toArray(new Missile[0]);
+    public List<Missile> missiles(){
+        return missiles;
     }
 
     public boolean didPlaneFire() {
@@ -220,9 +220,14 @@ public class PlaneSprite extends SpriteSheet
 
     }
 
-    public boolean missileFired() {
-        return missileFired;
+    public void missileFired(boolean fire) {
+       missileFired = fire;
     }
+    public boolean didmissileFired() {
+
+            return missileFired;
+        }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

@@ -1,11 +1,9 @@
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +22,16 @@ public class GameJPanel extends JPanel implements Runnable {
     private int explosionCount;
     private int explosionTic = 0;
     private SmallEnemySprite smallEnemy;
-    private tankEnemySprite tankEnemy;
-    private JLabel health;
+    // private tankEnemySprite tankEnemy;
+    // private JLabel health;
     private int healthX = 200;
     private int ammoPlacement=570;
     private Font retroGame;
     private List<Missile> ammo;
 	public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
-
+    private int ammoAmount=650;
+    private int ammoReload;
+    //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
 
         intiGamePanel();
@@ -56,7 +56,7 @@ public class GameJPanel extends JPanel implements Runnable {
         new Thread(this).start();
         addMouseMotionListener(new MAdapter());
         addMouseListener(new MAdapter());
-        setDoubleBuffered(true);
+
         back = new Sound_effects();
         back.backGround();
         back1 = new ScrollingBackground();
@@ -66,10 +66,10 @@ public class GameJPanel extends JPanel implements Runnable {
         plane.missiles.add(new Missile());
         enemy = new EnemySprite();
         smallEnemy = new SmallEnemySprite();
-        tankEnemy = new tankEnemySprite();
+
 
         explosion = new ExplosionSprite();
-
+        setDoubleBuffered(true);
     }
 
 	@Override
@@ -82,7 +82,7 @@ public class GameJPanel extends JPanel implements Runnable {
                 missile.setX2(ammoPlacement);
                 missile.setY2(25);
                 missile.doImageDraw(g);
-                if(ammoPlacement<650){
+                if(ammoPlacement<ammoAmount){
                     ammoPlacement+=20;
                 }
                 else{
@@ -120,6 +120,9 @@ public class GameJPanel extends JPanel implements Runnable {
 			p.collisionCheck(plane.getBounds());
 			if(p.isCollided()){
 				p.addLife(plane);
+                if(healthX<200) {
+                    healthX += 70;
+                }
 			}else{
 				p.draw(g);
 			}
@@ -139,15 +142,7 @@ public class GameJPanel extends JPanel implements Runnable {
 
 			smallEnemy.setVisible(false);
 		}
-		if(!tankEnemy.isEnemyDestroyed())	{
-			tankEnemy.doDrawing(g);
 
-		}
-		else {
-			tankEnemy.setEnemyDestroyed(true);
-
-			tankEnemy.setVisible(false);
-		}
 		if(!enemy.isEnemyDestroyed())	{
 			enemy.doDrawing(g);
 
@@ -185,30 +180,41 @@ public class GameJPanel extends JPanel implements Runnable {
 
 
 
-        Rectangle enemyArea2 = enemy.getBounds2();
 
 
-		if (plane.didPlaneFire()) {
+
+		if (plane.didPlaneFire()&&!ammo.isEmpty()) {
 			back.missileFired();
-            Missile mis = plane.projectile();
-			mis.setX(plane.getxPosition()+51);
-			mis.setY(plane.getyPosition());
-			plane.missiles.add(mis);
-			plane.didPlaneFire=false;
+
+            if (!ammo.isEmpty()) {
+                ammo.remove(0);
+                ammoAmount-=20;
+                Missile mis = plane.projectile();
+                mis.setX(plane.getxPosition()+51);
+                mis.setY(plane.getyPosition());
+                plane.missiles.add(mis);
+            }
+
+            plane.didPlaneFire=false;
 
 		}
-		if (plane.missileFired()) {
+		if (plane.didmissileFired()) {
 
-            Missile[] miss = plane.array();
-				for(Missile m: miss) {
 
-					m.doDrawing1(g);
+
+            List<Missile> miss = plane.missiles();
+            if (!miss.isEmpty()) {
+                for (Missile m : miss) {
+
+                    m.doDrawing1(g);
 
                     Rectangle misArea = m.getBounds();
                     Rectangle enemyArea = enemy.getBounds();
+                    Rectangle enemyArea2 = enemy.getBounds2();
 
 
-					if (misArea.intersects(enemyArea)) {
+
+					if (misArea.intersects(enemyArea)||misArea.intersects(enemyArea2)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
 						LifeUpList.add(new LifePowerup(enemy));
@@ -218,14 +224,24 @@ public class GameJPanel extends JPanel implements Runnable {
 
 
 
+                    }
 
-					}
-					if(m.isOffScreen()) {
-						plane.missiles.remove(m);
-					}
-				}
-			}
 
+                    if (m.isOffScreen()) {
+                        plane.missiles.remove(m);
+                    }
+                }
+
+            }
+
+        }
+        if(ammo.isEmpty()&&ammoReload>=99){
+            plane.ammoLoad();
+            ammo = plane.ammo();
+            ammoPlacement=570;
+            ammoAmount=650;
+            ammoReload=0;
+        }
 		if (enemyCount >= 99 && !enemy.isEnemyDestroyed()) {
             Missile mis2 = enemy.projectile();
 			mis2.setX2(enemy.getxPosition()+ 90);
@@ -287,6 +303,11 @@ public class GameJPanel extends JPanel implements Runnable {
                 if (explosionCount == 6) {
                     explosionCount = 0;
                 }
+                if(ammo != null) {
+                    if(ammo.isEmpty()) {
+                        ammoReload += 1;
+                    }
+                }
 
                 repaint();
 
@@ -308,7 +329,7 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
-    private class MAdapter extends MouseInputAdapter implements MouseMotionListener, MouseInputListener {
+    private class MAdapter extends MouseInputAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
