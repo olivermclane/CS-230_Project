@@ -35,14 +35,55 @@ public class GameJPanel extends JPanel implements Runnable {
         intiGamePanel();
     }
 
-    private void intiGamePanel() {
-        try {
-            retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
-            retroGame = retroGame.deriveFont(Font.PLAIN, 20);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(retroGame);
-            lifeCounter.setFont(retroGame);
-        } catch (IOException e) {
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			plane.keyReleased(e);
+		}
+	}
+
+	
+	
+public Runnable runnable;
+public Thread t;
+private ScrollingBackground back1;
+public PlaneSprite plane;
+private Missile mis;
+private Missile[] array;
+private Missile[] miss;
+private EnemySprite enemy;
+private Rectangle misArea;
+private Rectangle enemyArea;
+private Missile mis2;
+private Rectangle planeArea;
+private int enemyCount;
+private Missile[] miss2;
+private Rectangle misArea2;
+private Sound_effects back;
+private ExplosionSprite explosion;
+private int explosionCount;
+private int explosionTic = 0;
+private SmallEnemySprite smallEnemy;
+public JLabel lifeCounter = new JLabel();
+private tankEnemySprite tankEnemy;
+public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
+//public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
+
+
+
+	public GameJPanel() {
+		
+		intiGamePanel();
+	}
+
+	private void intiGamePanel() {
+		try{
+            Font retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
+          	retroGame = retroGame.deriveFont(Font.PLAIN,20);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
+		      	ge.registerFont(retroGame);
+			      lifeCounter.setFont(retroGame);
+        }catch(IOException e){
             e.printStackTrace();
         } catch (FontFormatException e) {
             e.printStackTrace();
@@ -112,6 +153,16 @@ public class GameJPanel extends JPanel implements Runnable {
 				explosionTic++;
 			}
 
+		}
+		for(LifePowerup p: LifeUpList){
+			p.getBounds();
+			p.collisionCheck(plane.getBounds());
+			if(p.isCollided()){
+				p.addLife(plane);
+			}else{
+				p.draw(g);
+			}
+			
 		}
 		if(explosionTic == 8 && enemy.isEnemyDestroyed()) {
 
@@ -199,6 +250,9 @@ public class GameJPanel extends JPanel implements Runnable {
 					if (misArea.intersects(enemyArea)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
+						LifeUpList.add(new LifePowerup(enemy));
+						System.out.println(enemy.getxPosition());
+						System.out.println(enemy.getyPosition());
 						enemy.setEnemyDestroyed(true);
 
 
