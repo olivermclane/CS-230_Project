@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameJPanel extends JPanel implements Runnable {
 
@@ -31,6 +32,10 @@ public class GameJPanel extends JPanel implements Runnable {
 	public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     private int ammoAmount=650;
     private int ammoReload;
+    private final int powerUpRate = 2;
+    private int powerRandom;
+    private Random puDrop = new Random();
+    private boolean allowDrop;
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
 
@@ -76,7 +81,7 @@ public class GameJPanel extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		back1.loadBackground(g);
-
+        powerRandom = puDrop.nextInt(8)+1;
 
         for (Missile missile : ammo) {
                 missile.setX2(ammoPlacement);
@@ -118,16 +123,18 @@ public class GameJPanel extends JPanel implements Runnable {
 		for(LifePowerup p: LifeUpList){
 			p.getBounds();
 			p.collisionCheck(plane.getBounds());
+
 			if(p.isCollided()){
 				p.addLife(plane);
                 if(healthX<200) {
                     healthX += 70;
                 }
-			}else{
+			} else{
 				p.draw(g);
 			}
 			
 		}
+
 		if(explosionTic == 8 && enemy.isEnemyDestroyed()) {
 
 			explosion.setVisible(false);
@@ -179,10 +186,6 @@ public class GameJPanel extends JPanel implements Runnable {
 		}
 
 
-
-
-
-
 		if (plane.didPlaneFire()&&!ammo.isEmpty()) {
 			back.missileFired();
 
@@ -217,7 +220,9 @@ public class GameJPanel extends JPanel implements Runnable {
 					if (misArea.intersects(enemyArea)||misArea.intersects(enemyArea2)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
-						LifeUpList.add(new LifePowerup(enemy));
+                        if(powerRandom == powerUpRate){
+						    LifeUpList.add(new LifePowerup(enemy));
+                        }
 						System.out.println(enemy.getxPosition());
 						System.out.println(enemy.getyPosition());
 						enemy.setEnemyDestroyed(true);
