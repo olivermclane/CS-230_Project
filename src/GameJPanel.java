@@ -40,7 +40,7 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 	private void intiGamePanel() {
 		try{
-            Font retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
+            retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
           	retroGame = retroGame.deriveFont(Font.PLAIN,20);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment(); 
 		      	ge.registerFont(retroGame);
@@ -121,6 +121,9 @@ public class GameJPanel extends JPanel implements Runnable {
 			p.collisionCheck(plane.getBounds());
 			if(p.isCollided()){
 				p.addLife(plane);
+                if(healthX<200) {
+                    healthX += 70;
+                }
 			}else{
 				p.draw(g);
 			}
