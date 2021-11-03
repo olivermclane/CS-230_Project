@@ -4,11 +4,7 @@
     <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Missile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Missile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Plane-assets/Enemies.xcf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Plane-assets/explosionSprite.xcf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PlaneSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlaneSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SmallEnemySprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SmallEnemySprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Dustin_11-2-21" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="20CKvSWCL2MnC0lHBY5sK4qDpKf" />
@@ -73,7 +74,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Dustin_11-2-21" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
