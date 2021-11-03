@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameJPanel extends JPanel implements Runnable {
@@ -31,53 +32,12 @@ public class GameJPanel extends JPanel implements Runnable {
     private List<Missile> ammo;
     private int ammoAmount=650;
     private int ammoReload;
-
+    public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
+    //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
 
         intiGamePanel();
     }
-
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			plane.keyReleased(e);
-		}
-	}
-
-	
-	
-public Runnable runnable;
-public Thread t;
-private ScrollingBackground back1;
-public PlaneSprite plane;
-private Missile mis;
-private Missile[] array;
-private Missile[] miss;
-private EnemySprite enemy;
-private Rectangle misArea;
-private Rectangle enemyArea;
-private Missile mis2;
-private Rectangle planeArea;
-private int enemyCount;
-private Missile[] miss2;
-private Rectangle misArea2;
-private Sound_effects back;
-private ExplosionSprite explosion;
-private int explosionCount;
-private int explosionTic = 0;
-private SmallEnemySprite smallEnemy;
-public JLabel lifeCounter = new JLabel();
-private tankEnemySprite tankEnemy;
-public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
-//public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
-
-
-
-	public GameJPanel() {
-		
-		intiGamePanel();
-	}
-
 	private void intiGamePanel() {
 		try{
             Font retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
