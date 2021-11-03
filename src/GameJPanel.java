@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameJPanel extends JPanel implements Runnable {
@@ -29,6 +30,7 @@ public class GameJPanel extends JPanel implements Runnable {
     private int ammoPlacement=570;
     private Font retroGame;
     private List<Missile> ammo;
+	public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
 
     public GameJPanel() {
 
@@ -112,6 +114,16 @@ public class GameJPanel extends JPanel implements Runnable {
 				explosionTic++;
 			}
 
+		}
+		for(LifePowerup p: LifeUpList){
+			p.getBounds();
+			p.collisionCheck(plane.getBounds());
+			if(p.isCollided()){
+				p.addLife(plane);
+			}else{
+				p.draw(g);
+			}
+			
 		}
 		if(explosionTic == 8 && enemy.isEnemyDestroyed()) {
 
@@ -199,6 +211,9 @@ public class GameJPanel extends JPanel implements Runnable {
 					if (misArea.intersects(enemyArea)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
+						LifeUpList.add(new LifePowerup(enemy));
+						System.out.println(enemy.getxPosition());
+						System.out.println(enemy.getyPosition());
 						enemy.setEnemyDestroyed(true);
 
 
