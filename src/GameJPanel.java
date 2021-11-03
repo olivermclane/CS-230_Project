@@ -178,7 +178,7 @@ public class GameJPanel extends JPanel implements Runnable {
 
 
 
-        Rectangle enemyArea2 = enemy.getBounds2();
+
 
 
 		if (plane.didPlaneFire()&&!ammo.isEmpty()) {
@@ -208,10 +208,11 @@ public class GameJPanel extends JPanel implements Runnable {
 
                     Rectangle misArea = m.getBounds();
                     Rectangle enemyArea = enemy.getBounds();
+                    Rectangle enemyArea2 = enemy.getBounds2();
 
 
 
-					if (misArea.intersects(enemyArea)) {
+					if (misArea.intersects(enemyArea)||misArea.intersects(enemyArea2)) {
 						plane.missiles.remove(m);
 						back.planeHitsound();
 						LifeUpList.add(new LifePowerup(enemy));
