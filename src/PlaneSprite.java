@@ -4,8 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,10 +94,6 @@ public class PlaneSprite extends SpriteSheet
         return new Rectangle(getxPosition()+3, getyPosition() +15,
                 getW() - 3,
                 getH() - 53);
-    }
-
-    public int getH() {
-        return getPlane().getHeight();
     }
 
     public BufferedImage getPlane() {
