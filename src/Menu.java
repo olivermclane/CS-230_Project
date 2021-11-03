@@ -24,7 +24,7 @@ public class Menu implements ActionListener {
 
     public void drawMenu() {
         //creating the gameFrame
-        JFrame menu = new JFrame("Time Fighters -- Main Menu");
+        JFrame menu = new JFrame("TimeX Fighters -- Main Menu");
 
         //creating my buttons
         JButton quitGButton = new JButton("  Quit Game   ");
@@ -33,7 +33,7 @@ public class Menu implements ActionListener {
 
         //creating Jlabel Title
         //name of game
-        JLabel timeFigtherTitle = new JLabel("Time Fighters");
+        JLabel timeFigtherTitle = new JLabel("TimeX Fighters");
 
 
         //creating font and appending it to the compents
