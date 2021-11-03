@@ -29,6 +29,8 @@ public class GameJPanel extends JPanel implements Runnable {
     private int ammoPlacement=570;
     private Font retroGame;
     private List<Missile> ammo;
+    private int ammoAmount=650;
+    private int ammoReload;
 
     public GameJPanel() {
 
@@ -95,7 +97,7 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
         new Thread(this).start();
         addMouseMotionListener(new MAdapter());
         addMouseListener(new MAdapter());
-        setDoubleBuffered(true);
+
         back = new Sound_effects();
         back.backGround();
         back1 = new ScrollingBackground();
@@ -105,10 +107,10 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
         plane.missiles.add(new Missile());
         enemy = new EnemySprite();
         smallEnemy = new SmallEnemySprite();
-        tankEnemy = new tankEnemySprite();
+
 
         explosion = new ExplosionSprite();
-
+        setDoubleBuffered(true);
     }
 
 	@Override
@@ -121,7 +123,7 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
                 missile.setX2(ammoPlacement);
                 missile.setY2(25);
                 missile.doImageDraw(g);
-                if(ammoPlacement<650){
+                if(ammoPlacement<ammoAmount){
                     ammoPlacement+=20;
                 }
                 else{
@@ -178,15 +180,7 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
 
 			smallEnemy.setVisible(false);
 		}
-		if(!tankEnemy.isEnemyDestroyed())	{
-			tankEnemy.doDrawing(g);
 
-		}
-		else {
-			tankEnemy.setEnemyDestroyed(true);
-
-			tankEnemy.setVisible(false);
-		}
 		if(!enemy.isEnemyDestroyed())	{
 			enemy.doDrawing(g);
 
@@ -227,24 +221,34 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
         Rectangle enemyArea2 = enemy.getBounds2();
 
 
-		if (plane.didPlaneFire()) {
+		if (plane.didPlaneFire()&&!ammo.isEmpty()) {
 			back.missileFired();
-            Missile mis = plane.projectile();
-			mis.setX(plane.getxPosition()+51);
-			mis.setY(plane.getyPosition());
-			plane.missiles.add(mis);
-			plane.didPlaneFire=false;
+
+            if (!ammo.isEmpty()) {
+                ammo.remove(0);
+                ammoAmount-=20;
+                Missile mis = plane.projectile();
+                mis.setX(plane.getxPosition()+51);
+                mis.setY(plane.getyPosition());
+                plane.missiles.add(mis);
+            }
+
+            plane.didPlaneFire=false;
 
 		}
-		if (plane.missileFired()) {
+		if (plane.didmissileFired()) {
 
-            Missile[] miss = plane.array();
-				for(Missile m: miss) {
 
-					m.doDrawing1(g);
+
+            List<Missile> miss = plane.missiles();
+            if (!miss.isEmpty()) {
+                for (Missile m : miss) {
+
+                    m.doDrawing1(g);
 
                     Rectangle misArea = m.getBounds();
                     Rectangle enemyArea = enemy.getBounds();
+
 
 
 					if (misArea.intersects(enemyArea)) {
@@ -257,14 +261,24 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
 
 
 
+                    }
 
-					}
-					if(m.isOffScreen()) {
-						plane.missiles.remove(m);
-					}
-				}
-			}
 
+                    if (m.isOffScreen()) {
+                        plane.missiles.remove(m);
+                    }
+                }
+
+            }
+
+        }
+        if(ammo.isEmpty()&&ammoReload>=99){
+            plane.ammoLoad();
+            ammo = plane.ammo();
+            ammoPlacement=570;
+            ammoAmount=650;
+            ammoReload=0;
+        }
 		if (enemyCount >= 99 && !enemy.isEnemyDestroyed()) {
             Missile mis2 = enemy.projectile();
 			mis2.setX2(enemy.getxPosition()+ 90);
@@ -325,6 +339,11 @@ public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
                 explosionCount += 1;
                 if (explosionCount == 6) {
                     explosionCount = 0;
+                }
+                if(ammo != null) {
+                    if(ammo.isEmpty()) {
+                        ammoReload += 1;
+                    }
                 }
 
                 repaint();
