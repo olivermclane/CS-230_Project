@@ -1,140 +1,94 @@
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 
-/**
- * 
- */
-
-/**
- * @author dusti
- *
- */
 public class ExplosionSprite extends SpriteSheet implements ImageObserver {
-	
-	private BufferedImage originalImg;
-	private SpriteSheet explosionImages;
-	private BufferedImage[] explosionSprites;
-	private BufferedImage oneExplosion;
-	private int w;
-	private int h;
-	private int x;
-	private int y;
-	private BufferedImage explosionEffect;
-	private int expCount = 0;
 
-	public int getExpCount() {
-		return expCount;
-	}
+    private BufferedImage[] explosionSprites;
+    private int x;
+    private int y;
+    private int expCount = 0;
 
-	public void setExpCount(int newexpCount) {
-		this.expCount = newexpCount;
-	}
+    ExplosionSprite() {
+        loadImage();
+    }
 
-	ExplosionSprite(){
-		loadImage();
-	}
-	
-	private void loadImage() {
-		try {
-			originalImg = ImageIO.read(new File("src/Plane-assets/explosionSprite.png"));
-			explosionImages = new SpriteSheet(originalImg, 82, 85, 4, 2);
-			explosionSprites = explosionImages.getSprites();
-			oneExplosion = explosionSprites[2];
+    public int getExpCount() {
+        return expCount;
+    }
 
-			setW(oneExplosion.getWidth());
-			setH(oneExplosion.getHeight());
+    public void setExpCount(int newexpCount) {
+        this.expCount = newexpCount;
+    }
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    private void loadImage() {
+        try {
+            BufferedImage originalImg = ImageIO.read(new File("src/Plane-assets/explosionSprite.png"));
+            SpriteSheet explosionImages = new SpriteSheet(originalImg, 82, 85, 4, 2);
+            explosionSprites = explosionImages.getSprites();
+            BufferedImage oneExplosion = explosionSprites[2];
 
-	}
-	public BufferedImage[] getExplosions() {
-		return explosionSprites;
-	}
-	
-	public void doDrawing(Graphics g) {
-		
-			explosionEffect = explosionSprites[getExpCount()];
-			g.drawImage(explosionEffect, getX(), getY(), this);
-			
-			
-		}
-		
-	
-	
-	
-	public int getW() {
-		return w;
-	}
+            setW(oneExplosion.getWidth());
+            setH(oneExplosion.getHeight());
 
-	/**
-	 * @param w the w to set
-	 */
-	public void setW(int w) {
-		this.w = w;
-	}
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	/**
-	 * @return the h
-	 */
-	public int getH() {
-		return h;
-	}
+    }
 
-	/**
-	 * @param h the h to set
-	 */
-	public void setH(int h) {
-		this.h = h;
-	}
+    public BufferedImage[] getExplosions() {
+        return explosionSprites;
+    }
 
-	@Override
-	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public void doDrawing(Graphics g) {
 
-	/**
-	 * @return the x
-	 */
-	public int getX() {
-		return x;
-	}
-
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public int getY() {
-		return y;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
+        BufferedImage explosionEffect = explosionSprites[getExpCount()];
+        g.drawImage(explosionEffect, getX(), getY(), this);
 
 
+    }
 
 
-		
+    public void setW(int w) {
+    }
+
+
+    public void setH(int h) {
+    }
+
+    @Override
+    public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public int getX() {
+        return x;
+    }
+
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+
+    public int getY() {
+        return y;
+    }
+
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+
 }
 
 

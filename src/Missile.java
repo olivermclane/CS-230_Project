@@ -1,199 +1,158 @@
-
-/**
- * 
- */
-
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 
-/**
- * @author dusti
- *
- */
+public class Missile implements ImageObserver {
+    private int width;
+    private int height;
+    private BufferedImage missile;
+    private int x;
+    private int y;
 
-public class Missile implements ImageObserver{
-	private int width;
-	private int height;
-	private int width2;
-	private int height2;
-	private BufferedImage missile;
-	private int x;
-	private int y;
-	
-	private BufferedImage enemyMissile;
-	private int y2;
-	private int x2;
-	public Missile() {
+    private BufferedImage enemyMissile;
+    private int y2;
+    private int x2;
 
-		loadImage1();
-		loadImage2();
-	}
+    public Missile() {
 
-	private void loadImage1() {
-		try {
+        loadImage1();
+        loadImage2();
+    }
 
-			missile = ImageIO.read(new File("src/Plane-assets/Missile2.png"));
-			
+    private void loadImage1() {
+        try {
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            missile = ImageIO.read(new File("src/Plane-assets/Missile2.png"));
 
-	}
-	private void loadImage2() {
-		try {
 
-			enemyMissile = ImageIO.read(new File("src/Plane-assets/EnemyMissile2.png"));
-			
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    }
 
-	}
-	public BufferedImage getEnemyMissile() {
-		return enemyMissile;
-	}
+    private void loadImage2() {
+        try {
 
-	public boolean isOffScreen() {
-		if (y < 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public boolean isOffScreen2() {
-		if (y > 800) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+            enemyMissile = ImageIO.read(new File("src/Plane-assets/EnemyMissile2.png"));
 
-	public void doDrawing1(Graphics r) {
 
-		r.drawImage(getMissile(), getX(), getY(), getWidth(), getHeight(), this);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		y -= 2;
-	}
-	public void doDrawing2(Graphics s) {
-		s.drawImage(getEnemyMissile(), getX2(), getY2(), getWidth2(), getHeight2(), this);
+    }
 
-		y2 +=4 ;
-	}
+    public BufferedImage getEnemyMissile() {
+        return enemyMissile;
+    }
 
-	public void setX(int newx) {
-		x = newx;
-	}
+    public boolean isOffScreen() {
+        return y < 0;
+    }
 
-	public void setY(int newy) {
-		y = newy;
-	}
+    public boolean isOffScreen2() {
+        return y > 800;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public void doDrawing1(Graphics r) {
 
-	public int getX() {
-		return x;
-	}
+        r.drawImage(getMissile(), getX(), getY(), getWidth(), getHeight(), this);
 
-	public int getWidth() {
-		return missile.getWidth();
-	}
+        y -= 2;
+    }
 
-	public int getHeight() {
-		return missile.getHeight();
-	}
-	
-	public Rectangle getBounds() {
-		
-		return new Rectangle(getX(), getY(), getWidth(), getHeight());
-		
-	}
-	
-	public Rectangle getBounds2() {
-		
-		return new Rectangle(getX2(), getY2(), getWidth(), getHeight());
-		
-	}
-	public BufferedImage getMissile() {
-		return missile;
-	}
+    public void doDrawing2(Graphics s) {
+        s.drawImage(getEnemyMissile(), getX2(), getY2(), getWidth2(), getHeight2(), this);
 
-	public void setMissile(BufferedImage missile) {
-		this.missile = missile;
-	}
+        y2 += 4;
+    }
+    public void doImageDraw(Graphics i){
+        i.drawImage(getEnemyMissile(), getX2(), getY2(), getWidth2(), getHeight2(), this);
+    }
 
-	@Override
-	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public int getY() {
+        return y;
+    }
 
-	/**
-	 * @return the y2
-	 */
-	public int getY2() {
-		return y2;
-	}
+    public void setY(int newy) {
+        y = newy;
+    }
 
-	/**
-	 * @param y2 the y2 to set
-	 */
-	public void setY2(int newy2) {
-		y2 = newy2;
-	}
+    public int getX() {
+        return x;
+    }
 
-	/**
-	 * @return the x2
-	 */
-	public int getX2() {
-		return x2;
-	}
+    public void setX(int newx) {
+        x = newx;
+    }
 
-	/**
-	 * @param x2 the x2 to set
-	 */
-	public void setX2(int newx2) {
-		x2 = newx2;
-	}
+    public int getWidth() {
+        return missile.getWidth();
+    }
 
-	/**
-	 * @return the width2
-	 */
-	public int getWidth2() {
-		return getEnemyMissile().getWidth();
-	}
+    public int getHeight() {
+        return missile.getHeight();
+    }
 
-	/**
-	 * @param width2 the width2 to set
-	 */
-	public void setWidth2(int width2) {
-		this.width2 = width2;
-	}
+    public Rectangle getBounds() {
 
-	/**
-	 * @return the height2
-	 */
-	public int getHeight2() {
-		return getEnemyMissile().getHeight();
-	}
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
 
-	/**
-	 * @param height2 the height2 to set
-	 */
-	public void setHeight2(int height2) {
-		this.height2 = height2;
-	}
+    }
+
+
+    public Rectangle getBounds2() {
+
+        return new Rectangle(getX2(), getY2(), getWidth(), getHeight());
+
+    }
+
+    public BufferedImage getMissile() {
+        return missile;
+    }
+
+
+    @Override
+    public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public int getY2() {
+        return y2;
+    }
+
+
+    public void setY2(int newy2) {
+        y2 = newy2;
+    }
+
+
+    public int getX2() {
+        return x2;
+    }
+
+
+    public void setX2(int newx2) {
+        x2 = newx2;
+    }
+
+
+    public int getWidth2() {
+        return getEnemyMissile().getWidth();
+    }
+
+
+    public int getHeight2() {
+        return getEnemyMissile().getHeight();
+    }
 
 }
