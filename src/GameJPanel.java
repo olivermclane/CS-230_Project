@@ -226,6 +226,7 @@ public class GameJPanel extends JPanel implements Runnable {
 						System.out.println(enemy.getxPosition());
 						System.out.println(enemy.getyPosition());
 						enemy.setEnemyDestroyed(true);
+                        break;
 
 
 
