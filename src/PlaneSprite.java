@@ -69,15 +69,17 @@ public class PlaneSprite extends SpriteSheet
         if (!planeRight && !planeLeft) {
             g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
         }
-        if (planeRight) {
+        else if (planeRight && planeLeft) {
+            g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
+        }
+        else if (planeRight) {
             moveRight();
             g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
         }
-        if (planeLeft) {
+        else if (planeLeft) {
             moveLeft();
             g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
         }
-
         if (planeUp) {
             moveUp();
         }
