@@ -69,15 +69,17 @@ public class PlaneSprite extends SpriteSheet
         if (!planeRight && !planeLeft) {
             g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
         }
-        if (planeRight) {
+        else if (planeRight && planeLeft) {
+            g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
+        }
+        else if (planeRight) {
             moveRight();
             g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
         }
-        if (planeLeft) {
+        else if (planeLeft) {
             moveLeft();
             g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
         }
-
         if (planeUp) {
             moveUp();
         }
@@ -95,6 +97,10 @@ public class PlaneSprite extends SpriteSheet
                 getH() - 53);
     }
 
+    public int getH() {
+        return getPlane().getHeight();
+    }
+
     public BufferedImage getPlane() {
 
         return img1;
@@ -108,9 +114,6 @@ public class PlaneSprite extends SpriteSheet
 
     public int getW() {
         return getPlane().getWidth();
-    }
-    public int getH() {
-        return getPlane().getHeight();
     }
 
     public int getxPosition() {
