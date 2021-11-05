@@ -57,7 +57,7 @@ public class PlaneSprite extends SpriteSheet
 
     }
 
-    public List<Missile> missilesFired(){
+    public List<Missile> missiles(){
         return missiles;
     }
 
