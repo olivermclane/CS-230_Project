@@ -6,14 +6,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 
-public class Menu extends GameJPanel implements ActionListener {
+public class Menu implements ActionListener {
 
     //the background color
     private static final Color backGC = new Color(88, 148, 173);
-    public static GameJPanel panel;
-    public static JPanel CentralPanel;
-    public static JFrame menu;
-    public static Component startMenu;
 
     public Menu() {
         drawMenu();
@@ -28,9 +24,7 @@ public class Menu extends GameJPanel implements ActionListener {
 
     public void drawMenu() {
         //creating the gameFrame
-
-        menu = new JFrame("TimeX Fighters -- Main Menu");
-
+        JFrame menu = new JFrame("TimeX Fighters -- Main Menu");
 
         //creating my buttons
         JButton quitGButton = new JButton("  Quit Game   ");
@@ -64,7 +58,7 @@ public class Menu extends GameJPanel implements ActionListener {
         menu.setBackground(backGC);
 
         //create Title Panel & Layout by default: Flowlayout
-        CentralPanel = new JPanel();
+        JPanel CentralPanel = new JPanel();
         CentralPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         CentralPanel.setLayout(new GridBagLayout());
         CentralPanel.setBackground(backGC);
@@ -127,34 +121,30 @@ public class Menu extends GameJPanel implements ActionListener {
         menuLayout.weighty = 1;
 
         CentralPanel.add(buttonsPanel, menuLayout);
-        startMenu = menu.add(CentralPanel);
+        menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
 
         menu.setVisible(true);
 
     }
-    
 
     //start game method
-    static void startGame(JFrame j) {
-        panel = new GameJPanel();
+    public void startGame(JFrame j) {
+        JPanel panel = new GameJPanel();
 
 
+        j.add(panel);
+        try {
+            Robot robot = new Robot();
+            robot.mouseMove(j.getX() + 350, j.getY() + 700);
+        } catch (AWTException e) {
 
-            j.add(panel);
-            try {
-                Robot robot = new Robot();
-                robot.mouseMove(j.getX() + 350, j.getY() + 700);
-            } catch (AWTException e) {
-
-                e.printStackTrace();
-            }
-            j.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-                    new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
-            j.setVisible(true);
+            e.printStackTrace();
         }
-
-
+        j.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
+        j.setVisible(true);
+    }
 
     //exit game method
     public void exitGame() {
