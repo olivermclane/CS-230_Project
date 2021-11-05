@@ -13,23 +13,30 @@ public class EnemySprite extends SpriteSheet
     public boolean didPlaneFire = false;
     public List<Missile> enemyMissiles;
     private boolean planeHit;
-    private int x = 250;
-    private boolean planeRight = true;
-    private boolean planeLeft = false;
+    private int x;
+    private boolean planeRight;
+    private boolean planeLeft;
     private boolean planeUp;
     private boolean planeDown;
     private BufferedImage enemy;
-    private int height;
     private boolean enemyDestroyed;
     private boolean missileFired;
-
+    private int y;
+    private int moveSpeedX;
+    private int maxAmmo;
+    public boolean isBigEnemy;
+    public boolean isSmallEnemy;
 
     public EnemySprite() {
-        loadImage();
+
+    }
+    public EnemySprite(String file) {
+        loadImage(file);
 
         enemyMissiles = new ArrayList<>();
 
     }
+
 
     public void setisEnemyHit() {
         boolean isEnemyHit = true;
@@ -45,14 +52,14 @@ public class EnemySprite extends SpriteSheet
 //		if (!planeRight && !planeLeft) {
 //        g.drawImage(enemy, getxPosition(), getyPosition(), this);
 //		}
-        if (planeRight) {
-            moveRight();
+//        if (planeRight) {
+//            moveRight();
 			g.drawImage(enemy, getxPosition(), getyPosition(), this);
-        }
-        if (planeLeft) {
-            moveLeft();
-			g.drawImage(enemy, getxPosition(), getyPosition(), this);
-        }
+//        }
+//        if (planeLeft) {
+//            moveLeft();
+//			g.drawImage(enemy, getxPosition(), getyPosition(), this);
+//        }
 
 
 //		if (planeUp) {
@@ -69,32 +76,9 @@ public class EnemySprite extends SpriteSheet
         return didPlaneFire = x;
     }
 
-    public boolean missileFired() {
-        
-        return missileFired;
-    }
 
     public List<Missile> array() {
         return enemyMissiles;
-    }
-
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(getxPosition() + 74, getyPosition(),
-                getW() - 73,
-                getH() - 14);
-    }
-    public Rectangle getBounds2(){
-        return new Rectangle(getxPosition()+3 , getyPosition()+74,
-                getW()-3,
-                getH()- 104);
-    }
-
-
-
-    public int getH() {
-        return enemy.getHeight();
     }
 
 
@@ -102,7 +86,9 @@ public class EnemySprite extends SpriteSheet
 
         return enemy;
     }
-
+    public int getH() {
+        return getHeight();
+    }
 
     public int getW() {
         return enemy.getWidth();
@@ -113,11 +99,18 @@ public class EnemySprite extends SpriteSheet
     }
 
     public int getyPosition() {
-        int y = 100;
+        ;
         return y;
     }
 
+    public Rectangle getBigBoundsX() {
+        return null;
+    }
 
+
+    public Rectangle getBigBoundsY(){
+        return null;
+    }
 	public boolean isEnemyDestroyed() {
 		return enemyDestroyed;
 	}
@@ -126,14 +119,15 @@ public class EnemySprite extends SpriteSheet
         enemyDestroyed = b;
     }
 
+    public void setMoveSpeedX(int moveX){
+        moveSpeedX = moveX;
+    }
     public void moveLeft() {
         if (x <= 2) {
             x = 2;
-            planeLeft = false;
-            planeRight = true;
         } else {
-            x -= 2;
-            planeLeft = true;
+            x -= moveSpeedX;
+
         }
 
     }
@@ -159,22 +153,18 @@ public class EnemySprite extends SpriteSheet
     public void moveRight() {
         if (x >= 700 - getW() - 10) {
             x = 700 - getW() - 10;
-            planeLeft = true;
-            planeRight = false;
         } else {
-            x += 2;
-            planeRight = true;
+            x += moveSpeedX;
+
         }
 
     }
 
-    private void loadImage() {
+    void loadImage(String file) {
 
         try {
 
-            enemy = ImageIO.read(new File("src/Plane-assets/Enemies.png"));
-            BufferedImage enemyLeft = ImageIO.read(new File("src/Plane-assets/EnemiesLeft.png"));
-            BufferedImage enemyRight = ImageIO.read(new File("src/Plane-assets/EnemiesRight.png"));
+            enemy = ImageIO.read(new File("src/Plane-assets/" + file));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
