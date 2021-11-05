@@ -31,15 +31,19 @@ public class GameJPanel extends JPanel implements Runnable {
     private int ammoReload;
     public List <LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
-    public List <EnemySprite> enemyPlayers = new ArrayList<>();
+    public List <BigEnemy> enemyPlayers = new ArrayList<>();
     private BigEnemy bigEnemy;
     private Rectangle enemyArea;
     private Rectangle enemyArea2;
+    private boolean resetGame = false;
 
 
     public GameJPanel() {
 
         intiGamePanel();
+    }
+    public boolean getResetGame(){
+        return resetGame;
     }
 	private void intiGamePanel() {
 		try{
@@ -67,7 +71,6 @@ public class GameJPanel extends JPanel implements Runnable {
 
         plane = new PlaneSprite();
         ammo = plane.ammo();
-        plane.missiles.add(new Missile());
         bigEnemy = new BigEnemy("Enemies.png");
 
         enemyPlayers.add(bigEnemy);
@@ -156,6 +159,7 @@ public class GameJPanel extends JPanel implements Runnable {
 		explosion.setY(plane.getyPosition());
 		if(plane.isPlaneHit() && plane.isDead()) {
 			explosion.doDrawing(g);
+            resetGame = true;
 			if (explosionTic < 8  && explosionCount == 0) {
 				explosion.setExpCount(explosionTic);
 
@@ -164,6 +168,12 @@ public class GameJPanel extends JPanel implements Runnable {
 			}
 
 		}
+        if(resetGame&&explosionTic>7){
+            Menu.panel.setVisible(false);
+
+            new Menu();
+            resetGame = false;
+        }
 		if(explosionTic == 8 && bigEnemy.isEnemyDestroyed()) {
 
 			explosion.setVisible(false);
@@ -206,11 +216,11 @@ public class GameJPanel extends JPanel implements Runnable {
 
                     m.doDrawing1(g);
 
+                    Rectangle misArea = m.getBounds();
+
+                    for (BigEnemy enemy: enemyPlayers) {
 
 
-                    for (EnemySprite enemy: enemyPlayers) {
-
-                            Rectangle misArea = m.getBounds();
 
                             enemyArea = enemy.getBigBoundsX();
                             enemyArea2 = enemy.getBigBoundsY();
@@ -314,11 +324,15 @@ public class GameJPanel extends JPanel implements Runnable {
                     }
                 }
 
+
                 repaint();
 
                 nextTime = System.currentTimeMillis() + frameRate;
             }
+
+
         }
+
     }
 
     private class TAdapter extends KeyAdapter {
@@ -377,6 +391,8 @@ public class GameJPanel extends JPanel implements Runnable {
             // TODO Auto-generated method stub
             plane.mouseMoved(e);
         }
+
+
 
     }
 
