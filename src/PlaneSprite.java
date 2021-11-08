@@ -279,16 +279,18 @@ public class PlaneSprite extends SpriteSheet
     @Override
     public void mouseMoved(MouseEvent e) {
         if(!usingKeyboard) {
-            if(x < e.getX()-55)
-                planeRight = true;
-            if(x > e.getX()-55)
-                planeLeft = true;
-            if(y > e.getY()-34)
-                planeUp = true;
-            if(y < e.getY()-34)
-                planeDown = true;
-        }
-       
+            if(e.getX() < x+24 || e.getX() > x+72){
+                if(x < e.getX()-55)
+                    planeRight = true;
+                if(x > e.getX()-55)
+                    planeLeft = true;
+            }
+                if(y > e.getY()-34)
+                    planeUp = true;
+                if(y < e.getY()-34)
+                    planeDown = true;
+        
+            }
     }
 
     @Override
