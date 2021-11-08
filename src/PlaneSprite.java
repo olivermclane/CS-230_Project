@@ -29,6 +29,7 @@ public class PlaneSprite extends SpriteSheet
     private int maxAmmo = 5;
     private List<Missile> Ammo;
     private List<Missile> Missiles;
+    private boolean usingKeyboard;
 
 
     public PlaneSprite() {
@@ -133,7 +134,7 @@ public class PlaneSprite extends SpriteSheet
         y = yPosition;
     }
 
-    public boolean isPlaneDestroyed() {
+    public boolean isDestroyed() {
         return planeDestroyed;
     }
 
@@ -147,23 +148,25 @@ public class PlaneSprite extends SpriteSheet
         // if keys are pressed the move that direction
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             planeRight = true;
+            usingKeyboard = true;
 
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             planeLeft = true;
+            usingKeyboard = true;
 
         }
 
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             planeUp = true;
+            usingKeyboard = true;
 
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             planeDown = true;
-
+            usingKeyboard = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-
             didPlaneFire = false;
 
         }
@@ -174,19 +177,22 @@ public class PlaneSprite extends SpriteSheet
 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             planeRight = false;
+            usingKeyboard = false;
+
 
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             planeLeft = false;
+            usingKeyboard = false;
 
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             planeUp = false;
-
+            usingKeyboard = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             planeDown = false;
-
+            usingKeyboard = false;
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 
@@ -203,6 +209,18 @@ public class PlaneSprite extends SpriteSheet
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
 
+    }
+    public void setPlaneDown(boolean i){
+        planeDown = i;
+    }
+    public void setPlaneUp(boolean i){
+        planeUp = i;
+    }
+    public void setPlaneLeft(boolean i){
+        planeLeft = i;
+    }
+    public void setPlaneRight(boolean i){
+        planeRight = i;
     }
 
     private void loadImage() {
@@ -257,13 +275,20 @@ public class PlaneSprite extends SpriteSheet
 
     }
 
+    //manages the mouse movement of plane sprite
     @Override
     public void mouseMoved(MouseEvent e) {
-
-        setxPosition(e.getX() - 55);
-        setyPosition(e.getY() - 34);
-
-
+        if(!usingKeyboard) {
+            if(x < e.getX()-55)
+                planeRight = true;
+            if(x > e.getX()-55)
+                planeLeft = true;
+            if(y > e.getY()-34)
+                planeUp = true;
+            if(y < e.getY()-34)
+                planeDown = true;
+        }
+       
     }
 
     @Override
@@ -271,6 +296,10 @@ public class PlaneSprite extends SpriteSheet
         didPlaneFire = false;
 
 
+    }
+
+    public boolean getKeyboardStatus() {
+        return usingKeyboard;
     }
 
     @Override
@@ -359,6 +388,8 @@ public class PlaneSprite extends SpriteSheet
     public Rectangle getBounds2() {
         return null;
     }
+    
+    
 }
 	
 
