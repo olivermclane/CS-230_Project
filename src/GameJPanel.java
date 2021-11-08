@@ -35,7 +35,8 @@ public class GameJPanel extends JPanel implements Runnable {
     private final int powerUpRate = 2;
     private int powerRandom;
     private Random puDrop = new Random();
-    private boolean allowDrop;
+    public boolean gameOver; 
+    
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
 
@@ -121,17 +122,19 @@ public class GameJPanel extends JPanel implements Runnable {
 
 		}
 		for(LifePowerup p: LifeUpList){
-			p.getBounds();
-			p.collisionCheck(plane.getBounds());
+            if(p.isLifePowerup){
+                p.getBounds();
+                p.collisionCheck(plane.getBounds());
 
-			if(p.isCollided()){
-				p.addLife(plane);
-                if(healthX<200) {
-                    healthX += 70;
+                if(p.isCollided()){
+                    p.addLife(plane);
+                    if(healthX<200) {
+                        healthX += 70;
+                    }
+                } else{
+                    p.draw(g);
                 }
-			} else{
-				p.draw(g);
-			}
+            }
 			
 		}
 
@@ -164,14 +167,23 @@ public class GameJPanel extends JPanel implements Runnable {
 		explosion.setY(plane.getyPosition());
 		if(plane.isPlaneHit() && plane.isDead()) {
 			explosion.doDrawing(g);
+            gameOver = true;
 			if (explosionTic < 8  && explosionCount == 0) {
 				explosion.setExpCount(explosionTic);
 
-
+                
 				explosionTic++;
 			}
+        }
+        if(gameOver && explosionTic > 7){
+            new Menu();
+            System.out.println("Game Exit");
+            Menu.panel.setVisible(false);
+            gameOver = false;
+            explosionTic = 0; 
+        }
 
-		}
+		
 		if(explosionTic == 8 && enemy.isEnemyDestroyed()) {
 
 			explosion.setVisible(false);
@@ -228,8 +240,6 @@ public class GameJPanel extends JPanel implements Runnable {
 						enemy.setEnemyDestroyed(true);
                         break;
 
-
-
                     }
 
 
@@ -285,7 +295,12 @@ public class GameJPanel extends JPanel implements Runnable {
             }
 
         }
-
+        if(!plane.getKeyboardStatus()){
+            plane.setPlaneDown(false);
+            plane.setPlaneRight(false);
+            plane.setPlaneUp(false);
+            plane.setPlaneLeft(false);
+        }
         g.dispose();
         Toolkit.getDefaultToolkit().sync();
     }
