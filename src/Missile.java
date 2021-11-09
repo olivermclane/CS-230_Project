@@ -23,6 +23,8 @@ public class Missile implements ImageObserver {
         loadImage2();
     }
 
+
+
     private void loadImage1() {
         try {
 

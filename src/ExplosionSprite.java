@@ -11,7 +11,7 @@ public class ExplosionSprite extends SpriteSheet{
     private int x;
     private int y;
     private int expCount = 0;
-
+    private int explosionTic = 0;
     ExplosionSprite() {
         loadImage();
     }
@@ -52,7 +52,12 @@ public class ExplosionSprite extends SpriteSheet{
 
 
     }
-
+    public int getExplosionTic() {
+        return explosionTic;
+    }
+    public void plusExplosionTic(){
+        explosionTic++;
+    }
 
     public void setW(int w) {
     }
