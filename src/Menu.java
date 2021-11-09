@@ -27,6 +27,7 @@ public class Menu implements ActionListener {
 
 
         new Menu();
+
     }
 
     public void drawMenu() {

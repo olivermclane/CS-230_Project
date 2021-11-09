@@ -62,7 +62,7 @@ public class GameJPanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
 
-
+        setDoubleBuffered(true);
         setFocusable(true);
         addKeyListener(new TAdapter());
         new Thread(this).start();
@@ -75,19 +75,20 @@ public class GameJPanel extends JPanel implements Runnable {
 
         plane = new PlaneSprite();
         ammo = plane.ammo();
-        plane.missiles.add(new Missile());
+
         enemy = new EnemySprite();
         smallEnemy = new SmallEnemySprite();
 
         smallEnemyExplosion = new ExplosionSprite();
         planeExplosion = new ExplosionSprite();
         enemyExplosion = new ExplosionSprite();
-        setDoubleBuffered(true);
+
     }
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 		back1.loadBackground(g);
         powerRandom = puDrop.nextInt(8)+1;
 
@@ -239,9 +240,8 @@ public class GameJPanel extends JPanel implements Runnable {
 			back.missileFired();
 
             if (!ammo.isEmpty()) {
-                ammo.remove(0);
+                Missile mis = ammo.remove(0);
                 ammoAmount-=20;
-                Missile mis = plane.projectile();
                 mis.setX(plane.getxPosition()+51);
                 mis.setY(plane.getyPosition());
                 plane.missiles.add(mis);
@@ -276,18 +276,20 @@ public class GameJPanel extends JPanel implements Runnable {
                             break;
                         }
                     }
-                    Rectangle smallEnemyArea = smallEnemy.getBounds();
-                    if (misArea.intersects(smallEnemyArea)) {
-                        plane.missiles.remove(m);
-                        back.planeHitsound();
-                        smallEnemy.setEnemyDestroyed(true);
-                        break;
+                    if (!smallEnemy.isEnemyDestroyed()) {
+                        Rectangle smallEnemyArea = smallEnemy.getBounds();
+                        if (misArea.intersects(smallEnemyArea)) {
+                            plane.missiles.remove(m);
+                            back.planeHitsound();
+                            smallEnemy.setEnemyDestroyed(true);
+                            break;
 
-                    }
+                        }
 
-                    if (m.isOffScreen()) {
-                        plane.missiles.remove(m);
-                        break;
+                        if (m.isOffScreen()) {
+                            plane.missiles.remove(m);
+                            break;
+                        }
                     }
                 }
 
@@ -326,7 +328,7 @@ public class GameJPanel extends JPanel implements Runnable {
                     back.planeHitsound();
                     plane.isHit();
                     plane.isDead();
-                    healthX -=70;
+                    healthX -= 70;
                     break;
 
                 }
@@ -336,6 +338,42 @@ public class GameJPanel extends JPanel implements Runnable {
                 }
 
             }
+        }
+            if (enemyCount >= 99 && !smallEnemy.isEnemyDestroyed()) {
+                Missile mis2 = smallEnemy.projectile();
+                mis2.setX2(smallEnemy.getxPosition()+ 10);
+                mis2.setY2(smallEnemy.getyPosition()+20);
+                smallEnemy.enemyMissiles.add(mis2);
+                back.missileFired();
+                smallEnemy.didPlaneFire(true);
+            }
+
+
+            if (smallEnemy.didPlaneFire) {
+
+                List<Missile> miss3 = smallEnemy.array();
+                for (Missile m2 : miss3) {
+
+
+                    m2.doDrawing2(g);
+                    Rectangle misArea2 = m2.getBounds2();
+                    Rectangle planeArea = plane.getBounds();
+
+                    if (misArea2.intersects(planeArea)) {
+                        smallEnemy.enemyMissiles.remove(m2);
+                        back.planeHitsound();
+                        plane.isHit();
+                        plane.isDead();
+                        healthX -=70;
+                        break;
+
+                    }
+                    if (m2.isOffScreen2()) {
+                        smallEnemy.enemyMissiles.remove(m2);
+                        break;
+                    }
+
+                }
 
         }
         if(!plane.getKeyboardStatus()){
