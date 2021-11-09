@@ -196,10 +196,13 @@ public class PlaneSprite extends SpriteSheet
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 
+            if(Ammo.isEmpty()){
 
-            missileFired = true;
-            didPlaneFire = true;
-
+            }
+            else {
+                missileFired = true;
+                didPlaneFire = true;
+            }
 
         }
 
@@ -348,7 +351,7 @@ public class PlaneSprite extends SpriteSheet
     }
 
     public Missile projectile() {
-        Missile mis = new Missile();
+        Missile mis = Ammo.remove(0);
 
         return mis;
     }
