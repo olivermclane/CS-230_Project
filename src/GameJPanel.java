@@ -205,26 +205,30 @@ public class GameJPanel extends JPanel implements Runnable {
             planeExplosion.doDrawing(g);
             gameOver = true;
 
-			if (explosionTic < 8  && explosionCount == 0) {
-                planeExplosion.setExpCount(explosionTic);
+			if (planeExplosion.getExplosionTic() < 8  && explosionCount == 0) {
+                planeExplosion.setExpCount(planeExplosion.getExplosionTic());
 
                 
-				explosionTic++;
+				planeExplosion.plusExplosionTic();
 			}
         }
-        if(gameOver && explosionTic > 7){
+        if(gameOver && planeExplosion.getExplosionTic()==8){
+
             setVisible(false);
-            new Menu();
+
+            Menu.CentralPanel.setVisible(true);
+            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+
             System.out.println("Game Exit");
 
             gameOver = false;
-            explosionTic = 0; 
+
         }
 
 		
-		if(explosionTic == 8 && plane.isDead()) {
+		if(planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
 
-
+            planeExplosion.plusExplosionTic();
 			planeExplosion.setVisible(false);
 
 		}
