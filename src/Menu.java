@@ -10,6 +10,13 @@ public class Menu implements ActionListener {
 
     //the background color
     private static final Color backGC = new Color(88, 148, 173);
+    public static JPanel CentralPanel;
+    public static JPanel panel;
+    public static JFrame menu;
+    public static JButton playGButton;
+    public static JButton quitGButton;
+    public static JPanel ButtonPanel;
+    public static Menu drawMenu;
 
     public Menu() {
         drawMenu();
@@ -58,7 +65,7 @@ public class Menu implements ActionListener {
         menu.setBackground(backGC);
 
         //create Title Panel & Layout by default: Flowlayout
-        JPanel CentralPanel = new JPanel();
+        CentralPanel = new JPanel();
         CentralPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         CentralPanel.setLayout(new GridBagLayout());
         CentralPanel.setBackground(backGC);
@@ -95,8 +102,8 @@ public class Menu implements ActionListener {
         playGButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 startGame(menu);
-                playGButton.setVisible(false);
-                quitGButton.setVisible(false);
+                CentralPanel.setVisible(false);
+
             }
         });
         playGButton.setBorderPainted(false);
@@ -110,7 +117,7 @@ public class Menu implements ActionListener {
         quitGButton.setBackground(backGC);
         quitGButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                exitGame();
+                    exitGame();
             }
         });
         quitGButton.setBorderPainted(false);
@@ -119,18 +126,20 @@ public class Menu implements ActionListener {
         buttonsPanel.add(quitGButton, menuLayout);
 
         menuLayout.weighty = 1;
-
+        
         CentralPanel.add(buttonsPanel, menuLayout);
+
         menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
 
         menu.setVisible(true);
 
+
     }
 
     //start game method
     public void startGame(JFrame j) {
-        JPanel panel = new GameJPanel();
+        panel = new GameJPanel();
 
 
         j.add(panel);
@@ -147,7 +156,7 @@ public class Menu implements ActionListener {
     }
 
     //exit game method
-    public void exitGame() {
+    public static void exitGame(){
         System.exit(0);
     }
 
@@ -157,4 +166,3 @@ public class Menu implements ActionListener {
 
 
 }
-
