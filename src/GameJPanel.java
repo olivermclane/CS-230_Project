@@ -213,14 +213,15 @@ public class GameJPanel extends JPanel implements Runnable {
 			}
         }
         if(gameOver && explosionTic > 7){
+            setVisible(false);
             new Menu();
             System.out.println("Game Exit");
-            Menu.panel.setVisible(false);
+
             gameOver = false;
             explosionTic = 0; 
         }
 
-		}
+		
 		if(explosionTic == 8 && plane.isDead()) {
 
 
