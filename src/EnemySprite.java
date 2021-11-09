@@ -6,10 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class EnemySprite extends SpriteSheet
         implements ImageObserver {
-
     public boolean didPlaneFire = false;
     public List<Missile> enemyMissiles;
     private boolean planeHit;
@@ -22,110 +20,77 @@ public class EnemySprite extends SpriteSheet
     private int height;
     private boolean enemyDestroyed;
     private boolean missileFired;
-
-
     public EnemySprite() {
         loadImage();
-
         enemyMissiles = new ArrayList<>();
-
     }
-
     public void setisEnemyHit() {
         boolean isEnemyHit = true;
     }
-
     public Missile projectile() {
-
         return new Missile();
     }
-
     public void doDrawing(Graphics g) {
-
 //		if (!planeRight && !planeLeft) {
 //        g.drawImage(enemy, getxPosition(), getyPosition(), this);
 //		}
         if (planeRight) {
             moveRight();
-			g.drawImage(enemy, getxPosition(), getyPosition(), this);
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
         }
         if (planeLeft) {
             moveLeft();
-			g.drawImage(enemy, getxPosition(), getyPosition(), this);
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
         }
-
-
 //		if (planeUp) {
 //			moveUp();
 //		}
 //		if (planeDown) {
 //			moveDown();
 //		}
-
-
     }
-
     public boolean didPlaneFire(boolean x) {
         return didPlaneFire = x;
     }
-
     public boolean missileFired() {
-        
         return missileFired;
     }
-
     public List<Missile> array() {
         return enemyMissiles;
     }
-
-
     @Override
     public Rectangle getBounds() {
         return new Rectangle(getxPosition() + 74, getyPosition(),
                 getW() - 73,
                 getH() - 14);
     }
-    public Rectangle getBounds2(){
-        return new Rectangle(getxPosition()+3 , getyPosition()+74,
-                getW()-3,
-                getH()- 104);
+    public Rectangle getBounds2() {
+        return new Rectangle(getxPosition() + 3, getyPosition() + 74,
+                getW() - 3,
+                getH() - 104);
     }
-
-
-
     public int getH() {
         return enemy.getHeight();
     }
-
-
     public BufferedImage getPlane() {
-
         return enemy;
     }
-
-
     public int getW() {
         return enemy.getWidth();
     }
-
     public int getxPosition() {
         return x;
     }
-
     public int getyPosition() {
         int y = 100;
         return y;
     }
-
-
-	public boolean isEnemyDestroyed() {
-		return enemyDestroyed;
-	}
-
+    public boolean isEnemyDestroyed() {
+        return enemyDestroyed;
+    }
     public void setEnemyDestroyed(boolean b) {
         enemyDestroyed = b;
     }
-
     public void moveLeft() {
         if (x <= 2) {
             x = 2;
@@ -135,9 +100,7 @@ public class EnemySprite extends SpriteSheet
             x -= 2;
             planeLeft = true;
         }
-
     }
-
 //	public void moveUp() {
 //		if (y <= 0) {
 //			y = 0;
@@ -155,7 +118,6 @@ public class EnemySprite extends SpriteSheet
 //		}
 //
 //	}
-
     public void moveRight() {
         if (x >= 700 - getW() - 10) {
             x = 700 - getW() - 10;
@@ -165,13 +127,9 @@ public class EnemySprite extends SpriteSheet
             x += 2;
             planeRight = true;
         }
-
     }
-
     private void loadImage() {
-
         try {
-
             enemy = ImageIO.read(new File("src/Plane-assets/Enemies.png"));
             BufferedImage enemyLeft = ImageIO.read(new File("src/Plane-assets/EnemiesLeft.png"));
             BufferedImage enemyRight = ImageIO.read(new File("src/Plane-assets/EnemiesRight.png"));
@@ -179,6 +137,5 @@ public class EnemySprite extends SpriteSheet
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 }
