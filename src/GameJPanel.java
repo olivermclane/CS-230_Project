@@ -16,6 +16,8 @@ public class GameJPanel extends JPanel implements Runnable {
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
+    private int score = 0;
+    private String healthpercent = "100%";
     private ScrollingBackground back1;
     private EnemySprite enemy;
     private int enemyCount;
@@ -35,10 +37,12 @@ public class GameJPanel extends JPanel implements Runnable {
     private ExplosionSprite enemyExplosion;
     private ExplosionSprite smallEnemyExplosion;
     private ExplosionSprite planeExplosion;
+
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
         intiGamePanel();
     }
+
     private void intiGamePanel() {
         try {
             retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
@@ -68,6 +72,7 @@ public class GameJPanel extends JPanel implements Runnable {
         planeExplosion = new ExplosionSprite();
         enemyExplosion = new ExplosionSprite();
     }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -86,6 +91,15 @@ public class GameJPanel extends JPanel implements Runnable {
         g.setColor(Color.white);
         g.setFont(retroGame);
         g.drawString("Health: ", 10, 20);
+        g.setColor(Color.green);
+        g.setFont(retroGame);
+        g.drawString(healthpercent, 100, 20);
+        g.setColor(Color.white);
+        g.setFont(retroGame);
+        g.drawString("SCORE:", 300, 20);
+        g.setColor(Color.white);
+        g.setFont(retroGame);
+        g.drawString(String.valueOf(score), 400, 20);
         g.setColor(Color.white);
         g.setFont(retroGame);
         g.drawString("Ammo: ", 570, 20);
@@ -136,7 +150,19 @@ public class GameJPanel extends JPanel implements Runnable {
                 if (p.isCollided()) {
                     p.addLife(plane);
                     if (healthX < 200) {
-                        healthX += 70;
+                        healthX += 50;
+                        if (healthX == 200) {
+                            healthpercent = "100%";
+                        }
+                        if (healthX == 150) {
+                            healthpercent = "75%";
+                        }
+                        if (healthX == 100) {
+                            healthpercent = "50%";
+                        }
+                        if (healthX == 50) {
+                            healthpercent = "25%";
+                        }
                     }
                 } else {
                     p.draw(g);
@@ -196,6 +222,7 @@ public class GameJPanel extends JPanel implements Runnable {
                                 LifeUpList.add(new LifePowerup(enemy));
                             }
                             enemy.setEnemyDestroyed(true);
+                            score+=30;
                             break;
                         }
                     }
@@ -204,6 +231,7 @@ public class GameJPanel extends JPanel implements Runnable {
                         if (misArea.intersects(smallEnemyArea)) {
                             plane.missiles.remove(m);
                             back.planeHitsound();
+                            score += 20;
                             smallEnemy.setEnemyDestroyed(true);
                             break;
                         }
@@ -241,7 +269,19 @@ public class GameJPanel extends JPanel implements Runnable {
                     back.planeHitsound();
                     plane.isHit();
                     plane.isDead();
-                    healthX -= 70;
+                    healthX -= 50;
+                    if (healthX == 150) {
+                        healthpercent = "75%";
+                    }
+                    if (healthX == 100) {
+                        healthpercent = "50%";
+                    }
+                    if (healthX == 50) {
+                        healthpercent = "25%";
+                    }
+                    if (healthX == 0) {
+                        healthpercent = "0%";
+                    }
                     break;
                 }
                 if (m2.isOffScreen2()) {
@@ -269,7 +309,19 @@ public class GameJPanel extends JPanel implements Runnable {
                     back.planeHitsound();
                     plane.isHit();
                     plane.isDead();
-                    healthX -= 70;
+                    healthX -= 50;
+                    if (healthX == 150) {
+                        healthpercent = "75%";
+                    }
+                    if (healthX == 100) {
+                        healthpercent = "50%";
+                    }
+                    if (healthX == 50) {
+                        healthpercent = "25%";
+                    }
+                    if (healthX == 0) {
+                        healthpercent = "0%";
+                    }
                     break;
                 }
                 if (m2.isOffScreen2()) {
@@ -287,6 +339,7 @@ public class GameJPanel extends JPanel implements Runnable {
         g.dispose();
         Toolkit.getDefaultToolkit().sync();
     }
+
     @Override
     public void run() {
         int frameRate = 1000 / 40;
@@ -311,41 +364,50 @@ public class GameJPanel extends JPanel implements Runnable {
             }
         }
     }
+
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             plane.keyPressed(e);
         }
+
         @Override
         public void keyReleased(KeyEvent e) {
             plane.keyReleased(e);
         }
     }
+
     private class MAdapter extends MouseInputAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         @Override
         public void mouseEntered(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         public void mousePressed(MouseEvent e) {
             // TODO Auto-generated method stub
             plane.mousePressed(e);
         }
+
         public void mouseReleased(MouseEvent e) {
             // TODO Auto-generated method stub
             plane.mouseReleased(e);
         }
+
         @Override
         public void mouseDragged(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         @Override
         public void mouseMoved(MouseEvent e) {
             // TODO Auto-generated method stub

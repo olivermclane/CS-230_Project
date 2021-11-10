@@ -14,17 +14,21 @@ public class Menu implements ActionListener {
     public static JButton quitGButton;
     public static JPanel ButtonPanel;
     public static Menu drawMenu;
+
     public Menu() {
         drawMenu();
     }
+
     //main
     public static void main(String[] args) {
         new Menu();
     }
+
     //exit game method
     public static void exitGame() {
         System.exit(0);
     }
+
     public void drawMenu() {
         //creating the gameFrame
         JFrame menu = new JFrame("TimeX Fighters -- Main Menu");
@@ -104,6 +108,7 @@ public class Menu implements ActionListener {
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
     }
+
     //start game method
     public void startGame(JFrame j) {
         panel = new GameJPanel();
@@ -118,6 +123,7 @@ public class Menu implements ActionListener {
                 new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
         j.setVisible(true);
     }
+
     public void actionPerformed(ActionEvent a) {
     }
 }
