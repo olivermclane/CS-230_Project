@@ -29,32 +29,39 @@ public class PlaneSprite extends SpriteSheet
     private boolean isPlaneHit = false;
     private List<Missile> Missiles;
     private boolean usingKeyboard;
+
     public PlaneSprite() {
         loadImage();
         Ammo = new ArrayList<>();
         ammoLoad();
         addKeyListener(this);
         missiles = new ArrayList<>();
-        planeLife = 3;
+        planeLife = 4;
     }
+
     public void ammoLoad() {
         for (int i = 0; i < maxAmmo; i++) {
             Ammo.add(new Missile());
         }
     }
+
     public List<Missile> ammo() {
         return Ammo;
     }
+
     @Override
     public void actionPerformed(ActionEvent arg0) {
         // TODO Auto-generated method stub
     }
+
     public List<Missile> missiles() {
         return missiles;
     }
+
     public boolean didPlaneFire() {
         return didPlaneFire;
     }
+
     public void doDrawing(Graphics g) {
         if (!planeRight && !planeLeft) {
             g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
@@ -74,43 +81,55 @@ public class PlaneSprite extends SpriteSheet
             moveDown();
         }
     }
+
     @Override
     public Rectangle getBounds() {
         return new Rectangle(getxPosition() + 3, getyPosition() + 15,
                 getW() - 3,
                 getH() - 53);
     }
+
     public int getH() {
         return getPlane().getHeight();
     }
+
     public BufferedImage getPlane() {
         return img1;
     }
+
     @Override
     public BufferedImage[] getSprites() {
         return sprites1;
     }
+
     public int getW() {
         return getPlane().getWidth();
     }
+
     public int getxPosition() {
         return x;
     }
+
     public void setxPosition(int xPosition) {
         x = xPosition;
     }
+
     public int getyPosition() {
         return y;
     }
+
     public void setyPosition(int yPosition) {
         y = yPosition;
     }
+
     public boolean isDestroyed() {
         return planeDestroyed;
     }
+
     public void setPlaneDestroyed(boolean planeDestroyed) {
         this.planeDestroyed = planeDestroyed;
     }
+
     @Override
     public void keyPressed(KeyEvent e) {
         // if keys are pressed the move that direction
@@ -134,6 +153,7 @@ public class PlaneSprite extends SpriteSheet
             didPlaneFire = false;
         }
     }
+
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -160,22 +180,28 @@ public class PlaneSprite extends SpriteSheet
             }
         }
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
     }
+
     public void setPlaneDown(boolean i) {
         planeDown = i;
     }
+
     public void setPlaneUp(boolean i) {
         planeUp = i;
     }
+
     public void setPlaneLeft(boolean i) {
         planeLeft = i;
     }
+
     public void setPlaneRight(boolean i) {
         planeRight = i;
     }
+
     private void loadImage() {
         try {
             BufferedImage originalImg = ImageIO.read(new File("src/Plane-assets/PlaneResize.png"));
@@ -189,28 +215,35 @@ public class PlaneSprite extends SpriteSheet
             e.printStackTrace();
         }
     }
+
     public void missileFired(boolean fire) {
         missileFired = fire;
     }
+
     public boolean didmissileFired() {
         return missileFired;
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         setxPosition(e.getX());
         setyPosition(e.getY());
     }
+
     @Override
     public void mouseDragged(MouseEvent e) {
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
     }
+
     //manages the mouse movement of plane sprite
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -227,19 +260,23 @@ public class PlaneSprite extends SpriteSheet
                 planeDown = true;
         }
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         didPlaneFire = false;
     }
+
     public boolean getKeyboardStatus() {
         return usingKeyboard;
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
         missileFired = true;
         didPlaneFire = true;
     }
+
     public void moveDown() {
         if (y >= 680) {
             y = 680;
@@ -247,6 +284,7 @@ public class PlaneSprite extends SpriteSheet
             y += 3;
         }
     }
+
     public void moveLeft() {
         if (x <= -10) {
             x = -10;
@@ -254,6 +292,7 @@ public class PlaneSprite extends SpriteSheet
             x -= 3;
         }
     }
+
     public void moveRight() {
         if (x >= 580) {
             x = 580;
@@ -261,6 +300,7 @@ public class PlaneSprite extends SpriteSheet
             x += 3;
         }
     }
+
     public void moveUp() {
         if (y <= 0) {
             y = 0;
@@ -268,17 +308,21 @@ public class PlaneSprite extends SpriteSheet
             y -= 3;
         }
     }
+
     public Missile projectile() {
         Missile mis = Ammo.remove(0);
         return mis;
     }
+
     @Override
     public void run() {
         // TODO Auto-generated method stub
     }
+
     public boolean isPlaneHit() {
         return isPlaneHit;
     }
+
     public void isHit() {
         if (planeLife == 0) {
             this.setVisible(false);
@@ -286,9 +330,11 @@ public class PlaneSprite extends SpriteSheet
             planeLife--;
         }
     }
+
     public int getLife() {
         return planeLife;
     }
+
     public boolean isDead() {
         if (planeLife == 0) {
             isPlaneHit = true;
@@ -296,9 +342,11 @@ public class PlaneSprite extends SpriteSheet
         }
         return false;
     }
+
     public void addPlaneLife(int x) {
         planeLife += x;
     }
+
     public Rectangle getBounds2() {
         return null;
     }
