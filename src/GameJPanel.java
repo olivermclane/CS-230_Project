@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 public class GameJPanel extends JPanel implements Runnable {
+    public static PlaneSprite plane;
     private final int explosionTic = 0;
     private final int powerUpRate = 2;
     private final Random puDrop = new Random();
-    public PlaneSprite plane;
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
@@ -222,7 +222,7 @@ public class GameJPanel extends JPanel implements Runnable {
                                 LifeUpList.add(new LifePowerup(enemy));
                             }
                             enemy.setEnemyDestroyed(true);
-                            score+=30;
+                            score += 30;
                             break;
                         }
                     }

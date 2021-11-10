@@ -248,16 +248,42 @@ public class PlaneSprite extends SpriteSheet
     @Override
     public void mouseMoved(MouseEvent e) {
         if (!usingKeyboard) {
-            if (e.getX() < x + 24 || e.getX() > x + 72) {
-                if (x < e.getX() - 55)
-                    planeRight = true;
-                if (x > e.getX() - 55)
-                    planeLeft = true;
+            if (getxPosition() + 418 < e.getXOnScreen()) {
+                planeRight = true;
+                try {
+                    Robot robot = new Robot();
+                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
+                } catch (AWTException c) {
+                    c.printStackTrace();
+                }
             }
-            if (y > e.getY() - 34)
-                planeUp = true;
-            if (y < e.getY() - 34)
+            if (getxPosition() + 418 > e.getXOnScreen()) {
+                planeLeft = true;
+                try {
+                    Robot robot = new Robot();
+                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
+                } catch (AWTException c) {
+                    c.printStackTrace();
+                }
+            }
+            if (getyPosition() + 8 < e.getYOnScreen()) {
                 planeDown = true;
+                try {
+                    Robot robot = new Robot();
+                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
+                } catch (AWTException c) {
+                    c.printStackTrace();
+                }
+            }
+            if (getyPosition() + 8 > e.getYOnScreen()) {
+                planeUp = true;
+                try {
+                    Robot robot = new Robot();
+                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
+                } catch (AWTException c) {
+                    c.printStackTrace();
+                }
+            }
         }
     }
 
@@ -283,6 +309,7 @@ public class PlaneSprite extends SpriteSheet
         } else {
             y += 3;
         }
+        planeDown = false;
     }
 
     public void moveLeft() {
@@ -291,6 +318,7 @@ public class PlaneSprite extends SpriteSheet
         } else {
             x -= 3;
         }
+        planeLeft = false;
     }
 
     public void moveRight() {
@@ -299,6 +327,7 @@ public class PlaneSprite extends SpriteSheet
         } else {
             x += 3;
         }
+        planeRight = false;
     }
 
     public void moveUp() {
@@ -307,6 +336,7 @@ public class PlaneSprite extends SpriteSheet
         } else {
             y -= 3;
         }
+        planeUp = false;
     }
 
     public Missile projectile() {
@@ -345,10 +375,6 @@ public class PlaneSprite extends SpriteSheet
 
     public void addPlaneLife(int x) {
         planeLife += x;
-    }
-
-    public Rectangle getBounds2() {
-        return null;
     }
 }
 	
