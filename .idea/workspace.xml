@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameTest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameTest.uml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameTest.umlcd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EnemySprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EnemySprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlaneSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlaneSprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +51,7 @@
     <property name="code.cleanup.on.save" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="format.on.save" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../School Fall 2021/CS-230/Game/UML" />
     <property name="optimize.imports.on.save" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
