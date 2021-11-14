@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="" />
+    <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Background_structure.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EnemySprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EnemySprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EnemySprite_structure.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LifePowerup_structure.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Menu_structure.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sound_effects_structure.png" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

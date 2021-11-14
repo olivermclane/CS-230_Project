@@ -183,17 +183,17 @@ public class EnemySprite extends SpriteSheet
     }
 
     public void doDrawing(Graphics g) {
-//		if (!planeRight && !planeLeft) {
-//        g.drawImage(enemy, getxPosition(), getyPosition(), this);
-//		}
-//        if (planeRight) {
-//            moveRight();
-        g.drawImage(enemy, getxPosition(), getyPosition(), this);
-//        }
-//        if (planeLeft) {
-//            moveLeft();
-//			g.drawImage(enemy, getxPosition(), getyPosition(), this);
-//        }
+        if (!planeRight && !planeLeft) {
+            g.drawImage(enemy, getxPosition() + 200, getyPosition() + 100, this);
+        }
+        if (planeRight) {
+            moveRight();
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
+        }
+        if (planeLeft) {
+            moveLeft();
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
+        }
 //		if (planeUp) {
 //			moveUp();
 //		}
