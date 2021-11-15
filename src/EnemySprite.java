@@ -184,7 +184,7 @@ public class EnemySprite extends SpriteSheet
 
     public void doDrawing(Graphics g) {
         if (!planeRight && !planeLeft) {
-            g.drawImage(enemy, getxPosition() + 200, getyPosition() + 100, this);
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
         }
         if (planeRight) {
             moveRight();
@@ -215,7 +215,7 @@ public class EnemySprite extends SpriteSheet
     }
 
     public int getH() {
-        return getHeight();
+        return enemy.getHeight();
     }
 
     public int getW() {
@@ -274,6 +274,14 @@ public class EnemySprite extends SpriteSheet
 //		}
 //
 //	}
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public void moveRight() {
         if (x >= 700 - getW() - 10) {

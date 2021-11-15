@@ -7,6 +7,8 @@ public class BigEnemy extends EnemySprite
     public BigEnemy(String e) {
         super(e);
         isBigEnemy = true;
+        setX(100);
+        setY(200);
     }
 
     @Override
