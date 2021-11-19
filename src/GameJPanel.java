@@ -5,17 +5,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.*;
 public class GameJPanel extends JPanel implements Runnable {
+    public static PlaneSprite plane;
     private final int explosionTic = 0;
     private final int powerUpRate = 2;
     private final Random puDrop = new Random();
-    public PlaneSprite plane;
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
+    public List<EnemySprite> enemyPlayers = new ArrayList<>();
     private int score = 0;
     private String healthpercent = "100%";
     private ScrollingBackground back1;
@@ -23,7 +23,7 @@ public class GameJPanel extends JPanel implements Runnable {
     private int enemyCount;
     private Sound_effects back;
     private int explosionCount;
-    private SmallEnemySprite smallEnemy;
+    private SmallEnemy smallEnemy;
     // private tankEnemySprite tankEnemy;
     // private JLabel health;
     private int healthX = 200;
@@ -37,6 +37,7 @@ public class GameJPanel extends JPanel implements Runnable {
     private ExplosionSprite enemyExplosion;
     private ExplosionSprite smallEnemyExplosion;
     private ExplosionSprite planeExplosion;
+    private BigEnemy bigEnemy;
 
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
@@ -66,11 +67,13 @@ public class GameJPanel extends JPanel implements Runnable {
         back1 = new ScrollingBackground();
         plane = new PlaneSprite();
         ammo = plane.ammo();
-        enemy = new EnemySprite();
-        smallEnemy = new SmallEnemySprite();
         smallEnemyExplosion = new ExplosionSprite();
         planeExplosion = new ExplosionSprite();
         enemyExplosion = new ExplosionSprite();
+        bigEnemy = new BigEnemy("Enemies.png");
+        smallEnemy = new SmallEnemy("smallEnemies.png");
+        enemyPlayers.add(bigEnemy);
+        enemyPlayers.add(smallEnemy);
     }
 
     @Override
@@ -105,43 +108,22 @@ public class GameJPanel extends JPanel implements Runnable {
         g.drawString("Ammo: ", 570, 20);
         g.setColor(Color.GREEN);
         g.fillRect(10, 25, healthX, 20);
-        if (!enemy.isEnemyDestroyed()) {
-            enemy.doDrawing(g);
-        } else {
-            enemy.setEnemyDestroyed(true);
-            enemy.setVisible(false);
-        }
-        if (enemy.isEnemyDestroyed()) {
-            enemyExplosion.setX(enemy.getxPosition() + 50);
-            enemyExplosion.setY(enemy.getyPosition() + 50);
-            enemyExplosion.doDrawing(g);
-            if (enemyExplosion.getExplosionTic() < 8 && explosionCount == 0) {
-                enemyExplosion.setExpCount(enemyExplosion.getExplosionTic());
+        for (EnemySprite enemies : enemyPlayers) {
+            if (!enemies.isEnemyDestroyed()) {
+                enemies.doDrawing(g);
+            } else {
+                enemyExplosion.setX(enemies.getxPosition() + 50);
+                enemyExplosion.setY(enemies.getyPosition() + 50);
+                enemyExplosion.doDrawing(g);
+                if (enemyExplosion.getExplosionTic() < 8 && explosionCount == 0) {
+                    enemyExplosion.setExpCount(enemyExplosion.getExplosionTic());
+                    enemyExplosion.plusExplosionTic();
+                }
+            }
+            if (enemyExplosion.getExplosionTic() == 8 && enemies.isEnemyDestroyed()) {
+                enemyExplosion.setVisible(false);
                 enemyExplosion.plusExplosionTic();
             }
-        }
-        if (enemyExplosion.getExplosionTic() == 8 && enemy.isEnemyDestroyed()) {
-            enemyExplosion.setVisible(false);
-            enemyExplosion.plusExplosionTic();
-        }
-        if (!smallEnemy.isEnemyDestroyed()) {
-            smallEnemy.doDrawing(g);
-        } else {
-            smallEnemy.setEnemyDestroyed(true);
-            smallEnemy.setVisible(false);
-        }
-        if (smallEnemy.isEnemyDestroyed()) {
-            smallEnemyExplosion.setX(smallEnemy.getxPosition() + 3);
-            smallEnemyExplosion.setY(smallEnemy.getyPosition() + 3);
-            smallEnemyExplosion.doDrawing(g);
-            if (smallEnemyExplosion.getExplosionTic() < 8 && explosionCount == 0) {
-                smallEnemyExplosion.setExpCount(smallEnemyExplosion.getExplosionTic());
-                smallEnemyExplosion.plusExplosionTic();
-            }
-        }
-        if (smallEnemyExplosion.getExplosionTic() == 8 && smallEnemy.isEnemyDestroyed()) {
-            smallEnemyExplosion.setVisible(false);
-            smallEnemyExplosion.plusExplosionTic();
         }
         for (LifePowerup p : LifeUpList) {
             if (p.isLifePowerup) {
@@ -209,37 +191,30 @@ public class GameJPanel extends JPanel implements Runnable {
         if (plane.didmissileFired()) {
             List<Missile> miss = plane.missiles();
             if (!miss.isEmpty()) {
+                Set<Missile> collided = new HashSet<>();
                 for (Missile m : miss) {
                     m.doDrawing1(g);
                     Rectangle misArea = m.getBounds();
-                    if (!enemy.isEnemyDestroyed()) {
-                        Rectangle enemyArea = enemy.getBounds();
-                        Rectangle enemyArea2 = enemy.getBounds2();
+                    for (EnemySprite enemies : enemyPlayers) {
+                        if (enemies.isEnemyDestroyed()) {
+                            continue;
+                        }
+                        Rectangle enemyArea = enemies.getBigBoundsX();
+                        Rectangle enemyArea2 = enemies.getBigBoundsY();
                         if (misArea.intersects(enemyArea) || misArea.intersects(enemyArea2)) {
-                            plane.missiles.remove(m);
+                            collided.add(m);
                             back.planeHitsound();
                             if (powerRandom == powerUpRate) {
-                                LifeUpList.add(new LifePowerup(enemy));
+                                LifeUpList.add(new LifePowerup(enemies));
                             }
-                            enemy.setEnemyDestroyed(true);
-                            score+=30;
+                            enemies.setEnemyDestroyed(true);
+                            score += 30;
                             break;
                         }
                     }
-                    if (!smallEnemy.isEnemyDestroyed()) {
-                        Rectangle smallEnemyArea = smallEnemy.getBounds();
-                        if (misArea.intersects(smallEnemyArea)) {
-                            plane.missiles.remove(m);
-                            back.planeHitsound();
-                            score += 20;
-                            smallEnemy.setEnemyDestroyed(true);
-                            break;
-                        }
-                        if (m.isOffScreen()) {
-                            plane.missiles.remove(m);
-                            break;
-                        }
-                    }
+                }
+                for (Missile m : collided) {
+                    plane.missiles.remove(m);
                 }
             }
         }
@@ -250,83 +225,44 @@ public class GameJPanel extends JPanel implements Runnable {
             ammoAmount = 650;
             ammoReload = 0;
         }
-        if (enemyCount >= 99 && !enemy.isEnemyDestroyed()) {
-            Missile mis2 = enemy.projectile();
-            mis2.setX2(enemy.getxPosition() + 90);
-            mis2.setY2(enemy.getyPosition() + 100);
-            enemy.enemyMissiles.add(mis2);
-            back.missileFired();
-            enemy.didPlaneFire(true);
-        }
-        if (enemy.didPlaneFire) {
-            List<Missile> miss2 = enemy.array();
-            for (Missile m2 : miss2) {
-                m2.doDrawing2(g);
-                Rectangle misArea2 = m2.getBounds2();
-                Rectangle planeArea = plane.getBounds();
-                if (misArea2.intersects(planeArea)) {
-                    enemy.enemyMissiles.remove(m2);
-                    back.planeHitsound();
-                    plane.isHit();
-                    plane.isDead();
-                    healthX -= 50;
-                    if (healthX == 150) {
-                        healthpercent = "75%";
-                    }
-                    if (healthX == 100) {
-                        healthpercent = "50%";
-                    }
-                    if (healthX == 50) {
-                        healthpercent = "25%";
-                    }
-                    if (healthX == 0) {
-                        healthpercent = "0%";
-                    }
-                    break;
-                }
-                if (m2.isOffScreen2()) {
-                    enemy.enemyMissiles.remove(m2);
-                    break;
-                }
+        for (EnemySprite enemies : enemyPlayers) {
+            if (enemyCount >= 99 && !enemies.isEnemyDestroyed()) {
+                Missile mis2 = enemies.projectile();
+                mis2.setX2(enemies.getxPosition() + 90);
+                mis2.setY2(enemies.getyPosition() + 100);
+                enemies.enemyMissiles.add(mis2);
+                back.missileFired();
+                enemies.didPlaneFire(true);
             }
-        }
-        if (enemyCount >= 99 && !smallEnemy.isEnemyDestroyed()) {
-            Missile mis2 = smallEnemy.projectile();
-            mis2.setX2(smallEnemy.getxPosition() + 10);
-            mis2.setY2(smallEnemy.getyPosition() + 20);
-            smallEnemy.enemyMissiles.add(mis2);
-            back.missileFired();
-            smallEnemy.didPlaneFire(true);
-        }
-        if (smallEnemy.didPlaneFire) {
-            List<Missile> miss3 = smallEnemy.array();
-            for (Missile m2 : miss3) {
-                m2.doDrawing2(g);
-                Rectangle misArea2 = m2.getBounds2();
-                Rectangle planeArea = plane.getBounds();
-                if (misArea2.intersects(planeArea)) {
-                    smallEnemy.enemyMissiles.remove(m2);
-                    back.planeHitsound();
-                    plane.isHit();
-                    plane.isDead();
-                    healthX -= 50;
-                    if (healthX == 150) {
-                        healthpercent = "75%";
+            if (enemies.didPlaneFire) {
+                for (Missile m : enemies.array()) {
+                    m.doDrawing2(g);
+                    Rectangle misArea2 = m.getBounds2();
+                    Rectangle planeArea = plane.getBounds();
+                    if (misArea2.intersects(planeArea)) {
+                        enemies.enemyMissiles.remove(m);
+                        back.planeHitsound();
+                        plane.isHit();
+                        plane.isDead();
+                        healthX -= 50;
+                        if (healthX == 150) {
+                            healthpercent = "75%";
+                        }
+                        if (healthX == 100) {
+                            healthpercent = "50%";
+                        }
+                        if (healthX == 50) {
+                            healthpercent = "25%";
+                        }
+                        if (healthX == 0) {
+                            healthpercent = "0%";
+                        }
+                        break;
                     }
-                    if (healthX == 100) {
-                        healthpercent = "50%";
+                    if (m.isOffScreen2()) {
+                        enemies.enemyMissiles.remove(m);
+                        break;
                     }
-                    if (healthX == 50) {
-                        healthpercent = "25%";
-                    }
-                    if (healthX == 0) {
-                        healthpercent = "0%";
-                    }
-                    break;
-                }
-                if (m2.isOffScreen2()) {
-                    smallEnemy.enemyMissiles.remove(m2);
-                    break;
                 }
             }
         }

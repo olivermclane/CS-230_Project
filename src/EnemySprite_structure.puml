@@ -1,0 +1,461 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root node is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "EnemySprite"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1071625478 { 
+   	label=SmallEnemySprite
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   SmallEnemySprite1071625478[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SmallEnemySprite</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   didPlaneFire: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemy: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemyDestroyed: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   enemyMissiles: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isEnemyHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   missileFired: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeDown: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeLeft: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeRight: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeUp: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   smallEnemy: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   width: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ array(): List&lt;Missile&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ didPlaneFire(x: boolean): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ doDrawing(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadImage()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ missileFired(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveLeft()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveRight()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ projectile(): Missile</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1560864506 { 
+   	label=Missile
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Missile1560864506[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Missile</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   enemyMissile: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   missile: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   width: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x2: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y2: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ doDrawing1(r: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ doDrawing2(s: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ doImageDraw(i: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ imageUpdate(arg0: Image, arg1: int, arg2: int, arg3: int, arg4: int, arg5: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadImage1()</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadImage2()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1743167565 { 
+   	label=EnemySprite
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   EnemySprite1743167565[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)EnemySprite</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   didPlaneFire: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemy: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemyDestroyed: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   enemyMissiles: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   isBigEnemy: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   isSmallEnemy: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   maxAmmo: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   missileFired: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   moveSpeedX: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeDown: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeLeft: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeRight: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeUp: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ array(): List&lt;Missile&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ didPlaneFire(x: boolean): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ doDrawing(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" ># loadImage(file: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveLeft()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveRight()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ projectile(): Missile</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1743328547 { 
+   	label=tankEnemySprite
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   tankEnemySprite1743328547[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)tankEnemySprite</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   didPlaneFire: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemyDestroyed: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   enemyMissiles: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isEnemyHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   missileFired: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeDown: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeLeft: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeRight: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeUp: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   smallEnemy: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   width: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ didPlaneFire(x: boolean): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ doDrawing(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadImage()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ missileFired(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveDown()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveLeft()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveRight()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveUp()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ projectile(): Missile</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1904936314 { 
+   	label=SpriteSheet
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   SpriteSheet1904936314[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SpriteSheet</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   height: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sprites: BufferedImage[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   width: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1965186452 { 
+   	label=GameJPanel
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   GameJPanel1965186452[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)GameJPanel</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   LifeUpList: List&lt;LifePowerup&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   allowDrop: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ammo: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ammoAmount: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ammoPlacement: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ammoReload: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   back: Sound_effects [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   back1: ScrollingBackground [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   bigEnemy: BigEnemy [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemy: EnemySprite [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemyCount: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   enemyExplosion: ExplosionSprite [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   enemyPlayers: List&lt;EnemySprite&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosionCount: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosionTic: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   gameOver: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   healthX: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   healthpercent: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   lifeCounter: JLabel [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeExplosion: ExplosionSprite [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   powerRandom: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   powerUpRate: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   puDrop: Random [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   retroGame: Font [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   score: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   smallEnemy: SmallEnemySprite [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   smallEnemyExplosion: ExplosionSprite [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- intiGamePanel()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ paintComponent(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_637912031 { 
+   	label=PlaneSprite
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   PlaneSprite637912031[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PlaneSprite</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   Ammo: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   Missiles: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   MoveTic: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   didPlaneFire: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   img1: BufferedImage [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isPlaneHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   maxAmmo: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   missileFired: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   missiles: List&lt;Missile&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeDestroyed: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeDown: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeHit: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeLeft: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   planeLife: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeRight: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   planeUp: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   usingKeyboard: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ actionPerformed(arg0: ActionEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addPlaneLife(x: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ammo(): List&lt;Missile&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ ammoLoad()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ didPlaneFire(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ didmissileFired(): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ doDrawing(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isHit()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyPressed(e: KeyEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyReleased(e: KeyEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ keyTyped(e: KeyEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadImage()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ missileFired(fire: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ missiles(): List&lt;Missile&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseClicked(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseDragged(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseEntered(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseExited(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseMoved(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mousePressed(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mouseReleased(e: MouseEvent)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveDown()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveLeft()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveRight()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ moveUp()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ projectile(): Missile</TD></TR>
+<TR><TD ALIGN="LEFT" >+ run()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_640251418 { 
+   	label=ExplosionSprite
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ExplosionSprite640251418[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ExplosionSprite</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   expCount: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosionSprites: BufferedImage[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   explosionTic: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   x: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   y: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ doDrawing(g: Graphics)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ imageUpdate(arg0: Image, arg1: int, arg2: int, arg3: int, arg4: int, arg5: int): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- loadImage()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ plusExplosionTic()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_775874184 { 
+   	label=BigEnemy
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   BigEnemy775874184[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BigEnemy</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   isBigEnemy: boolean [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+EnemySprite1743167565 -> BigEnemy775874184[arrowhead=none, arrowtail=empty, dir=both];
+EnemySprite1743167565 -> Missile1560864506[label="enemyMissiles
+[0..*]"];
+GameJPanel1965186452 -> BigEnemy775874184[label="bigEnemy
+[0..1]"];
+GameJPanel1965186452 -> EnemySprite1743167565[label="enemy
+[0..1]"];
+GameJPanel1965186452 -> EnemySprite1743167565[label="enemyPlayers
+[0..*]"];
+GameJPanel1965186452 -> ExplosionSprite640251418[label="enemyExplosion
+[0..1]"];
+GameJPanel1965186452 -> ExplosionSprite640251418[label="planeExplosion
+[0..1]"];
+GameJPanel1965186452 -> ExplosionSprite640251418[label="smallEnemyExplosion
+[0..1]"];
+GameJPanel1965186452 -> SmallEnemySprite1071625478[label="smallEnemy
+[0..1]"];
+PlaneSprite637912031 -> Missile1560864506[label="Ammo
+[0..*]"];
+PlaneSprite637912031 -> Missile1560864506[label="Missiles
+[0..*]"];
+PlaneSprite637912031 -> Missile1560864506[label="missiles
+[0..*]"];
+SmallEnemySprite1071625478 -> Missile1560864506[label="enemyMissiles
+[0..*]"];
+SpriteSheet1904936314 -> EnemySprite1743167565[arrowhead=none, arrowtail=empty, dir=both];
+SpriteSheet1904936314 -> ExplosionSprite640251418[arrowhead=none, arrowtail=empty, dir=both];
+SpriteSheet1904936314 -> PlaneSprite637912031[arrowhead=none, arrowtail=empty, dir=both];
+SpriteSheet1904936314 -> SmallEnemySprite1071625478[arrowhead=none, arrowtail=empty, dir=both];
+SpriteSheet1904936314 -> tankEnemySprite1743328547[arrowhead=none, arrowtail=empty, dir=both];
+tankEnemySprite1743328547 -> Missile1560864506[label="enemyMissiles
+[0..*]"];
+    
+}
+@enduml
