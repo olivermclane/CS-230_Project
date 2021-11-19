@@ -165,6 +165,7 @@ public class EnemySprite extends SpriteSheet
     private int y;
     private int moveSpeedX = 3;
     private int maxAmmo;
+    private final Color heathBar = Color.GREEN;
 
     public EnemySprite() {
     }
@@ -185,6 +186,8 @@ public class EnemySprite extends SpriteSheet
     public void doDrawing(Graphics g) {
         if (!planeRight && !planeLeft) {
             g.drawImage(enemy, getxPosition(), getyPosition(), this);
+            g.setColor(heathBar);
+            g.fillRect(getxPosition() + enemy.getWidth() / 4, getyPosition() - 10, enemy.getWidth() / 2, 5);
         }
         if (planeRight) {
             moveRight();
