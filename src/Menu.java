@@ -14,6 +14,7 @@ public class Menu implements ActionListener {
     public static JButton quitGButton;
     public static JPanel ButtonPanel;
     public static Menu drawMenu;
+    public static JFrame j;
 
     public Menu() {
         drawMenu();
@@ -113,14 +114,14 @@ public class Menu implements ActionListener {
     public void startGame(JFrame j) {
         panel = new GameJPanel();
         j.add(panel);
+        j.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
         try {
             Robot robot = new Robot();
-            robot.mouseMove(j.getX() + 350, j.getY() + 700);
+            robot.mouseMove(j.getX() + GameJPanel.plane.getxPosition(), j.getY() + GameJPanel.plane.getyPosition());
         } catch (AWTException e) {
             e.printStackTrace();
         }
-        j.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-                new ImageIcon("src/Plane-assets/blackCursor.png").getImage(), new Point(0, 0), "custom cursor"));
         j.setVisible(true);
     }
 
