@@ -29,7 +29,6 @@ public class PlaneSprite extends SpriteSheet
     private boolean isPlaneHit = false;
     private List<Missile> Missiles;
     private boolean usingKeyboard;
-    private int MoveTic;
 
     public PlaneSprite() {
         loadImage();
@@ -64,42 +63,22 @@ public class PlaneSprite extends SpriteSheet
     }
 
     public void doDrawing(Graphics g) {
-        if (!planeRight && !planeLeft && !planeUp && !planeDown) {
+        if (!planeRight && !planeLeft) {
             g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
-        } else if (planeRight && planeLeft && !planeUp && !planeDown) {
+        } else if (planeRight && planeLeft) {
             g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
-        } else if (planeRight && !planeUp && !planeDown) {
+        } else if (planeRight) {
             moveRight();
             g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
-        } else if (planeLeft && !planeUp && !planeDown) {
+        } else if (planeLeft) {
             moveLeft();
             g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
         }
-        if (planeUp && !planeLeft && !planeRight) {
+        if (planeUp) {
             moveUp();
         }
-        if (planeDown && !planeLeft && !planeRight) {
+        if (planeDown) {
             moveDown();
-        }
-        if (planeUp && planeRight) {
-            moveUp();
-            moveRight();
-            g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
-        }
-        if (planeDown && planeRight) {
-            moveDown();
-            moveRight();
-            g.drawImage(sprites1[4], getxPosition(), getyPosition(), this);
-        }
-        if (planeUp && planeLeft) {
-            moveUp();
-            moveLeft();
-            g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
-        }
-        if (planeDown && planeLeft) {
-            moveDown();
-            moveLeft();
-            g.drawImage(sprites1[0], getxPosition(), getyPosition(), this);
         }
     }
 
@@ -268,44 +247,18 @@ public class PlaneSprite extends SpriteSheet
     //manages the mouse movement of plane sprite
     @Override
     public void mouseMoved(MouseEvent e) {
-//        if (!usingKeyboard) {
-//            if (getxPosition() + 418 < e.getXOnScreen()) {
-//                planeRight = true;
-//                try {
-//                    Robot robot = new Robot();
-//                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
-//                } catch (AWTException c) {
-//                    c.printStackTrace();
-//                }
-//            }
-//            if (getxPosition() + 418 > e.getXOnScreen()) {
-//                planeLeft = true;
-//                try {
-//                    Robot robot = new Robot();
-//                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
-//                } catch (AWTException c) {
-//                    c.printStackTrace();
-//                }
-//            }
-//            if (getyPosition() + 8 < e.getYOnScreen()) {
-//                planeDown = true;
-//                try {
-//                    Robot robot = new Robot();
-//                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
-//                } catch (AWTException c) {
-//                    c.printStackTrace();
-//                }
-//            }
-//            if (getyPosition() + 8 > e.getYOnScreen()) {
-//                planeUp = true;
-//                try {
-//                    Robot robot = new Robot();
-//                    robot.mouseMove(418 + getxPosition(), 8 + getyPosition());
-//                } catch (AWTException c) {
-//                    c.printStackTrace();
-//                }
-//            }
-//        }
+        if (!usingKeyboard) {
+            if (e.getX() < x + 24 || e.getX() > x + 72) {
+                if (x < e.getX() - 55)
+                    planeRight = true;
+                if (x > e.getX() - 55)
+                    planeLeft = true;
+            }
+            if (y > e.getY() - 34)
+                planeUp = true;
+            if (y < e.getY() - 34)
+                planeDown = true;
+        }
     }
 
     @Override
@@ -392,6 +345,10 @@ public class PlaneSprite extends SpriteSheet
 
     public void addPlaneLife(int x) {
         planeLife += x;
+    }
+
+    public Rectangle getBounds2() {
+        return null;
     }
 }
 	
