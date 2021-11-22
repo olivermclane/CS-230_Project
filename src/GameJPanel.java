@@ -168,7 +168,7 @@ public class GameJPanel extends JPanel implements Runnable {
                 planeExplosion.plusExplosionTic();
             }
         }
-        if (gameOver && planeExplosion.getExplosionTic() == 8) {
+        if (gameOver && planeExplosion.getExplosionTic() == 8 || enemyPlayers.isEmpty()) {
             setVisible(false);
             Menu.CentralPanel.setVisible(true);
             Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -230,8 +230,8 @@ public class GameJPanel extends JPanel implements Runnable {
         for (EnemySprite enemies : enemyPlayers) {
             if (enemyCount >= 99 && !enemies.isEnemyDestroyed()) {
                 Missile mis2 = enemies.projectile();
-                mis2.setX2(enemies.getxPosition() + 90);
-                mis2.setY2(enemies.getyPosition() + 100);
+                mis2.setX2(enemies.getxPosition() + enemies.getW() / 2);
+                mis2.setY2(enemies.getyPosition() + enemies.getH() - 2);
                 enemies.enemyMissiles.add(mis2);
                 back.missileFired();
                 enemies.didPlaneFire(true);
