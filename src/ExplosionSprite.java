@@ -73,16 +73,16 @@ public class ExplosionSprite extends SpriteSheet {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setX(int newx) {
+        x = newx;
     }
 
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setY(int newy) {
+        y = newy;
     }
 }
 

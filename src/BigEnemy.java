@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.util.concurrent.ThreadLocalRandom;
 public class BigEnemy extends EnemySprite
         implements ImageObserver {
     private final boolean isBigEnemy;
@@ -7,8 +8,8 @@ public class BigEnemy extends EnemySprite
     public BigEnemy(String e) {
         super(e);
         isBigEnemy = true;
-        setX(100);
-        setY(200);
+        setX(ThreadLocalRandom.current().nextInt(20, 600));
+        setY(ThreadLocalRandom.current().nextInt(10, 500));
     }
 
     @Override
