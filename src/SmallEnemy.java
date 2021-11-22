@@ -13,15 +13,15 @@ public class SmallEnemy extends EnemySprite
 
     @Override
     public Rectangle getBigBoundsX() {
-        return new Rectangle(getxPosition() + 74, getyPosition(),
+        return new Rectangle(getxPosition() + getW(), getyPosition() + getH(),
                 getW(),
                 getH());
     }
 
     @Override
     public Rectangle getBigBoundsY() {
-        return new Rectangle(getxPosition() + 3, getyPosition() + 74,
-                getW() - 3,
-                getH() - 104);
+        return new Rectangle(getxPosition() + getW(), getyPosition() + getH(),
+                getW(),
+                getH());
     }
 }
