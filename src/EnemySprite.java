@@ -149,6 +149,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class EnemySprite extends SpriteSheet
         implements ImageObserver {
+    private final Color heathBar = Color.GREEN;
     public boolean didPlaneFire = false;
     public List<Missile> enemyMissiles;
     public boolean isBigEnemy;
@@ -156,7 +157,7 @@ public class EnemySprite extends SpriteSheet
     private boolean planeHit;
     private int x;
     private boolean planeRight;
-    private boolean planeLeft;
+    private boolean planeLeft = true;
     private boolean planeUp;
     private boolean planeDown;
     private BufferedImage enemy;
@@ -165,7 +166,6 @@ public class EnemySprite extends SpriteSheet
     private int y;
     private int moveSpeedX = 3;
     private int maxAmmo;
-    private final Color heathBar = Color.GREEN;
 
     public EnemySprite() {
     }
@@ -184,10 +184,10 @@ public class EnemySprite extends SpriteSheet
     }
 
     public void doDrawing(Graphics g) {
+        g.setColor(heathBar);
+        g.fillRect(getxPosition() + enemy.getWidth() / 4, getyPosition() - 15, enemy.getWidth() / 2, 5);
         if (!planeRight && !planeLeft) {
             g.drawImage(enemy, getxPosition(), getyPosition(), this);
-            g.setColor(heathBar);
-            g.fillRect(getxPosition() + enemy.getWidth() / 4, getyPosition() - 10, enemy.getWidth() / 2, 5);
         }
         if (planeRight) {
             moveRight();
@@ -256,6 +256,8 @@ public class EnemySprite extends SpriteSheet
     public void moveLeft() {
         if (x <= 2) {
             x = 2;
+            planeLeft = false;
+            planeRight = true;
         } else {
             x -= moveSpeedX;
         }
@@ -289,6 +291,8 @@ public class EnemySprite extends SpriteSheet
     public void moveRight() {
         if (x >= 700 - getW() - 10) {
             x = 700 - getW() - 10;
+            planeRight = false;
+            planeLeft = true;
         } else {
             x += moveSpeedX;
         }

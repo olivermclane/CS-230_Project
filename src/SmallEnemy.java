@@ -7,15 +7,15 @@ public class SmallEnemy extends EnemySprite
     public SmallEnemy(String e) {
         super(e);
         isSmallEnemy = true;
-        setX(100);
-        setY(200);
+        setX(300);
+        setY(400);
     }
 
     @Override
     public Rectangle getBigBoundsX() {
         return new Rectangle(getxPosition() + 74, getyPosition(),
-                getW() - 73,
-                getH() - 14);
+                getW(),
+                getH());
     }
 
     @Override
