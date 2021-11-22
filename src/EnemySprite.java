@@ -147,9 +147,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 public class EnemySprite extends SpriteSheet
         implements ImageObserver {
     private final Color heathBar = Color.GREEN;
+    private final int moveSpeedY = ThreadLocalRandom.current().nextInt(1, 3);
     public boolean didPlaneFire = false;
     public List<Missile> enemyMissiles;
     public boolean isBigEnemy;
@@ -158,13 +160,13 @@ public class EnemySprite extends SpriteSheet
     private int x;
     private boolean planeRight;
     private boolean planeLeft = true;
-    private boolean planeUp;
+    private boolean planeUp = true;
     private boolean planeDown;
     private BufferedImage enemy;
     private boolean enemyDestroyed;
     private boolean missileFired;
     private int y;
-    private int moveSpeedX = 3;
+    private int moveSpeedX = ThreadLocalRandom.current().nextInt(1, 4);
     private int maxAmmo;
 
     public EnemySprite() {
@@ -197,12 +199,14 @@ public class EnemySprite extends SpriteSheet
             moveLeft();
             g.drawImage(enemy, getxPosition(), getyPosition(), this);
         }
-//		if (planeUp) {
-//			moveUp();
-//		}
-//		if (planeDown) {
-//			moveDown();
-//		}
+        if (planeUp) {
+            moveUp();
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
+        }
+        if (planeDown) {
+            moveDown();
+            g.drawImage(enemy, getxPosition(), getyPosition(), this);
+        }
     }
 
     public boolean didPlaneFire(boolean x) {
@@ -262,23 +266,26 @@ public class EnemySprite extends SpriteSheet
             x -= moveSpeedX;
         }
     }
-//	public void moveUp() {
-//		if (y <= 0) {
-//			y = 0;
-//		} else {
-//			y -= 3;
-//		}
-//
-//	}
-//
-//	public void moveDown() {
-//		if (y >= 680) {
-//			y = 680;
-//		} else {
-//			y += 3;
-//		}
-//
-//	}
+
+    public void moveUp() {
+        if (y <= 0) {
+            y = 0;
+            planeDown = true;
+            planeUp = false;
+        } else {
+            y -= moveSpeedY;
+        }
+    }
+
+    public void moveDown() {
+        if (y >= 400) {
+            y = 400;
+            planeDown = false;
+            planeUp = true;
+        } else {
+            y += moveSpeedY;
+        }
+    }
 
     public void setX(int x) {
         this.x = x;

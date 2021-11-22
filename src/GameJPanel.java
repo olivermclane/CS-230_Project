@@ -112,8 +112,8 @@ public class GameJPanel extends JPanel implements Runnable {
             if (!enemies.isEnemyDestroyed() && !enemyPlayers.isEmpty()) {
                 enemies.doDrawing(g);
             } else {
-                enemyExplosion.setX(enemies.getxPosition() + (enemies.getW() / 2));
-                enemyExplosion.setY(enemies.getyPosition() + (enemies.getH() / 2));
+                enemyExplosion.setX(enemies.getxPosition() + (enemies.getW() / 2) - (enemyExplosion.getWidth() / 2));
+                enemyExplosion.setY(enemies.getyPosition() + (enemies.getH() / 2) - (enemyExplosion.getHeight() / 2));
                 enemyExplosion.doDrawing(g);
                 if (enemyExplosion.getExplosionTic() < 8 && explosionCount == 0) {
                     enemyExplosion.setExpCount(enemyExplosion.getExplosionTic());
