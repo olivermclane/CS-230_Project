@@ -302,8 +302,8 @@ public class PlaneSprite extends SpriteSheet
     }
 
     public void moveUp() {
-        if (y <= 0) {
-            y = 0;
+        if (y <= 500) {
+            y = 500;
         } else {
             y -= 3;
         }

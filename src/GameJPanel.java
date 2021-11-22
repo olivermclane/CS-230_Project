@@ -109,20 +109,22 @@ public class GameJPanel extends JPanel implements Runnable {
         g.setColor(Color.GREEN);
         g.fillRect(10, 25, healthX, 20);
         for (EnemySprite enemies : enemyPlayers) {
-            if (!enemies.isEnemyDestroyed()) {
+            if (!enemies.isEnemyDestroyed() && !enemyPlayers.isEmpty()) {
                 enemies.doDrawing(g);
             } else {
-                enemyExplosion.setX(enemies.getxPosition() + 50);
-                enemyExplosion.setY(enemies.getyPosition() + 50);
+                enemyExplosion.setX(enemies.getxPosition() + enemies.getW() / 2);
+                enemyExplosion.setY(enemies.getyPosition() + enemies.getH() / 2);
                 enemyExplosion.doDrawing(g);
                 if (enemyExplosion.getExplosionTic() < 8 && explosionCount == 0) {
                     enemyExplosion.setExpCount(enemyExplosion.getExplosionTic());
                     enemyExplosion.plusExplosionTic();
                 }
             }
-            if (enemyExplosion.getExplosionTic() == 8 && enemies.isEnemyDestroyed()) {
+            if (enemyExplosion.getExplosionTic() >= 8 && enemies.isEnemyDestroyed()) {
                 enemyExplosion.setVisible(false);
-                enemyExplosion.plusExplosionTic();
+                enemyPlayers.remove(enemies);
+                enemyExplosion.resetExplosionTic();
+                break;
             }
         }
         for (LifePowerup p : LifeUpList) {
