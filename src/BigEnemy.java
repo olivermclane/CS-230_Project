@@ -9,7 +9,7 @@ public class BigEnemy extends EnemySprite
         super(e);
         isBigEnemy = true;
         setX(ThreadLocalRandom.current().nextInt(20, 600));
-        setY(ThreadLocalRandom.current().nextInt(10, 500));
+        setY(ThreadLocalRandom.current().nextInt(10, 400));
     }
 
     @Override
