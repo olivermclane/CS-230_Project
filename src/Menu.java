@@ -108,6 +108,10 @@ public class Menu implements ActionListener {
         CentralPanel.add(playerName, menuLayout);
         CentralPanel.add(name, menuLayout);
         playerName.addActionListener(new ActionListener() {
+            /**
+             * 
+             * @param e
+             */
             public void actionPerformed(ActionEvent e) {
                 player = name.getText();
                 name.setText("");
