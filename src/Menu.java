@@ -92,6 +92,28 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setForeground(Color.DARK_GRAY);
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
+        JTextField name = new JTextField();
+        JButton playerName = new JButton("<html><center><h2>Enter Name<br />To Play</h2></center></html>");
+        playerName.setBackground(backGC);
+        playerName.setBorderPainted(false);
+        playerName.setFocusPainted(false);
+        playerName.setHorizontalAlignment(SwingConstants.CENTER);
+        playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerName.setForeground(Color.DARK_GRAY);
+        playerName.setVisible(true);
+        name.setAlignmentX(Component.CENTER_ALIGNMENT);
+        name.setForeground(Color.DARK_GRAY);
+        name.setVisible(true);
+        playerName.setFont(RetroGame);
+        CentralPanel.add(playerName, menuLayout);
+        CentralPanel.add(name, menuLayout);
+        playerName.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                player = name.getText();
+                name.setText("");
+                playGButton.setEnabled(true);
+            }
+        });
         // Creating play game button
         playGButton.setForeground(Color.WHITE);
         playGButton.setBackground(backGC);

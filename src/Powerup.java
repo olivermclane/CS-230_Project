@@ -66,11 +66,17 @@ public class Powerup implements ImageObserver {
         g.drawImage(imageLife, x, y, this);
     }
 
-    // moves powerup down
+    /**
+     *  
+     *  
+     */
     public void movePowerDown() {
         y += 3;
     }
 
+    /**
+     * 
+     */
     @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
         // TODO Auto-generated method stub

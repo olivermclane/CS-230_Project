@@ -47,6 +47,9 @@ public class GameJPanel extends JPanel implements Runnable {
 
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     
+    /**
+     * 
+     */
     public GameJPanel() {
         intiGamePanel();
         gameReplay += 1;
