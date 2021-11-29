@@ -15,6 +15,8 @@ public class Menu implements ActionListener {
     public static JPanel ButtonPanel;
     public static Menu drawMenu;
     public static JFrame j;
+    public static Font RetroGame;
+    public static String player;
 
     public Menu() {
         drawMenu();
@@ -40,7 +42,6 @@ public class Menu implements ActionListener {
         //name of game
         JLabel timeFigtherTitle = new JLabel("TimeX Fighters");
         //creating font and appending it to the compents
-        Font RetroGame;
         try {
             RetroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
             RetroGame = RetroGame.deriveFont(Font.PLAIN, 20);
@@ -79,6 +80,27 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setForeground(Color.DARK_GRAY);
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
+        JTextField name = new JTextField();
+        JButton playerName = new JButton("<html><center><h2>Enter Name<br />To Play</h2></center></html>");
+        playerName.setBorderPainted(false);
+        playerName.setFocusPainted(false);
+        playerName.setHorizontalAlignment(SwingConstants.CENTER);
+        playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerName.setForeground(Color.DARK_GRAY);
+        playerName.setVisible(true);
+        name.setAlignmentX(Component.CENTER_ALIGNMENT);
+        name.setForeground(Color.DARK_GRAY);
+        name.setVisible(true);
+        playerName.setFont(RetroGame);
+        CentralPanel.add(playerName, menuLayout);
+        CentralPanel.add(name, menuLayout);
+        playerName.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                player = name.getText();
+                name.setText("");
+                playGButton.setEnabled(true);
+            }
+        });
         // Creating play game button
         playGButton.setForeground(Color.WHITE);
         playGButton.setBackground(backGC);
@@ -108,6 +130,7 @@ public class Menu implements ActionListener {
         menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
+        playGButton.setEnabled(false);
     }
 
     //start game method
@@ -123,6 +146,9 @@ public class Menu implements ActionListener {
             e.printStackTrace();
         }
         j.setVisible(true);
+    }
+
+    public void endGame(JFrame e) {
     }
 
     public void actionPerformed(ActionEvent a) {

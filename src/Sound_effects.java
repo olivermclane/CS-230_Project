@@ -5,8 +5,10 @@ import javax.sound.sampled.FloatControl;
 import java.io.File;
 public class Sound_effects {
     private Clip clip;
+
     public Sound_effects() {
     }
+
     public void backGround() {
         try {
             String filepath = ("src/Plane-assets/background.wav");
@@ -15,13 +17,14 @@ public class Sound_effects {
             clip.open(audioInput);
             FloatControl gainControl =
                     (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-20.0f); // Reduce volume by 10 decibels.
+            gainControl.setValue(-15.0f); // Reduce volume by 10 decibels.
             clip.start();
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             System.out.print(e.getMessage());
         }
     }
+
     public void missileFired() {
         try {
             String filepath = ("src/Plane-assets/ROCKET2.wav");
@@ -33,6 +36,7 @@ public class Sound_effects {
             System.out.print(e.getMessage());
         }
     }
+
     public void planeHitsound() {
         try {
             String filepath = ("src/Plane-assets/EXPLOSION.wav");

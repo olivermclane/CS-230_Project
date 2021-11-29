@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.*;
 public class GameJPanel extends JPanel implements Runnable {
     public static PlaneSprite plane;
+    public static int highScore;
+    private static int gameReplay;
+    private static JLabel endScore;
     private final int explosionTic = 0;
     private final int powerUpRate = 2;
     private final Random puDrop = new Random();
@@ -16,6 +19,7 @@ public class GameJPanel extends JPanel implements Runnable {
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
     public List<EnemySprite> enemyPlayers = new ArrayList<>();
+    public List<ExplosionSprite> enemyExp = new ArrayList<>();
     private int score = 0;
     private String healthpercent = "100%";
     private ScrollingBackground back1;
@@ -23,7 +27,6 @@ public class GameJPanel extends JPanel implements Runnable {
     private int enemyCount;
     private Sound_effects back;
     private int explosionCount;
-    private SmallEnemy smallEnemy;
     // private tankEnemySprite tankEnemy;
     // private JLabel health;
     private int healthX = 200;
@@ -38,10 +41,17 @@ public class GameJPanel extends JPanel implements Runnable {
     private ExplosionSprite smallEnemyExplosion;
     private ExplosionSprite planeExplosion;
     private BigEnemy bigEnemy;
+    private SmallEnemy smallEnemy;
+    private BigEnemy bigEnemy2;
+    private SmallEnemy smallEnemy2;
+    private BigEnemy bigEnemy3;
+    private SmallEnemy smallEnemy3;
+    private String playerName;
 
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     public GameJPanel() {
         intiGamePanel();
+        gameReplay += 1;
     }
 
     private void intiGamePanel() {
@@ -51,6 +61,7 @@ public class GameJPanel extends JPanel implements Runnable {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(retroGame);
             lifeCounter.setFont(retroGame);
+            gameReplay += 1;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -63,7 +74,10 @@ public class GameJPanel extends JPanel implements Runnable {
         addMouseMotionListener(new MAdapter());
         addMouseListener(new MAdapter());
         back = new Sound_effects();
-        back.backGround();
+        if (gameReplay > 1) {
+        } else {
+            back.backGround();
+        }
         back1 = new ScrollingBackground();
         plane = new PlaneSprite();
         ammo = plane.ammo();
@@ -74,6 +88,20 @@ public class GameJPanel extends JPanel implements Runnable {
         smallEnemy = new SmallEnemy("smallEnemies.png");
         enemyPlayers.add(bigEnemy);
         enemyPlayers.add(smallEnemy);
+        bigEnemy2 = new BigEnemy("Enemies.png");
+        smallEnemy2 = new SmallEnemy("smallEnemies.png");
+        enemyPlayers.add(bigEnemy);
+        enemyPlayers.add(smallEnemy);
+        bigEnemy3 = new BigEnemy("Enemies.png");
+        smallEnemy3 = new SmallEnemy("smallEnemies.png");
+        enemyPlayers.add(bigEnemy2);
+        enemyPlayers.add(smallEnemy2);
+        enemyPlayers.add(bigEnemy3);
+        enemyPlayers.add(smallEnemy3);
+        if (endScore == null) {
+        } else {
+            endScore.setVisible(false);
+        }
     }
 
     @Override
@@ -109,6 +137,12 @@ public class GameJPanel extends JPanel implements Runnable {
         g.setColor(Color.GREEN);
         g.fillRect(10, 25, healthX, 20);
         for (EnemySprite enemies : enemyPlayers) {
+            if (enemyExplosion.getExplosionTic() >= 8 && enemies.isEnemyDestroyed()) {
+                enemyExplosion.setVisible(false);
+                enemyPlayers.remove(enemies);
+                enemyExplosion.resetExplosionTic();
+                break;
+            }
             if (!enemies.isEnemyDestroyed() && !enemyPlayers.isEmpty()) {
                 enemies.doDrawing(g);
             } else {
@@ -119,12 +153,6 @@ public class GameJPanel extends JPanel implements Runnable {
                     enemyExplosion.setExpCount(enemyExplosion.getExplosionTic());
                     enemyExplosion.plusExplosionTic();
                 }
-            }
-            if (enemyExplosion.getExplosionTic() >= 8 && enemies.isEnemyDestroyed()) {
-                enemyExplosion.setVisible(false);
-                enemyPlayers.remove(enemies);
-                enemyExplosion.resetExplosionTic();
-                break;
             }
         }
         for (LifePowerup p : LifeUpList) {
@@ -172,7 +200,16 @@ public class GameJPanel extends JPanel implements Runnable {
             setVisible(false);
             Menu.CentralPanel.setVisible(true);
             Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            System.out.println("Game Exit");
+            if (score > highScore) {
+                highScore = score;
+                playerName = Menu.player;
+            }
+            endScore = new JLabel(playerName + " " + "HighScore:" + " " + (highScore));
+            endScore.setFont(Menu.RetroGame);
+            endScore.setAlignmentX(Component.TOP_ALIGNMENT);
+            endScore.setForeground(Color.DARK_GRAY);
+            endScore.setVisible(true);
+            Menu.CentralPanel.add(endScore);
             gameOver = false;
         }
         if (planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
