@@ -5,6 +5,10 @@ public class BigEnemy extends EnemySprite
         implements ImageObserver {
     private final boolean isBigEnemy;
 
+    /**
+     * 
+     * @param e
+     */
     public BigEnemy(String e) {
         super(e);
         isBigEnemy = true;
@@ -12,13 +16,21 @@ public class BigEnemy extends EnemySprite
         setY(ThreadLocalRandom.current().nextInt(10, 400));
     }
 
+    
+    /**
+     * 
+     * @return
+     */
     @Override
     public Rectangle getBigBoundsX() {
         return new Rectangle(getxPosition() + 74, getyPosition(),
                 getW() - 73,
                 getH() - 14);
     }
-
+    /**
+     * 
+     * @return
+     */
     @Override
     public Rectangle getBigBoundsY() {
         return new Rectangle(getxPosition() + 3, getyPosition() + 74,

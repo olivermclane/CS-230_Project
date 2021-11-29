@@ -7,12 +7,12 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
+
 public class GameJPanel extends JPanel implements Runnable {
     public static PlaneSprite plane;
     public static int highScore;
     private static int gameReplay;
     private static JLabel endScore;
-    private final int explosionTic = 0;
     private final int powerUpRate = 2;
     private final Random puDrop = new Random();
     public JLabel lifeCounter = new JLabel();
@@ -23,7 +23,6 @@ public class GameJPanel extends JPanel implements Runnable {
     private int score = 0;
     private String healthpercent = "100%";
     private ScrollingBackground back1;
-    private EnemySprite enemy;
     private int enemyCount;
     private Sound_effects back;
     private int explosionCount;
@@ -36,9 +35,7 @@ public class GameJPanel extends JPanel implements Runnable {
     private int ammoAmount = 650;
     private int ammoReload;
     private int powerRandom;
-    private boolean allowDrop;
     private ExplosionSprite enemyExplosion;
-    private ExplosionSprite smallEnemyExplosion;
     private ExplosionSprite planeExplosion;
     private BigEnemy bigEnemy;
     private SmallEnemy smallEnemy;
@@ -49,11 +46,15 @@ public class GameJPanel extends JPanel implements Runnable {
     private String playerName;
 
     //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
+    
     public GameJPanel() {
         intiGamePanel();
         gameReplay += 1;
     }
 
+   /**
+    *
+    */
     private void intiGamePanel() {
         try {
             retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
@@ -81,7 +82,6 @@ public class GameJPanel extends JPanel implements Runnable {
         back1 = new ScrollingBackground();
         plane = new PlaneSprite();
         ammo = plane.ammo();
-        smallEnemyExplosion = new ExplosionSprite();
         planeExplosion = new ExplosionSprite();
         enemyExplosion = new ExplosionSprite();
         bigEnemy = new BigEnemy("Enemies.png");
@@ -105,6 +105,9 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 
     @Override
+    /**
+     * 
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         back1.loadBackground(g);

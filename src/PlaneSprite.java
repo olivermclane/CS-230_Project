@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class PlaneSprite extends SpriteSheet
         implements ActionListener, ImageObserver, Runnable, KeyListener, MouseInputListener {
     private static BufferedImage[] sprites1;
@@ -30,6 +31,9 @@ public class PlaneSprite extends SpriteSheet
     private List<Missile> Missiles;
     private boolean usingKeyboard;
 
+    /**
+     * 
+     */
     public PlaneSprite() {
         loadImage();
         Ammo = new ArrayList<>();
@@ -39,29 +43,51 @@ public class PlaneSprite extends SpriteSheet
         planeLife = 4;
     }
 
+    /**
+     * 
+     */
     public void ammoLoad() {
         for (int i = 0; i < maxAmmo; i++) {
             Ammo.add(new Missile());
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public List<Missile> ammo() {
         return Ammo;
     }
 
+    /**
+     * 
+     */
     @Override
     public void actionPerformed(ActionEvent arg0) {
         // TODO Auto-generated method stub
     }
 
+    /**
+     * 
+     * @return
+     */
     public List<Missile> missiles() {
         return missiles;
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean didPlaneFire() {
         return didPlaneFire;
     }
 
+    /**
+     * 
+     * @param g
+     */
     public void doDrawing(Graphics g) {
         if (!planeRight && !planeLeft) {
             g.drawImage(sprites1[2], getxPosition(), getyPosition(), this);
@@ -82,46 +108,83 @@ public class PlaneSprite extends SpriteSheet
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(getxPosition() + 3, getyPosition() + 15,
-                getW() - 3,
-                getH() - 53);
+        return new Rectangle(getxPosition() + 3, getyPosition() + 15, getW() - 3, getH() - 53);
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getH() {
         return getPlane().getHeight();
     }
 
+    /**
+     * 
+     * @return
+     */
     public BufferedImage getPlane() {
         return img1;
     }
-
+    /**
+     * 
+     * @return
+     */
     @Override
     public BufferedImage[] getSprites() {
         return sprites1;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getW() {
         return getPlane().getWidth();
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getxPosition() {
         return x;
     }
 
+    /**
+     * 
+     * @param xPosition
+     */
     public void setxPosition(int xPosition) {
         x = xPosition;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getyPosition() {
         return y;
     }
 
+    /**
+     * 
+     * @param yPosition
+     */
     public void setyPosition(int yPosition) {
         y = yPosition;
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean isDestroyed() {
         return planeDestroyed;
     }
@@ -244,7 +307,7 @@ public class PlaneSprite extends SpriteSheet
         // TODO Auto-generated method stub
     }
 
-    //manages the mouse movement of plane sprite
+    // manages the mouse movement of plane sprite
     @Override
     public void mouseMoved(MouseEvent e) {
         if (!usingKeyboard) {
@@ -351,5 +414,3 @@ public class PlaneSprite extends SpriteSheet
         return null;
     }
 }
-	
-

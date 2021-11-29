@@ -1,8 +1,15 @@
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+/**
+ * 
+ */
 public class LifePowerup extends Powerup {
     public boolean lifeAdded;
+    /**
+     * 
+     * @param e
+     */
     public LifePowerup(EnemySprite e) {
         super();
         loadImage();
@@ -10,7 +17,9 @@ public class LifePowerup extends Powerup {
         x = e.getxPosition();
         y = e.getyPosition();
     }
-    //loads powerup image
+    /**
+     * 
+     */
     public void loadImage() {
         try {
             imageLife = ImageIO.read(new File("src/Plane-assets/LifePowerup.png"));
@@ -21,7 +30,10 @@ public class LifePowerup extends Powerup {
             e.printStackTrace();
         }
     }
-    //checks collison with planesprite and adds life.
+    /**
+     * 
+     * @param p
+     */
     public void addLife(PlaneSprite p) {
         if (!lifeAdded) {
             p.addPlaneLife(1);
