@@ -150,6 +150,7 @@ public class Menu implements ActionListener {
         menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
+        playGButton.setEnabled(false);
     }
 
     /**
