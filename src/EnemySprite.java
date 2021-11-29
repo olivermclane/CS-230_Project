@@ -164,7 +164,7 @@ public class EnemySprite extends SpriteSheet
         }
     }
 
-    void loadImage(String file) {
+    public void loadImage(String file) {
         try {
             enemy = ImageIO.read(new File("src/Plane-assets/" + file));
         } catch (IOException e) {

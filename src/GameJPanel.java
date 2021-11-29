@@ -104,6 +104,9 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -209,6 +212,8 @@ public class GameJPanel extends JPanel implements Runnable {
             endScore.setAlignmentX(Component.TOP_ALIGNMENT);
             endScore.setForeground(Color.DARK_GRAY);
             endScore.setVisible(true);
+            Menu.CentralPanel.setVisible(true);
+            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             Menu.CentralPanel.add(endScore);
             gameOver = false;
         }

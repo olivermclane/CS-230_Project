@@ -82,7 +82,6 @@ public class Menu implements ActionListener {
         CentralPanel.add(timeFigtherTitle, menuLayout);
         JTextField name = new JTextField();
         JButton playerName = new JButton("<html><center><h2>Enter Name<br />To Play</h2></center></html>");
-        l
         playerName.setBackground(backGC);
         playerName.setBorderPainted(false);
         playerName.setFocusPainted(false);
