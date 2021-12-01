@@ -132,6 +132,7 @@ public class PlaneSprite extends SpriteSheet
     public BufferedImage getPlane() {
         return img1;
     }
+
     /**
      * 
      * @return

@@ -1,4 +1,5 @@
 import java.awt.*;
+
 /**
  * 
  */
@@ -6,6 +7,7 @@ public class ScrollingBackground {
     // Two copies of the background image to scroll
     private final Background backOne;
     private final Background backTwo;
+
     /**
      * 
      */
@@ -13,6 +15,7 @@ public class ScrollingBackground {
         backOne = new Background(0, +700);
         backTwo = new Background(0, +backOne.getImageHeight() + 700);
     }
+
     /**
      * 
      * @param g

@@ -5,19 +5,22 @@ import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 /**
- * 
+ * This class keeps track of our sounds clips. It can play sounds for
+ * background music, planehit sound, and the misslefired sound.
  */
 public class Sound_effects {
     private Clip clip;
 
     /**
-     * 
+     * This is our sound device, when created it can be used to
+     * play several different sounds.
      */
     public Sound_effects() {
     }
 
     /**
-     * 
+     * This will play and load the background music that is used throughout the
+     * game.
      */
     public void backGround() {
         try {
@@ -35,7 +38,7 @@ public class Sound_effects {
     }
 
     /**
-     * 
+     * This method will play the sound for a missled being fired.
      */
     public void missileFired() {
         try {
@@ -50,7 +53,7 @@ public class Sound_effects {
     }
 
     /**
-     * 
+     * This method load and play the noise for when a plane get hit.
      */
     public void planeHitsound() {
         try {

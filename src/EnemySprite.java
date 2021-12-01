@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * This is the parent class for BigEnemy and SmallEnemy.
+ * This holds shared methods and shared variables.
+ */
 public class EnemySprite extends SpriteSheet implements ImageObserver {
     private final Color heathBar = Color.GREEN;
     private final int moveSpeedY = ThreadLocalRandom.current().nextInt(1, 3);
@@ -15,7 +19,6 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     public List<Missile> enemyMissiles;
     public boolean isBigEnemy;
     public boolean isSmallEnemy;
-    private boolean planeHit;
     private int x;
     private boolean planeRight;
     private boolean planeLeft = true;
@@ -23,20 +26,21 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     private boolean planeDown;
     private BufferedImage enemy;
     private boolean enemyDestroyed;
-    private boolean missileFired;
     private int y;
     private int moveSpeedX = ThreadLocalRandom.current().nextInt(1, 4);
-    private int maxAmmo;
 
     /**
-     * 
+     * This is the default constructor for
+     * a parent class of BigEnemy and SmallEnemy
      */
     public EnemySprite() {
     }
 
     /**
+     * This is the parent consturctor and will set the image of
+     * the sprite.
      * 
-     * @param file
+     * @param file this is the location of the image file for the sprite
      */
     public EnemySprite(String file) {
         loadImage(file);
@@ -44,23 +48,19 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * Tis is the missle for the enemy.
      * 
-     */
-    public void setisEnemyHit() {
-        boolean isEnemyHit = true;
-    }
-
-    /**
-     * 
-     * @return
+     * @return a new missle for the enemy
      */
     public Missile projectile() {
         return new Missile();
     }
 
     /**
+     * This method will draw the enemysprite on the canas
+     * and move it around the canvas.
      * 
-     * @param g
+     * @param g this is the canvas for the enemysprite to get drawn on.
      */
     public void doDrawing(Graphics g) {
         g.setColor(heathBar);
@@ -87,23 +87,27 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * THis method takes care of settings location of the missle location.
+     * If the enemy fires it sets a x location for the missle.
      * 
-     * @param x
-     * @return
+     * @param x is a true or false value for it the eney fired.
+     * @return reutnrs the location of the missles to shoot.
      */
     public boolean didPlaneFire(boolean x) {
         return didPlaneFire = x;
     }
 
     /**
+     * This retunrs the List of missles controled by the enemy.
      * 
-     * @return
+     * @return a list of missles fired by the enemy
      */
     public List<Missile> array() {
         return enemyMissiles;
     }
 
     /**
+     * 
      * 
      * @return
      */
@@ -112,79 +116,95 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This method will return the height of the sprite.
      * 
-     * @return
+     * @return returns the height of the enemy sprite.
      */
     public int getH() {
         return enemy.getHeight();
     }
 
     /**
+     * This method will return the width of the sprite.
      * 
-     * @return
+     * @return reutnrs the width of the enemy sprite.
      */
     public int getW() {
         return enemy.getWidth();
     }
 
     /**
+     * This method will return the x point of the enemy sprite.
      * 
-     * @return
+     * @return returns the x location of the sprite.
      */
     public int getxPosition() {
         return x;
     }
 
     /**
+     * This methods will return the y point of the enemy sprite.
      * 
-     * @return
+     * @return returns the y location of the sprite.
      */
     public int getyPosition() {
         return y;
     }
 
     /**
+     * This is the parents class shared method for getting
+     * the bounds for the wings of the sprite.
      * 
-     * @return
+     * @return the bounds of the wings of the enemy sprite.
      */
     public Rectangle getBigBoundsX() {
         return null;
     }
 
     /**
+     * This is the parents class shared method for getting
+     * the bounds of the body of the eneny sprite.
      * 
-     * @return
+     * @return the bounds of the body of the enemy sprite.
      */
     public Rectangle getBigBoundsY() {
         return null;
     }
 
     /**
+     * This will return if the enemy sprite was destoryed.
      * 
-     * @return
+     * @return a boolean for if the sprite was destoryed/true or
+     *         still alive/false.
      */
     public boolean isEnemyDestroyed() {
         return enemyDestroyed;
     }
 
     /**
+     * This method allow you to set if the plane has been
+     * destoryed.
      * 
-     * @param b
+     * @param b this is the booolean passed in to set if
+     *          it was hit or not.
      */
     public void setEnemyDestroyed(boolean b) {
         enemyDestroyed = b;
     }
 
     /**
+     * This will set the speed of the x axis movement of the
+     * sprite.
      * 
-     * @param moveX
+     * @param moveX the number of x cords it moves per action.
      */
     public void setMoveSpeedX(int moveX) {
         moveSpeedX = moveX;
     }
 
     /**
-     * 
+     * This will move the the enemy sprite to the left, using
+     * the moveSpeed variable it move it by that number.
      */
     public void moveLeft() {
         if (x <= 2) {
@@ -197,7 +217,21 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
-     * 
+     * This method will move the enemy sprite to the right.
+     */
+    public void moveRight() {
+        if (x >= 700 - getW() - 10) {
+            x = 700 - getW() - 10;
+            planeRight = false;
+            planeLeft = true;
+        } else {
+            x += moveSpeedX;
+        }
+    }
+
+    /**
+     * This will move the enemy sprite up, using the y speed
+     * it will move the sprite across the plane.
      */
     public void moveUp() {
         if (y <= 0) {
@@ -210,6 +244,8 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This will move the enemy sprite down, using the y speed
+     * it will move the sprite across the plane.
      * 
      */
     public void moveDown() {
@@ -223,37 +259,29 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This method will set the X cordinate.
      * 
-     * @param x
+     * @param x this will be the number set for the x cord.
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
+     * This method will set the Y cordinate.
      * 
-     * @param y
+     * @param y this will be th enumber set for the y cord.
      */
     public void setY(int y) {
         this.y = y;
     }
 
     /**
+     * This method is used to load the image of the enemy sprite.
+     * Using the file location it will grab the image and load it onto
+     * the canvas.
      * 
-     */
-    public void moveRight() {
-        if (x >= 700 - getW() - 10) {
-            x = 700 - getW() - 10;
-            planeRight = false;
-            planeLeft = true;
-        } else {
-            x += moveSpeedX;
-        }
-    }
-
-    /**
-     * 
-     * @param file
+     * @param file this is the file location of the image.
      */
     public void loadImage(String file) {
         try {

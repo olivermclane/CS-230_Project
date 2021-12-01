@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+
 /**
  * 
  */
@@ -90,7 +91,7 @@ public class Missile implements ImageObserver {
         s.drawImage(getEnemyMissile(), getX2(), getY2(), getWidth2(), getHeight2(), this);
         y2 += 4;
     }
-    
+
     /**
      * 
      * @param i
@@ -178,6 +179,7 @@ public class Missile implements ImageObserver {
         // TODO Auto-generated method stub
         return false;
     }
+
     /**
      * 
      * @return
@@ -217,7 +219,7 @@ public class Missile implements ImageObserver {
     public int getWidth2() {
         return getEnemyMissile().getWidth();
     }
-    
+
     /**
      * 
      * @return
