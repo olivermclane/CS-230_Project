@@ -3,7 +3,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
 /**
- * 
+ * This class is the parent class for life powerups and
+ * weapon powerups. This is used to stored share methods
+ * across all powerups.
  */
 public class Powerup implements ImageObserver {
     // instance variables for x,y,width, and height
@@ -18,7 +20,9 @@ public class Powerup implements ImageObserver {
     protected Rectangle bounds;
 
     /**
-     * This is the method that will keep track of power up collision wiht the player. 
+     * This is the method that will keep track of power up collision wiht the
+     * player.
+     * 
      * @param planeBounds this is the bounds of the plane to check collision with.
      */
     public void collisionCheck(Rectangle planeBounds) {
@@ -29,6 +33,7 @@ public class Powerup implements ImageObserver {
 
     /**
      * This is a boolean to tell if its a life or weapon power up.
+     * 
      * @return return the life powerup boolean
      */
     public boolean isLifeP() {
@@ -37,6 +42,7 @@ public class Powerup implements ImageObserver {
 
     /**
      * This is a future feature -- Devoloping
+     * 
      * @return retunr the weapon powerup boolean
      */
     public boolean isWeapon() {
@@ -45,6 +51,7 @@ public class Powerup implements ImageObserver {
 
     /**
      * This method will return the sprite collided boolean.
+     * 
      * @return if the powerup has been collided with.
      */
     public boolean isCollided() {
@@ -57,8 +64,10 @@ public class Powerup implements ImageObserver {
     public void getBounds() {
         bounds = new Rectangle(x, y, w, h);
     }
+
     /**
      * This method draws the on the canvas and moves it down.
+     * 
      * @param g
      */
     public void draw(Graphics g) {
@@ -67,8 +76,8 @@ public class Powerup implements ImageObserver {
     }
 
     /**
-     *  This method will move the powerup down 3 spots
-     *  
+     * This method will move the powerup down 3 points on the plane.
+     * 
      */
     public void movePowerDown() {
         y += 3;

@@ -45,8 +45,8 @@ public class GameJPanel extends JPanel implements Runnable {
     private SmallEnemy smallEnemy3;
     private String playerName;
 
-    //public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
-    
+    // public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
+
     /**
      * 
      */
@@ -55,12 +55,13 @@ public class GameJPanel extends JPanel implements Runnable {
         gameReplay += 1;
     }
 
-   /**
+    /**
     *
     */
     private void intiGamePanel() {
         try {
-            retroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
+            retroGame = Font.createFont(Font.TRUETYPE_FONT,
+                    getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
             retroGame = retroGame.deriveFont(Font.PLAIN, 20);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(retroGame);

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * This is the parent class for BigEnemy and SmallEnemy. 
+ * This is the parent class for BigEnemy and SmallEnemy.
  * This holds shared methods and shared variables.
  */
 public class EnemySprite extends SpriteSheet implements ImageObserver {
@@ -30,14 +30,14 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     private int moveSpeedX = ThreadLocalRandom.current().nextInt(1, 4);
 
     /**
-     * This is the default constructor for 
+     * This is the default constructor for
      * a parent class of BigEnemy and SmallEnemy
      */
     public EnemySprite() {
     }
 
     /**
-     * This is the parent consturctor and will set the image of 
+     * This is the parent consturctor and will set the image of
      * the sprite.
      * 
      * @param file this is the location of the image file for the sprite
@@ -48,7 +48,8 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
-     * Tis is the missle for the enemy. 
+     * Tis is the missle for the enemy.
+     * 
      * @return a new missle for the enemy
      */
     public Missile projectile() {
@@ -117,7 +118,7 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     /**
      * This method will return the height of the sprite.
      * 
-     * @return returns the height of  the enemy sprite.
+     * @return returns the height of the enemy sprite.
      */
     public int getH() {
         return enemy.getHeight();
@@ -173,8 +174,8 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     /**
      * This will return if the enemy sprite was destoryed.
      * 
-     * @return a boolean for if the sprite was destoryed/true or 
-     *          still alive/false.
+     * @return a boolean for if the sprite was destoryed/true or
+     *         still alive/false.
      */
     public boolean isEnemyDestroyed() {
         return enemyDestroyed;
@@ -184,7 +185,7 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
      * This method allow you to set if the plane has been
      * destoryed.
      * 
-     * @param b this is the booolean passed in to set if 
+     * @param b this is the booolean passed in to set if
      *          it was hit or not.
      */
     public void setEnemyDestroyed(boolean b) {
@@ -202,7 +203,7 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
-     * This will move the the enemy sprite to the left, using 
+     * This will move the the enemy sprite to the left, using
      * the moveSpeed variable it move it by that number.
      */
     public void moveLeft() {
@@ -230,7 +231,7 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
 
     /**
      * This will move the enemy sprite up, using the y speed
-     *  it will move the sprite across the plane. 
+     * it will move the sprite across the plane.
      */
     public void moveUp() {
         if (y <= 0) {
@@ -268,6 +269,7 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
 
     /**
      * This method will set the Y cordinate.
+     * 
      * @param y this will be th enumber set for the y cord.
      */
     public void setY(int y) {
@@ -275,9 +277,10 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
-     * This method is used to load the image of the enemy sprite. 
-     * Using the file location it will grab the image and load it onto 
+     * This method is used to load the image of the enemy sprite.
+     * Using the file location it will grab the image and load it onto
      * the canvas.
+     * 
      * @param file this is the file location of the image.
      */
     public void loadImage(String file) {

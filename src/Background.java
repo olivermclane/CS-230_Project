@@ -5,7 +5,8 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 
 /**
- * 
+ * This class takes care of loading the background image.
+ * When you create a instance background will pull and image file.
  */
 public class Background implements ImageObserver {
     private final int x;
@@ -17,7 +18,7 @@ public class Background implements ImageObserver {
     }
 
     /**
-     * This is a background object 
+     * This is a background object
      * and places an image covering the screen.
      * 
      * @param x this is the horizontal placement of the background
@@ -37,6 +38,7 @@ public class Background implements ImageObserver {
     /**
      * This method takes care of drawing he image on the canvas.
      * When called it will paint the background image onto the canvas.
+     * 
      * @param g this is what the image will be painted on
      */
     public void draw(Graphics g) {
@@ -52,7 +54,7 @@ public class Background implements ImageObserver {
     /**
      * Method will reaturn the locaiton of the x location
      * 
-     * @return the x coordinate 
+     * @return the x coordinate
      */
     private int getX() {
         return this.x;
@@ -67,7 +69,7 @@ public class Background implements ImageObserver {
     }
 
     /**
-     *  Return the width of the image
+     * Return the width of the image
      * 
      * @return this will return a int for the width of the iamge
      */
@@ -76,7 +78,7 @@ public class Background implements ImageObserver {
     }
 
     /**
-     * Returns the height of the iamge 
+     * Returns the height of the iamge
      * 
      * @return this will return a int for the height of the image
      */
