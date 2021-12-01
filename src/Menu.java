@@ -1,13 +1,12 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 /**
- * 
+ *
  */
-public class Menu implements ActionListener {
+public class Menu implements ActionListener, KeyListener {
     //the background color
     private static final Color backGC = new Color(88, 148, 173);
     public static JPanel CentralPanel;
@@ -20,16 +19,17 @@ public class Menu implements ActionListener {
     public static JFrame j;
     public static Font RetroGame;
     public static String player;
+    private JTextField name;
+    private JLabel displayName;
 
     /**
-     * 
+     *
      */
     public Menu() {
         drawMenu();
     }
 
     /**
-     * 
      * @param args
      */
     public static void main(String[] args) {
@@ -37,24 +37,25 @@ public class Menu implements ActionListener {
     }
 
     /**
-     * 
+     *
      */
     public static void exitGame() {
         System.exit(0);
     }
 
     /**
-     * 
+     *
      */
     public void drawMenu() {
         //creating the gameFrame
         JFrame menu = new JFrame("TimeX Fighters -- Main Menu");
+        menu.requestFocusInWindow();
         //creating my buttons
         JButton quitGButton = new JButton("  Quit Game   ");
         JButton playGButton = new JButton("Play Game");
         //creating Jlabel Title
         //name of game
-        JLabel timeFigtherTitle = new JLabel("TimeX Fighters");
+        JLabel timeFigtherTitle = new JLabel("<html><center><h1>TimeX Fighters</h1></center></html>");
         //creating font and appending it to the compents
         try {
             RetroGame = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
@@ -92,39 +93,61 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setForeground(Color.DARK_GRAY);
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
-        JTextField name = new JTextField();
-        JButton playerName = new JButton("<html><center><h2>Enter Name<br />To Play</h2></center></html>");
-        playerName.setBackground(backGC);
-        playerName.setBorderPainted(false);
-        playerName.setFocusPainted(false);
+        name = new JTextField();
+        JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. A.B.C)</h3></center></html>");
+        JLabel enterName = new JLabel("<html><center><h3>Press Enter To Save</h3></center></html>");
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
         playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerName.setForeground(Color.DARK_GRAY);
         playerName.setVisible(true);
+        enterName.setHorizontalAlignment(SwingConstants.CENTER);
+        enterName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        enterName.setForeground(Color.DARK_GRAY);
+        enterName.setVisible(true);
         name.setAlignmentX(Component.CENTER_ALIGNMENT);
         name.setForeground(Color.DARK_GRAY);
         name.setVisible(true);
-        playerName.setFont(RetroGame);
-        CentralPanel.add(playerName, menuLayout);
-        CentralPanel.add(name, menuLayout);
-        playerName.addActionListener(new ActionListener() {
-            /**
-             * 
-             * @param e
-             */
-            public void actionPerformed(ActionEvent e) {
-                player = name.getText();
+        name.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
                 name.setText("");
-                playGButton.setEnabled(true);
+            }
+
+            public void focusLost(FocusEvent e) {
             }
         });
+        name.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    player = name.getText();
+                    name.setText("");
+                    playGButton.setEnabled(true);
+                    displayName.setVisible(true);
+                    displayName.setFont(RetroGame);
+                    displayName.setText("Player Name: " + player);
+
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        playerName.setFont(RetroGame);
+        enterName.setFont(RetroGame);
+        CentralPanel.add(playerName, menuLayout);
+        CentralPanel.add(name, menuLayout);
+        CentralPanel.add(enterName, menuLayout);
+        displayName = new JLabel("");
+        CentralPanel.add(displayName, menuLayout);
         // Creating play game button
         playGButton.setForeground(Color.WHITE);
         playGButton.setBackground(backGC);
         playGButton.addActionListener(new ActionListener() {
-            /**
-             * @param ActionEvent
-             */
             public void actionPerformed(ActionEvent e) {
                 startGame(menu);
                 CentralPanel.setVisible(false);
@@ -138,7 +161,7 @@ public class Menu implements ActionListener {
         quitGButton.setBackground(backGC);
         quitGButton.addActionListener(new ActionListener() {
             /**
-             * 
+             *
              * @param e
              */
             public void actionPerformed(ActionEvent e) {
@@ -158,7 +181,6 @@ public class Menu implements ActionListener {
     }
 
     /**
-     * 
      * @param j
      */
     public void startGame(JFrame j) {
@@ -174,10 +196,22 @@ public class Menu implements ActionListener {
         }
         j.setVisible(true);
     }
-    
+
     /**
      * Unused Method -- required for ActionListener
      */
     public void actionPerformed(ActionEvent a) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
