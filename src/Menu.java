@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 /**
- * 
+ * This is the creation of the menu for the game.
+ * When you called the menu it will create and JFrame
+ * and Panel for the exiting and quiting the game.
  */
 public class Menu implements ActionListener {
     //the background color
@@ -22,29 +24,33 @@ public class Menu implements ActionListener {
     public static String player;
 
     /**
-     * 
+     * This is the constructor for the menu, when called,
+     * it will draw the menu. 
      */
     public Menu() {
         drawMenu();
     }
 
     /**
-     * 
-     * @param args
+     * This is the main method of the code and will start the game
+     * by creating the menu.
+     * @param args this is unused in our code.
      */
     public static void main(String[] args) {
         new Menu();
     }
 
     /**
-     * 
+     * This method will end the process
      */
     public static void exitGame() {
         System.exit(0);
     }
 
     /**
-     * 
+     *  This method is used to draw the menu. In this buttons are created
+     *  and organized in layouts. When this is called yur will create a 
+     *  Time FitherX menu.333
      */
     public void drawMenu() {
         //creating the gameFrame
@@ -109,8 +115,9 @@ public class Menu implements ActionListener {
         CentralPanel.add(name, menuLayout);
         playerName.addActionListener(new ActionListener() {
             /**
-             * 
-             * @param e
+             * 3This will allow the play game button to be pressed, and will lock
+             * the players name.
+             * @param e this is the action of the button being pressed.
              */
             public void actionPerformed(ActionEvent e) {
                 player = name.getText();
@@ -123,7 +130,9 @@ public class Menu implements ActionListener {
         playGButton.setBackground(backGC);
         playGButton.addActionListener(new ActionListener() {
             /**
-             * @param ActionEvent
+             * This is the action event for the start game button gets
+             * pressed.
+             * @param ActionEvent this is the action event for getting pressed.
              */
             public void actionPerformed(ActionEvent e) {
                 startGame(menu);
@@ -138,8 +147,8 @@ public class Menu implements ActionListener {
         quitGButton.setBackground(backGC);
         quitGButton.addActionListener(new ActionListener() {
             /**
-             * 
-             * @param e
+             * This will call the quit game method.
+             * @param e this is the action event for the button press
              */
             public void actionPerformed(ActionEvent e) {
                 exitGame();
@@ -158,8 +167,9 @@ public class Menu implements ActionListener {
     }
 
     /**
-     * 
-     * @param j
+     * THis method will create a instance of the GameJPanel
+     * and start the game. This will also start a mouse tracer.
+     * @param j This is the main frame for graphic to shown on.
      */
     public void startGame(JFrame j) {
         panel = new GameJPanel();

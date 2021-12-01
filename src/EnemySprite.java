@@ -181,23 +181,29 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This method allow you to set if the plane has been
+     * destoryed.
      * 
-     * @param b
+     * @param b this is the booolean passed in to set if 
+     *          it was hit or not.
      */
     public void setEnemyDestroyed(boolean b) {
         enemyDestroyed = b;
     }
 
     /**
+     * This will set the speed of the x axis movement of the
+     * sprite.
      * 
-     * @param moveX
+     * @param moveX the number of x cords it moves per action.
      */
     public void setMoveSpeedX(int moveX) {
         moveSpeedX = moveX;
     }
 
     /**
-     * 
+     * This will move the the enemy sprite to the left, using 
+     * the moveSpeed variable it move it by that number.
      */
     public void moveLeft() {
         if (x <= 2) {
@@ -210,7 +216,21 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
-     * 
+     * This method will move the enemy sprite to the right.
+     */
+    public void moveRight() {
+        if (x >= 700 - getW() - 10) {
+            x = 700 - getW() - 10;
+            planeRight = false;
+            planeLeft = true;
+        } else {
+            x += moveSpeedX;
+        }
+    }
+
+    /**
+     * This will move the enemy sprite up, using the y speed
+     *  it will move the sprite across the plane. 
      */
     public void moveUp() {
         if (y <= 0) {
@@ -223,6 +243,8 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This will move the enemy sprite down, using the y speed
+     * it will move the sprite across the plane.
      * 
      */
     public void moveDown() {
@@ -236,37 +258,27 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This method will set the X cordinate.
      * 
-     * @param x
+     * @param x this will be the number set for the x cord.
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * 
-     * @param y
+     * This method will set the Y cordinate.
+     * @param y this will be th enumber set for the y cord.
      */
     public void setY(int y) {
         this.y = y;
     }
 
     /**
-     * 
-     */
-    public void moveRight() {
-        if (x >= 700 - getW() - 10) {
-            x = 700 - getW() - 10;
-            planeRight = false;
-            planeLeft = true;
-        } else {
-            x += moveSpeedX;
-        }
-    }
-
-    /**
-     * 
-     * @param file
+     * This method is used to load the image of the enemy sprite. 
+     * Using the file location it will grab the image and load it onto 
+     * the canvas.
+     * @param file this is the file location of the image.
      */
     public void loadImage(String file) {
         try {

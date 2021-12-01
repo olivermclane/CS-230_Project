@@ -18,8 +18,8 @@ public class Powerup implements ImageObserver {
     protected Rectangle bounds;
 
     /**
-     * 
-     * @param planeBounds
+     * This is the method that will keep track of power up collision wiht the player. 
+     * @param planeBounds this is the bounds of the plane to check collision with.
      */
     public void collisionCheck(Rectangle planeBounds) {
         if (planeBounds.intersects(bounds)) {
@@ -28,37 +28,37 @@ public class Powerup implements ImageObserver {
     }
 
     /**
-     * 
-     * @return
+     * This is a boolean to tell if its a life or weapon power up.
+     * @return return the life powerup boolean
      */
     public boolean isLifeP() {
         return isLifePowerup;
     }
 
     /**
-     * 
-     * @return
+     * This is a future feature -- Devoloping
+     * @return retunr the weapon powerup boolean
      */
     public boolean isWeapon() {
         return isWeaponUpgrade;
     }
 
     /**
-     * 
-     * @return
+     * This method will return the sprite collided boolean.
+     * @return if the powerup has been collided with.
      */
     public boolean isCollided() {
         return isCollected;
     }
 
     /**
-     * 
+     * THis method will retunr the bounds of the powerups sprite.
      */
     public void getBounds() {
         bounds = new Rectangle(x, y, w, h);
     }
     /**
-     * 
+     * This method draws the on the canvas and moves it down.
      * @param g
      */
     public void draw(Graphics g) {
@@ -67,7 +67,7 @@ public class Powerup implements ImageObserver {
     }
 
     /**
-     *  
+     *  This method will move the powerup down 3 spots
      *  
      */
     public void movePowerDown() {
@@ -75,7 +75,7 @@ public class Powerup implements ImageObserver {
     }
 
     /**
-     * 
+     * This method is unused but required by ImageObsever super.
      */
     @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {

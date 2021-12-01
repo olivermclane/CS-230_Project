@@ -109,7 +109,8 @@ public class GameJPanel extends JPanel implements Runnable {
 
     @Override
     /**
-     * 
+     * This method is extended from JComponent and carrys out much of the code.
+     * In this method we manage most of the operations on the sprite, which includes
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
