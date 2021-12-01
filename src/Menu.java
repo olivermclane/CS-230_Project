@@ -3,15 +3,19 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
-
 /**
- * This is the creation of the menu for the game.
- * When you called the menu it will create and JFrame
- * and Panel for the exiting and quiting the game.
+ *
  */
 public class Menu implements ActionListener {
-    // the background color
+    //the background color
+    /**
+     * This is the creation of the menu for the game.
+     * When you called the menu it will create and JFrame
+     * and Panel for the exiting and quiting the game.
+     */
     private static final Color backGC = new Color(88, 148, 173);
     public static JPanel CentralPanel;
     public static JPanel panel;
@@ -23,6 +27,8 @@ public class Menu implements ActionListener {
     public static JFrame j;
     public static Font RetroGame;
     public static String player;
+    private JTextField name;
+    private JLabel displayName;
 
     /**
      * This is the constructor for the menu, when called,
@@ -35,7 +41,7 @@ public class Menu implements ActionListener {
     /**
      * This is the main method of the code and will start the game
      * by creating the menu.
-     * 
+     *
      * @param args this is unused in our code.
      */
     public static void main(String[] args) {
@@ -57,13 +63,14 @@ public class Menu implements ActionListener {
     public void drawMenu() {
         // creating the gameFrame
         JFrame menu = new JFrame("TimeX Fighters -- Main Menu");
-        // creating my buttons
+        menu.requestFocusInWindow();
+        //creating my buttons
         JButton quitGButton = new JButton("  Quit Game   ");
         JButton playGButton = new JButton("Play Game");
-        // creating Jlabel Title
-        // name of game
-        JLabel timeFigtherTitle = new JLabel("TimeX Fighters");
-        // creating font and appending it to the compents
+        //creating Jlabel Title
+        //name of game
+        JLabel timeFigtherTitle = new JLabel("<html><center><h1>TimeX Fighters</h1></center></html>");
+        //creating font and appending it to the compents
         try {
             RetroGame = Font.createFont(Font.TRUETYPE_FONT,
                     getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
@@ -101,34 +108,54 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setForeground(Color.DARK_GRAY);
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
-        JTextField name = new JTextField();
-        JButton playerName = new JButton("<html><center><h2>Enter Name<br />To Play</h2></center></html>");
-        playerName.setBackground(backGC);
-        playerName.setBorderPainted(false);
-        playerName.setFocusPainted(false);
+        name = new JTextField();
+        JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. A.B.C)</h3></center></html>");
+        JLabel enterName = new JLabel("<html><center><h3>Press Enter To Save</h3></center></html>");
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
         playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerName.setForeground(Color.DARK_GRAY);
         playerName.setVisible(true);
+        enterName.setHorizontalAlignment(SwingConstants.CENTER);
+        enterName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        enterName.setForeground(Color.DARK_GRAY);
+        enterName.setVisible(true);
         name.setAlignmentX(Component.CENTER_ALIGNMENT);
         name.setForeground(Color.DARK_GRAY);
         name.setVisible(true);
-        playerName.setFont(RetroGame);
-        CentralPanel.add(playerName, menuLayout);
-        CentralPanel.add(name, menuLayout);
-        playerName.addActionListener(new ActionListener() {
-            /**
-             * 3This will allow the play game button to be pressed, and will lock
-             * the players name.
-             * 
-             * @param e this is the action of the button being pressed.
-             */
-            public void actionPerformed(ActionEvent e) {
-                player = name.getText();
-                name.setText("");
-                playGButton.setEnabled(true);
+        /**
+         * 3This will allow the play game button to be pressed, and will lock
+         * the players name.
+         *
+         * @param e this is the action of the button being pressed.
+         */
+        name.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    player = name.getText();
+                    name.setText("");
+                    playGButton.setEnabled(true);
+                    displayName.setVisible(true);
+                    displayName.setFont(RetroGame);
+                    displayName.setText("Player Name: " + player);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
+        playerName.setFont(RetroGame);
+        enterName.setFont(RetroGame);
+        CentralPanel.add(playerName, menuLayout);
+        CentralPanel.add(name, menuLayout);
+        CentralPanel.add(enterName, menuLayout);
+        displayName = new JLabel("");
+        CentralPanel.add(displayName, menuLayout);
         // Creating play game button
         playGButton.setForeground(Color.WHITE);
         playGButton.setBackground(backGC);
@@ -136,8 +163,8 @@ public class Menu implements ActionListener {
             /**
              * This is the action event for the start game button gets
              * pressed.
-             * 
-             * @param ActionEvent this is the action event for getting pressed.
+             *
+             * @param e is the action event for getting pressed.
              */
             public void actionPerformed(ActionEvent e) {
                 startGame(menu);
@@ -153,8 +180,9 @@ public class Menu implements ActionListener {
         quitGButton.addActionListener(new ActionListener() {
             /**
              * This will call the quit game method.
-             * 
+             *
              * @param e this is the action event for the button press
+
              */
             public void actionPerformed(ActionEvent e) {
                 exitGame();
@@ -175,7 +203,7 @@ public class Menu implements ActionListener {
     /**
      * THis method will create a instance of the GameJPanel
      * and start the game. This will also start a mouse tracer.
-     * 
+     *
      * @param j This is the main frame for graphic to shown on.
      */
     public void startGame(JFrame j) {
@@ -192,9 +220,7 @@ public class Menu implements ActionListener {
         j.setVisible(true);
     }
 
-    /**
-     * Unused Method -- required for ActionListener
-     */
-    public void actionPerformed(ActionEvent a) {
+    @Override
+    public void actionPerformed(ActionEvent e) {
     }
 }
