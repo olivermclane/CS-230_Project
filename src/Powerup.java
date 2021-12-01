@@ -59,7 +59,7 @@ public class Powerup implements ImageObserver {
     }
 
     /**
-     * THis method will retunr the bounds of the powerups sprite.
+     * This method will set the bounds of the powerups sprite.
      */
     public void getBounds() {
         bounds = new Rectangle(x, y, w, h);

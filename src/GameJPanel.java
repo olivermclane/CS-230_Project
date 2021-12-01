@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.*;
 
+/**
+ * 
+ */
 public class GameJPanel extends JPanel implements Runnable {
     public static PlaneSprite plane;
     public static int highScore;
@@ -26,8 +29,6 @@ public class GameJPanel extends JPanel implements Runnable {
     private int enemyCount;
     private Sound_effects back;
     private int explosionCount;
-    // private tankEnemySprite tankEnemy;
-    // private JLabel health;
     private int healthX = 200;
     private int ammoPlacement = 570;
     private Font retroGame;
@@ -44,8 +45,6 @@ public class GameJPanel extends JPanel implements Runnable {
     private BigEnemy bigEnemy3;
     private SmallEnemy smallEnemy3;
     private String playerName;
-
-    // public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
 
     /**
      * 
@@ -323,6 +322,9 @@ public class GameJPanel extends JPanel implements Runnable {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * 
+     */
     @Override
     public void run() {
         int frameRate = 1000 / 40;
@@ -348,6 +350,9 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * 
+     */
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -360,37 +365,61 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * 
+     */
     private class MAdapter extends MouseInputAdapter {
+        /**
+         * 
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             // TODO Auto-generated method stub
         }
 
+        /**
+         * 
+         */
         @Override
         public void mouseEntered(MouseEvent e) {
             // TODO Auto-generated method stub
         }
 
+        /**
+         * 
+         */
         @Override
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
         }
 
+        /**
+         * 
+         */
         public void mousePressed(MouseEvent e) {
             // TODO Auto-generated method stub
             plane.mousePressed(e);
         }
 
+        /**
+         * 
+         */
         public void mouseReleased(MouseEvent e) {
             // TODO Auto-generated method stub
             plane.mouseReleased(e);
         }
 
+        /**
+         * 
+         */
         @Override
         public void mouseDragged(MouseEvent e) {
             // TODO Auto-generated method stub
         }
 
+        /**
+         * 
+         */
         @Override
         public void mouseMoved(MouseEvent e) {
             // TODO Auto-generated method stub
