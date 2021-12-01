@@ -17,9 +17,11 @@ public class Background implements ImageObserver {
     }
 
     /**
+     * This is a background object 
+     * and places an image covering the screen.
      * 
-     * @param x
-     * @param y
+     * @param x this is the horizontal placement of the background
+     * @param y this is the vertial placement of the backgound
      */
     public Background(int x, int y) {
         this.x = x;
@@ -33,8 +35,9 @@ public class Background implements ImageObserver {
     }
 
     /**
-     * 
-     * @param g
+     * This method takes care of drawing he image on the canvas.
+     * When called it will paint the background image onto the canvas.
+     * @param g this is what the image will be painted on
      */
     public void draw(Graphics g) {
         // Draw the image onto the Graphics reference
@@ -47,8 +50,9 @@ public class Background implements ImageObserver {
     }
 
     /**
+     * Method will reaturn the locaiton of the x location
      * 
-     * @return
+     * @return the x coordinate 
      */
     private int getX() {
         return this.x;
@@ -56,23 +60,25 @@ public class Background implements ImageObserver {
 
     /**
      * 
-     * @return
+     * @return the y coordinate location
      */
     private int getY() {
         return this.y;
     }
 
     /**
+     *  Return the width of the image
      * 
-     * @return
+     * @return this will return a int for the width of the iamge
      */
     public int getImageWidth() {
         return image.getWidth();
     }
 
     /**
+     * Returns the height of the iamge 
      * 
-     * @return
+     * @return this will return a int for the height of the image
      */
     public int getImageHeight() {
         return image.getHeight();

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * This is the parent class for BigEnemy and SmallEnemy. 
+ * This holds shared methods and shared variables.
+ */
 public class EnemySprite extends SpriteSheet implements ImageObserver {
     private final Color heathBar = Color.GREEN;
     private final int moveSpeedY = ThreadLocalRandom.current().nextInt(1, 3);
@@ -15,7 +19,6 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     public List<Missile> enemyMissiles;
     public boolean isBigEnemy;
     public boolean isSmallEnemy;
-    private boolean planeHit;
     private int x;
     private boolean planeRight;
     private boolean planeLeft = true;
@@ -23,20 +26,21 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     private boolean planeDown;
     private BufferedImage enemy;
     private boolean enemyDestroyed;
-    private boolean missileFired;
     private int y;
     private int moveSpeedX = ThreadLocalRandom.current().nextInt(1, 4);
-    private int maxAmmo;
 
     /**
-     * 
+     * This is the default constructor for 
+     * a parent class of BigEnemy and SmallEnemy
      */
     public EnemySprite() {
     }
 
     /**
+     * This is the parent consturctor and will set the image of 
+     * the sprite.
      * 
-     * @param file
+     * @param file this is the location of the image file for the sprite
      */
     public EnemySprite(String file) {
         loadImage(file);
@@ -44,23 +48,18 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
-     * 
-     */
-    public void setisEnemyHit() {
-        boolean isEnemyHit = true;
-    }
-
-    /**
-     * 
-     * @return
+     * Tis is the missle for the enemy. 
+     * @return a new missle for the enemy
      */
     public Missile projectile() {
         return new Missile();
     }
 
     /**
+     * This method will draw the enemysprite on the canas
+     * and move it around the canvas.
      * 
-     * @param g
+     * @param g this is the canvas for the enemysprite to get drawn on.
      */
     public void doDrawing(Graphics g) {
         g.setColor(heathBar);
@@ -87,23 +86,27 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * THis method takes care of settings location of the missle location.
+     * If the enemy fires it sets a x location for the missle.
      * 
-     * @param x
-     * @return
+     * @param x is a true or false value for it the eney fired.
+     * @return reutnrs the location of the missles to shoot.
      */
     public boolean didPlaneFire(boolean x) {
         return didPlaneFire = x;
     }
 
     /**
+     * This retunrs the List of missles controled by the enemy.
      * 
-     * @return
+     * @return a list of missles fired by the enemy
      */
     public List<Missile> array() {
         return enemyMissiles;
     }
 
     /**
+     * 
      * 
      * @return
      */
@@ -112,56 +115,66 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     }
 
     /**
+     * This method will return the height of the sprite.
      * 
-     * @return
+     * @return returns the height of  the enemy sprite.
      */
     public int getH() {
         return enemy.getHeight();
     }
 
     /**
+     * This method will return the width of the sprite.
      * 
-     * @return
+     * @return reutnrs the width of the enemy sprite.
      */
     public int getW() {
         return enemy.getWidth();
     }
 
     /**
+     * This method will return the x point of the enemy sprite.
      * 
-     * @return
+     * @return returns the x location of the sprite.
      */
     public int getxPosition() {
         return x;
     }
 
     /**
+     * This methods will return the y point of the enemy sprite.
      * 
-     * @return
+     * @return returns the y location of the sprite.
      */
     public int getyPosition() {
         return y;
     }
 
     /**
+     * This is the parents class shared method for getting
+     * the bounds for the wings of the sprite.
      * 
-     * @return
+     * @return the bounds of the wings of the enemy sprite.
      */
     public Rectangle getBigBoundsX() {
         return null;
     }
 
     /**
+     * This is the parents class shared method for getting
+     * the bounds of the body of the eneny sprite.
      * 
-     * @return
+     * @return the bounds of the body of the enemy sprite.
      */
     public Rectangle getBigBoundsY() {
         return null;
     }
 
     /**
+     * This will return if the enemy sprite was destoryed.
      * 
-     * @return
+     * @return a boolean for if the sprite was destoryed/true or 
+     *          still alive/false.
      */
     public boolean isEnemyDestroyed() {
         return enemyDestroyed;

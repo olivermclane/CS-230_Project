@@ -1,13 +1,16 @@
 import java.awt.*;
-import java.awt.image.ImageObserver;
 import java.util.concurrent.ThreadLocalRandom;
-public class BigEnemy extends EnemySprite
-        implements ImageObserver {
-    private final boolean isBigEnemy;
-
+/**
+ * This is the BigEnemy class and is a subclass to 
+ * EnemySpirte. BigEnemy is a type of enemy and 
+ * uses a seperate image than other enemys.
+ */
+public class BigEnemy extends EnemySprite {
     /**
+     * This is the constructor for the BigEnemy
+     * and require a image file location for it too draw.
      * 
-     * @param e
+     * @param e the location of the image file
      */
     public BigEnemy(String e) {
         super(e);
@@ -18,8 +21,8 @@ public class BigEnemy extends EnemySprite
 
     
     /**
-     * 
-     * @return
+     * This gets the horizontal bounds for the wings of the plane
+     * @return returns the horizontal bounds of the BigEnemy
      */
     @Override
     public Rectangle getBigBoundsX() {
@@ -28,8 +31,8 @@ public class BigEnemy extends EnemySprite
                 getH() - 14);
     }
     /**
-     * 
-     * @return
+     * This gets the vertical bounds for the body of the plane.
+     * @return returns the vertical bounds
      */
     @Override
     public Rectangle getBigBoundsY() {
