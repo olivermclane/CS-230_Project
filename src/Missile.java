@@ -9,8 +9,6 @@ import java.io.IOException;
  * 
  */
 public class Missile implements ImageObserver {
-    private int width;
-    private int height;
     private BufferedImage missile;
     private int x;
     private int y;

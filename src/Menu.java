@@ -7,7 +7,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 /**
- *
+ * This is the menu class, this will hold our main method
+ *  and will be used to start the code. In side of this we
+ * initialize the menu screen and create a GameJPanel to run the game.
  */
 public class Menu implements ActionListener {
     //the background color
@@ -123,16 +125,23 @@ public class Menu implements ActionListener {
         name.setForeground(Color.DARK_GRAY);
         name.setVisible(true);
         /**
-         * 3This will allow the play game button to be pressed, and will lock
+         * This will allow the play game button to be pressed, and will lock
          * the players name.
          *
          * @param e this is the action of the button being pressed.
          */
         name.addKeyListener(new KeyListener() {
+            /**
+             * Basic Method for key events
+             */
             @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            /**
+             * This method will check if the enter key is pressed
+             * within the main method and then lock the name and open
+             * up the start game button.
+             */
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -144,7 +153,9 @@ public class Menu implements ActionListener {
                     displayName.setText("Player Name: " + player);
                 }
             }
-
+            /**
+             * This is a basic keyevent method for keys being pressed.
+             */
             @Override
             public void keyReleased(KeyEvent e) {
             }

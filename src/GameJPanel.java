@@ -376,7 +376,6 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseClicked(MouseEvent e) {
             // TODO Auto-generated method stub
         }
-
         /**
          * 
          */
@@ -384,7 +383,6 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseEntered(MouseEvent e) {
             // TODO Auto-generated method stub
         }
-
         /**
          * 
          */
@@ -392,7 +390,6 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
         }
-
         /**
          * 
          */
@@ -400,7 +397,6 @@ public class GameJPanel extends JPanel implements Runnable {
             // TODO Auto-generated method stub
             plane.mousePressed(e);
         }
-
         /**
          * 
          */
@@ -416,7 +412,6 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseDragged(MouseEvent e) {
             // TODO Auto-generated method stub
         }
-
         /**
          * 
          */

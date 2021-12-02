@@ -11,9 +11,9 @@ public class SpriteSheet extends JPanel {
     private int height;
 
     /**
-     * This is out default constructor for sprite sheet.
+     * This is our default constructor for sprite sheet and is
+     * used by subclasses.
      * 
-     * @deprecated cant be used.
      */
     public SpriteSheet() {
     }
