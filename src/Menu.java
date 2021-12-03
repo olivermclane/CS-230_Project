@@ -122,6 +122,7 @@ public class Menu implements ActionListener {
         name.setAlignmentX(Component.CENTER_ALIGNMENT);
         name.setForeground(Color.DARK_GRAY);
         name.setVisible(true);
+        /*name.setDocument(new LimitJTextField(5));*/
         /**
          * 3This will allow the play game button to be pressed, and will lock
          * the players name.
@@ -136,12 +137,16 @@ public class Menu implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    player = name.getText();
-                    name.setText("");
-                    playGButton.setEnabled(true);
-                    displayName.setVisible(true);
-                    displayName.setFont(RetroGame);
-                    displayName.setText("Player Name: " + player);
+                    if (name.getText().length() > 3) {
+                        name.setText("");
+                    } else {
+                        player = name.getText();
+                        name.setText("");
+                        playGButton.setEnabled(true);
+                        displayName.setVisible(true);
+                        displayName.setFont(RetroGame);
+                        displayName.setText("Player Name: " + player);
+                    }
                 }
             }
 
