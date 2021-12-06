@@ -12,7 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
 /**
- * 
+ * This class takes out most of our game's gameplay. This class will create the
+ * enemys and the player sprite. All of our
  */
 public class GameJPanel extends JPanel implements Runnable {
     public static PlaneSprite plane;
@@ -45,7 +46,8 @@ public class GameJPanel extends JPanel implements Runnable {
     private int round = 0;
 
     /**
-     * 
+     * This is the GameJPanel constructor, when created it will load the waves,
+     * and run the initGamePanel.
      */
     public GameJPanel() {
         intiGamePanel();
@@ -54,8 +56,11 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 
     /**
-    *
-    */
+     * This is the GamePanel initalization, this will set up all the fonts
+     * and other options surroung our game such as enemies and player. Then the
+     * method will
+     * set up some of the JPanel settings.
+     */
     private void intiGamePanel() {
         try {
             retroGame = Font.createFont(Font.TRUETYPE_FONT,
@@ -96,13 +101,15 @@ public class GameJPanel extends JPanel implements Runnable {
     /**
      * This method is extended from JComponent and carrys out much of the code.
      * In this method we manage most of the operations on the sprite, which includes
+     * collision, loading waves, combat methods, and changing enemy and player
+     * properties.
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         back1.loadBackground(g);
         if (enemyPlayers.isEmpty()) {
             round++;
-            if (round > 2) {
+            if (round > 6) {
                 setVisible(false);
                 Menu.CentralPanel.setVisible(true);
                 Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -205,7 +212,7 @@ public class GameJPanel extends JPanel implements Runnable {
                         if (healthX == 50) {
                             healthpercent = "25%";
                         }
-                        if(healthX == 0){
+                        if (healthX == 0) {
                             healthpercent = "0%";
                         }
                     }
@@ -229,7 +236,7 @@ public class GameJPanel extends JPanel implements Runnable {
             }
             gameOver = true;
         }
-        if (gameOver && planeExplosion.getExplosionTic() == 8 ) {
+        if (gameOver && planeExplosion.getExplosionTic() == 8) {
             setVisible(false);
             Menu.CentralPanel.setVisible(true);
             Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -247,7 +254,8 @@ public class GameJPanel extends JPanel implements Runnable {
         }
         if (planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
             planeExplosion.plusExplosionTic();
-            planeExplosion.setVisible(false);        }
+            planeExplosion.setVisible(false);
+        }
         if (plane.didPlaneFire() && !ammo.isEmpty()) {
             back.missileFired();
             if (!ammo.isEmpty()) {
@@ -353,7 +361,8 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 
     /**
-     * 
+     * This is our run method for GameJPanel, this will keep track of the framerate
+     * and will repaint our images on the canvas.
      */
     @Override
     public void run() {
@@ -380,14 +389,6 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
-    public void printWaves() {
-        for (List<String> list : wavesList) {
-            for (String e : list) {
-                System.out.println(e);
-            }
-        }
-    }
-
     /**
      * This method will read in the wave.txt and load
      * in the waves for the game. Method will pull the file in
@@ -400,7 +401,7 @@ public class GameJPanel extends JPanel implements Runnable {
             List<String> addWave = new ArrayList<>();
             while (wave.hasNextLine()) {
                 String data = wave.nextLine();
-                //new wave
+                // new wave
                 if (data.equals("WAVE")) {
                     wavesList.add(addWave);
                     for (String e : addWave) {
@@ -423,14 +424,27 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 
     /**
-     * 
+     * This TAdapter class tracks of our keey presses and will funnel them into the
+     * PlaneSprite class
+     * methods.
      */
     private class TAdapter extends KeyAdapter {
+
+        /**
+         * Invoked when a key is pressed
+         * 
+         * @param e the key being pressed
+         */
         @Override
         public void keyPressed(KeyEvent e) {
             plane.keyPressed(e);
         }
 
+        /**
+         * Invoked when a key is being released
+         * 
+         * @param e the key being released
+         */
         @Override
         public void keyReleased(KeyEvent e) {
             plane.keyReleased(e);
@@ -438,63 +452,38 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 
     /**
-     * 
+     * This class with manage the mouse presses and mouse
+     * released as well as gathering the mousemove events.
      */
     private class MAdapter extends MouseInputAdapter {
-        /**
-         * 
-         */
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
 
         /**
+         * This method will pass a Mouseevent to the planeclass to handle shooting.
          * 
-         */
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
-
-        /**
-         * 
-         */
-        @Override
-        public void mouseExited(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
-
-        /**
-         * 
+         * @param e the mousebutton being pressed(left or right)
          */
         public void mousePressed(MouseEvent e) {
-            // TODO Auto-generated method stub
             plane.mousePressed(e);
         }
 
         /**
+         * This method will pass a Mouseevent to the will help prevent the PlaneSprite
+         * mass shooting.
          * 
+         * @param e the mousebutton being released(left or right)
          */
         public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
             plane.mouseReleased(e);
         }
 
         /**
+         * This method will pass a Mouseevent that will allow the player to move
+         * their PlaneSprite using the mouse.
          * 
-         */
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
-
-        /**
-         * 
+         * @param e the mouse being moved
          */
         @Override
         public void mouseMoved(MouseEvent e) {
-            // TODO Auto-generated method stub
             plane.mouseMoved(e);
         }
     }
