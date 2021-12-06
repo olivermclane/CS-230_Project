@@ -17,8 +17,8 @@ public class SmallEnemy extends EnemySprite
      * 
      * @param e this is the image location will be load for the sprite.
      */
-    public SmallEnemy(String e) {
-        super(e);
+    public SmallEnemy(String e, int life) {
+        super(e,life);
         isSmallEnemy = true;
         setX(ThreadLocalRandom.current().nextInt(20, 600));
         setY(ThreadLocalRandom.current().nextInt(10, 400));

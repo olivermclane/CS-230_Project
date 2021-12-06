@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
 /**
@@ -17,7 +20,6 @@ public class GameJPanel extends JPanel implements Runnable {
     private static int gameReplay;
     private static JLabel endScore;
     private final int powerUpRate = 2;
-    private final Random puDrop = new Random();
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
@@ -38,19 +40,16 @@ public class GameJPanel extends JPanel implements Runnable {
     private int powerRandom;
     private ExplosionSprite enemyExplosion;
     private ExplosionSprite planeExplosion;
-    private BigEnemy bigEnemy;
-    private SmallEnemy smallEnemy;
-    private BigEnemy bigEnemy2;
-    private SmallEnemy smallEnemy2;
-    private BigEnemy bigEnemy3;
-    private SmallEnemy smallEnemy3;
     private String playerName;
+    private List<List> wavesList = new ArrayList<>();
+    private int round = 0;
 
     /**
      * 
      */
     public GameJPanel() {
         intiGamePanel();
+        loadWave();
         gameReplay += 1;
     }
 
@@ -87,20 +86,6 @@ public class GameJPanel extends JPanel implements Runnable {
         ammo = plane.ammo();
         planeExplosion = new ExplosionSprite();
         enemyExplosion = new ExplosionSprite();
-        bigEnemy = new BigEnemy("Enemies.png");
-        smallEnemy = new SmallEnemy("smallEnemies.png");
-        enemyPlayers.add(bigEnemy);
-        enemyPlayers.add(smallEnemy);
-        bigEnemy2 = new BigEnemy("Enemies.png");
-        smallEnemy2 = new SmallEnemy("smallEnemies.png");
-        enemyPlayers.add(bigEnemy);
-        enemyPlayers.add(smallEnemy);
-        bigEnemy3 = new BigEnemy("Enemies.png");
-        smallEnemy3 = new SmallEnemy("smallEnemies.png");
-        enemyPlayers.add(bigEnemy2);
-        enemyPlayers.add(smallEnemy2);
-        enemyPlayers.add(bigEnemy3);
-        enemyPlayers.add(smallEnemy3);
         if (endScore == null) {
         } else {
             endScore.setVisible(false);
@@ -115,7 +100,45 @@ public class GameJPanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         back1.loadBackground(g);
-        powerRandom = puDrop.nextInt(8) + 1;
+        if (enemyPlayers.isEmpty()) {
+            round++;
+            if (round > 2) {
+                setVisible(false);
+                Menu.CentralPanel.setVisible(true);
+                Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                if (score > highScore) {
+                    highScore = score;
+                    playerName = Menu.player;
+                }
+                endScore = new JLabel(playerName + " " + "HighScore:" + " " + (highScore));
+                endScore.setFont(Menu.RetroGame);
+                endScore.setAlignmentX(Component.TOP_ALIGNMENT);
+                endScore.setForeground(Color.DARK_GRAY);
+                endScore.setVisible(true);
+                Menu.CentralPanel.add(endScore);
+                gameOver = false;
+            } else {
+                List<String> currentWave;
+                try {
+                    currentWave = wavesList.get(ThreadLocalRandom.current().nextInt(0, wavesList.size()));
+                    System.out.println(ThreadLocalRandom.current().nextInt(0, wavesList.size()));
+                    for (String e : currentWave) {
+                        String[] enemy = e.split(",", 3);
+                        if (enemy[0].equals("Big Enemy")) {
+                            enemyPlayers.add(new BigEnemy(enemy[1], Integer.parseInt(enemy[2])));
+                        }
+                        if (enemy[0].equals("Small Enemy")) {
+                            enemyPlayers.add(new SmallEnemy(enemy[1], Integer.parseInt(enemy[2])));
+                        }
+
+                    }
+                } catch (Exception e) {
+                    System.out.println("Failed to load wave: Line 127");
+                    System.out.println(wavesList.size());
+                    System.exit(-1);
+                }
+            }
+        }
         for (Missile missile : ammo) {
             missile.setX2(ammoPlacement);
             missile.setY2(25);
@@ -182,6 +205,9 @@ public class GameJPanel extends JPanel implements Runnable {
                         if (healthX == 50) {
                             healthpercent = "25%";
                         }
+                        if(healthX == 0){
+                            healthpercent = "0%";
+                        }
                     }
                 } else {
                     p.draw(g);
@@ -197,13 +223,13 @@ public class GameJPanel extends JPanel implements Runnable {
             planeExplosion.setX(plane.getxPosition());
             planeExplosion.setY(plane.getyPosition());
             planeExplosion.doDrawing(g);
-            gameOver = true;
             if (planeExplosion.getExplosionTic() < 8 && explosionCount == 0) {
                 planeExplosion.setExpCount(planeExplosion.getExplosionTic());
                 planeExplosion.plusExplosionTic();
             }
+            gameOver = true;
         }
-        if (gameOver && planeExplosion.getExplosionTic() == 8 || enemyPlayers.isEmpty()) {
+        if (gameOver && planeExplosion.getExplosionTic() == 8 ) {
             setVisible(false);
             Menu.CentralPanel.setVisible(true);
             Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -221,8 +247,7 @@ public class GameJPanel extends JPanel implements Runnable {
         }
         if (planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
             planeExplosion.plusExplosionTic();
-            planeExplosion.setVisible(false);
-        }
+            planeExplosion.setVisible(false);        }
         if (plane.didPlaneFire() && !ammo.isEmpty()) {
             back.missileFired();
             if (!ammo.isEmpty()) {
@@ -248,14 +273,18 @@ public class GameJPanel extends JPanel implements Runnable {
                         Rectangle enemyArea = enemies.getBigBoundsX();
                         Rectangle enemyArea2 = enemies.getBigBoundsY();
                         if (misArea.intersects(enemyArea) || misArea.intersects(enemyArea2)) {
-                            collided.add(m);
-                            back.planeHitsound();
-                            if (powerRandom == powerUpRate) {
-                                LifeUpList.add(new LifePowerup(enemies));
+                            if (enemies.getLife() <= 0) {
+                                collided.add(m);
+                                back.planeHitsound();
+                                if (powerRandom == powerUpRate) {
+                                    LifeUpList.add(new LifePowerup(enemies));
+                                }
+                                enemies.setEnemyDestroyed(true);
+                                score += 30;
+                                break;
+                            } else if (enemies.getLife() > 0) {
+                                enemies.substractLife();
                             }
-                            enemies.setEnemyDestroyed(true);
-                            score += 30;
-                            break;
                         }
                     }
                 }
@@ -302,6 +331,7 @@ public class GameJPanel extends JPanel implements Runnable {
                         }
                         if (healthX == 0) {
                             healthpercent = "0%";
+                            gameOver = true;
                         }
                         break;
                     }
@@ -350,6 +380,48 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
+    public void printWaves() {
+        for (List<String> list : wavesList) {
+            for (String e : list) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    /**
+     * This method will read in the wave.txt and load
+     * in the waves for the game. Method will pull the file in
+     * and read each line one by one and will break it up into arraylists.
+     */
+    private void loadWave() {
+        File waveFile = new File("src/wave.txt");
+        try {
+            Scanner wave = new Scanner(waveFile);
+            List<String> addWave = new ArrayList<>();
+            while (wave.hasNextLine()) {
+                String data = wave.nextLine();
+                //new wave
+                if (data.equals("WAVE")) {
+                    wavesList.add(addWave);
+                    for (String e : addWave) {
+                        System.out.println(e);
+                    }
+                    addWave = new ArrayList<>();
+                    continue;
+                } else if (!data.equals("WAVE")) {
+                    addWave.add(data);
+
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+    }
+
     /**
      * 
      */
@@ -376,6 +448,7 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseClicked(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         /**
          * 
          */
@@ -383,6 +456,7 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseEntered(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         /**
          * 
          */
@@ -390,6 +464,7 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseExited(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         /**
          * 
          */
@@ -397,6 +472,7 @@ public class GameJPanel extends JPanel implements Runnable {
             // TODO Auto-generated method stub
             plane.mousePressed(e);
         }
+
         /**
          * 
          */
@@ -412,6 +488,7 @@ public class GameJPanel extends JPanel implements Runnable {
         public void mouseDragged(MouseEvent e) {
             // TODO Auto-generated method stub
         }
+
         /**
          * 
          */
