@@ -116,6 +116,7 @@ public class GameJPanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         back1.loadBackground(g);
+        powerRandom = ThreadLocalRandom.current().nextInt(1, 4);
         if (enemyPlayers.isEmpty()) {
             round++;
             if (round > 6) {
