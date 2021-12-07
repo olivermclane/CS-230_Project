@@ -128,7 +128,6 @@ public class GameJPanel extends JPanel implements Runnable {
                 List<String> currentWave;
                 try {
                     currentWave = wavesList.get(ThreadLocalRandom.current().nextInt(0, wavesList.size()));
-                    System.out.println(ThreadLocalRandom.current().nextInt(0, wavesList.size()));
                     for (String e : currentWave) {
                         String[] enemy = e.split(",", 3);
                         if (enemy[0].equals("Big Enemy")) {
@@ -141,8 +140,6 @@ public class GameJPanel extends JPanel implements Runnable {
                     }
                 } catch (Exception e) {
                     System.out.println("Failed to load wave: Line 127");
-                    System.out.println(wavesList.size());
-                    System.exit(-1);
                 }
             }
         }
@@ -404,9 +401,6 @@ public class GameJPanel extends JPanel implements Runnable {
                 // new wave
                 if (data.equals("WAVE")) {
                     wavesList.add(addWave);
-                    for (String e : addWave) {
-                        System.out.println(e);
-                    }
                     addWave = new ArrayList<>();
                     continue;
                 } else if (!data.equals("WAVE")) {

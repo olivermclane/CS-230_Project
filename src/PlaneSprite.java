@@ -579,8 +579,9 @@ public class PlaneSprite extends SpriteSheet
     }
 
     /**
+     * This method will return the bounds of the plane sprite
      * 
-     * @return
+     * @return the bounds of the planesprite
      */
     public Rectangle getBounds2() {
         return null;
