@@ -117,6 +117,7 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
         name = new JTextField();
+        // adding player name entered to the JFrame
         JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. ABC)</h3></center></html>");
         JLabel enterName = new JLabel("<html><center><h3>Press Enter To Save</h3></center></html>");
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -153,15 +154,20 @@ public class Menu implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    // If the name entered is longer than 3 digits than it will not take
+                    // and set instructions to red
                     if (name.getText().length() > 3) {
                         name.setText("");
                         playerName.setForeground(Color.RED);
                     } else {
+                        //reset text field to blank and set the label to player name if 3 digits
                         player = name.getText();
                         name.setText("");
                         playGButton.setEnabled(true);
                         displayName.setFont(RetroGame);
                         displayName.setText("Player Name: " + player);
+                        displayName.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        displayName.setForeground(Color.red);
                     }
                 }
             }
@@ -178,14 +184,16 @@ public class Menu implements ActionListener {
         CentralPanel.add(playerName, menuLayout);
         CentralPanel.add(name, menuLayout);
         CentralPanel.add(enterName, menuLayout);
-        displayName = new JLabel("Player Name: ");
+        displayName = new JLabel("");
         displayName.setVisible(true);
         CentralPanel.add(displayName, menuLayout);
+        // Highescores label
         JLabel highScoreLabel = new JLabel("HIGHSCORES");
         highScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
         highScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         highScoreLabel.setFont(RetroGame);
         CentralPanel.add(highScoreLabel, menuLayout);
+        //Read in file for highscores recorded already and display them on main menu
         try {
             File myObj = new File("src/TextFiles/HighScores.txt");
             Scanner myReader = new Scanner(myObj);
