@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Scanner;
 /**
  * This is the menu class, this will hold our main method
- *  and will be used to start the code. In side of this we
+ * and will be used to start the code. In side of this we
  * initialize the menu screen and create a GameJPanel to run the game.
  */
 public class Menu implements ActionListener {
@@ -36,6 +36,7 @@ public class Menu implements ActionListener {
     public static java.util.List<JLabel> highScoreList = new java.util.ArrayList<>();
     public static JLabel displayName;
     private JTextField name;
+    private String errorName;
 
     /**
      * This is the constructor for the menu, when called,
@@ -143,6 +144,7 @@ public class Menu implements ActionListener {
             @Override
             public void keyTyped(KeyEvent e) {
             }
+
             /**
              * This method will check if the enter key is pressed
              * within the main method and then lock the name and open
@@ -153,6 +155,7 @@ public class Menu implements ActionListener {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (name.getText().length() > 3) {
                         name.setText("");
+                        playerName.setForeground(Color.RED);
                     } else {
                         player = name.getText();
                         name.setText("");
@@ -162,6 +165,7 @@ public class Menu implements ActionListener {
                     }
                 }
             }
+
             /**
              * This is a basic keyevent method for keys being pressed.
              */
