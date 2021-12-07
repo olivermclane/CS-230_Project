@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 /**
  *
  */
@@ -27,8 +30,10 @@ public class Menu implements ActionListener {
     public static JFrame j;
     public static Font RetroGame;
     public static String player;
+    public static JLabel highScoreNames;
+    public static java.util.List<JLabel> highScoreList = new java.util.ArrayList<>();
+    public static JLabel displayName;
     private JTextField name;
-    private JLabel displayName;
 
     /**
      * This is the constructor for the menu, when called,
@@ -109,7 +114,7 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
         name = new JTextField();
-        JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. A.B.C)</h3></center></html>");
+        JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. ABC)</h3></center></html>");
         JLabel enterName = new JLabel("<html><center><h3>Press Enter To Save</h3></center></html>");
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
         playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -143,7 +148,6 @@ public class Menu implements ActionListener {
                         player = name.getText();
                         name.setText("");
                         playGButton.setEnabled(true);
-                        displayName.setVisible(true);
                         displayName.setFont(RetroGame);
                         displayName.setText("Player Name: " + player);
                     }
@@ -159,8 +163,31 @@ public class Menu implements ActionListener {
         CentralPanel.add(playerName, menuLayout);
         CentralPanel.add(name, menuLayout);
         CentralPanel.add(enterName, menuLayout);
-        displayName = new JLabel("");
+        displayName = new JLabel("Player Name: ");
+        displayName.setVisible(true);
         CentralPanel.add(displayName, menuLayout);
+        JLabel highScoreLabel = new JLabel("HIGHSCORES");
+        highScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        highScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        highScoreLabel.setFont(RetroGame);
+        CentralPanel.add(highScoreLabel, menuLayout);
+        try {
+            File myObj = new File("src/TextFiles/HighScores.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String[] data = myReader.nextLine().split(" : ");
+                highScoreNames = new JLabel(data[0] + " : " + data[1]);
+                highScoreNames.setHorizontalAlignment(SwingConstants.CENTER);
+                highScoreNames.setAlignmentX(Component.CENTER_ALIGNMENT);
+                highScoreNames.setFont(RetroGame);
+                highScoreList.add(highScoreNames);
+                CentralPanel.add(highScoreNames, menuLayout);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         // Creating play game button
         playGButton.setForeground(Color.WHITE);
         playGButton.setBackground(backGC);

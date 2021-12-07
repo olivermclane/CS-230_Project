@@ -4,10 +4,11 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
-
 public class GameJPanel extends JPanel implements Runnable {
     public static PlaneSprite plane;
     public static int highScore;
@@ -15,6 +16,7 @@ public class GameJPanel extends JPanel implements Runnable {
     private static JLabel endScore;
     private final int powerUpRate = 2;
     private final Random puDrop = new Random();
+    private final List<String> highScores = new ArrayList<String>();
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
@@ -42,13 +44,12 @@ public class GameJPanel extends JPanel implements Runnable {
     private BigEnemy bigEnemy2;
     private SmallEnemy smallEnemy2;
     private BigEnemy bigEnemy3;
+    // public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     private SmallEnemy smallEnemy3;
     private String playerName;
 
-    // public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
-
     /**
-     * 
+     *
      */
     public GameJPanel() {
         intiGamePanel();
@@ -56,8 +57,8 @@ public class GameJPanel extends JPanel implements Runnable {
     }
 
     /**
-    *
-    */
+     *
+     */
     private void intiGamePanel() {
         try {
             retroGame = Font.createFont(Font.TRUETYPE_FONT,
@@ -206,18 +207,64 @@ public class GameJPanel extends JPanel implements Runnable {
         }
         if (gameOver && planeExplosion.getExplosionTic() == 8 || enemyPlayers.isEmpty()) {
             setVisible(false);
-            Menu.CentralPanel.setVisible(true);
-            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            if (score > highScore) {
-                highScore = score;
-                playerName = Menu.player;
+            for (int i = 0; i < 5; i++) {
+                Menu.CentralPanel.remove(Menu.highScoreNames);
             }
-            endScore = new JLabel(playerName + " " + "HighScore:" + " " + (highScore));
+            highScore = score;
+            playerName = Menu.player;
+            endScore = new JLabel(playerName + " " + "Player HighScore:" + " " + (highScore));
             endScore.setFont(Menu.RetroGame);
             endScore.setAlignmentX(Component.TOP_ALIGNMENT);
             endScore.setForeground(Color.DARK_GRAY);
             endScore.setVisible(true);
+//            try {
+//                File myObj = new File("src/TextFiles/HighScores.txt");
+//                Scanner myReader = new Scanner(myObj);
+//                while (myReader.hasNextLine()) {
+//                    highScores.add(myReader.nextLine());
+//                }
+//                myReader.close();
+//            } catch (FileNotFoundException e) {
+//                System.out.println("An error occurred.");
+//                e.printStackTrace();
+//            }
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("src/TextFiles/HighScores.txt"));
+                for (JLabel score : Menu.highScoreList) {
+                    String playerScore = score.getText();
+                    if (Integer.parseInt(playerScore.substring(6, 9)) < highScore) {
+                        score.setText(playerName + " : " + highScore);
+                        System.out.println("Successfully wrote to the file.");
+                        highScore = 0;
+                        break;
+                    }
+                }
+                int counter = 0;
+                for (JLabel score : Menu.highScoreList) {
+                    bw.write(score.getText());
+                    counter++;
+                    if (counter < 5) {
+                        bw.newLine();
+                    }
+                }
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            try {
+//                File myObj = new File("src/TextFiles/HighScores.txt");
+//                Scanner myReader = new Scanner(myObj);
+//                while (myReader.hasNextLine()) {
+//                    highScores.add(myReader.nextLine());
+//                }
+//                myReader.close();
+//            } catch (FileNotFoundException e) {
+//                System.out.println("An error occurred.");
+//                e.printStackTrace();
+//            }
             Menu.CentralPanel.add(endScore);
+            Menu.CentralPanel.setVisible(true);
+            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             gameOver = false;
         }
         if (planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
