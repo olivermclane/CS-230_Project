@@ -253,6 +253,8 @@ public class GameJPanel extends JPanel implements Runnable {
             endScore.setAlignmentX(Component.TOP_ALIGNMENT);
             endScore.setForeground(Color.DARK_GRAY);
             endScore.setVisible(true);
+            //When game is over the score is used against the current highscore and replaces them
+            //if score is higher and the writes new score to file and to JLabel
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("src/TextFiles/HighScores.txt"));
                 for (JLabel score : Menu.highScoreList) {
