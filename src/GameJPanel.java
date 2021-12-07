@@ -4,13 +4,10 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
-
+import java.util.concurrent.ThreadLocalRandom;
 /**
  * This class takes out most of our game's gameplay. This class will create the
  * enemys and the player sprite. All of our
@@ -21,6 +18,9 @@ public class GameJPanel extends JPanel implements Runnable {
     private static int gameReplay;
     private static JLabel endScore;
     private final int powerUpRate = 2;
+    private final Random puDrop = new Random();
+    private final List<String> highScores = new ArrayList<String>();
+    private final List<List> wavesList = new ArrayList<>();
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
@@ -41,11 +41,20 @@ public class GameJPanel extends JPanel implements Runnable {
     private int powerRandom;
     private ExplosionSprite enemyExplosion;
     private ExplosionSprite planeExplosion;
+    private BigEnemy bigEnemy;
+    private SmallEnemy smallEnemy;
+    private BigEnemy bigEnemy2;
+    private SmallEnemy smallEnemy2;
+    private BigEnemy bigEnemy3;
+    private SmallEnemy smallEnemy3;
     private String playerName;
-    private List<List> wavesList = new ArrayList<>();
-    private int round = 0;
+    private int round;
 
     /**
+     * private String playerName;
+     * private List<List> wavesList = new ArrayList<>();
+     * private int round = 0;
+     * /**
      * This is the GameJPanel constructor, when created it will load the waves,
      * and run the initGamePanel.
      */
@@ -136,7 +145,6 @@ public class GameJPanel extends JPanel implements Runnable {
                         if (enemy[0].equals("Small Enemy")) {
                             enemyPlayers.add(new SmallEnemy(enemy[1], Integer.parseInt(enemy[2])));
                         }
-
                     }
                 } catch (Exception e) {
                     System.out.println("Failed to load wave: Line 127");
@@ -235,18 +243,44 @@ public class GameJPanel extends JPanel implements Runnable {
         }
         if (gameOver && planeExplosion.getExplosionTic() == 8) {
             setVisible(false);
-            Menu.CentralPanel.setVisible(true);
-            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            if (score > highScore) {
-                highScore = score;
-                playerName = Menu.player;
+            for (int i = 0; i < 5; i++) {
+                Menu.CentralPanel.remove(Menu.highScoreNames);
             }
-            endScore = new JLabel(playerName + " " + "HighScore:" + " " + (highScore));
+            highScore = score;
+            playerName = Menu.player;
+            endScore = new JLabel(playerName + " " + "Player HighScore:" + " " + (highScore));
             endScore.setFont(Menu.RetroGame);
             endScore.setAlignmentX(Component.TOP_ALIGNMENT);
             endScore.setForeground(Color.DARK_GRAY);
             endScore.setVisible(true);
+            //When game is over the score is used against the current highscore and replaces them
+            //if score is higher and the writes new score to file and to JLabel
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("src/TextFiles/HighScores.txt"));
+                for (JLabel score : Menu.highScoreList) {
+                    String playerScore = score.getText();
+                    if (Integer.parseInt(playerScore.substring(6, 9)) < highScore) {
+                        score.setText(playerName + " : " + highScore);
+                        System.out.println("Successfully wrote to the file.");
+                        highScore = 0;
+                        break;
+                    }
+                }
+                int counter = 0;
+                for (JLabel score : Menu.highScoreList) {
+                    bw.write(score.getText());
+                    counter++;
+                    if (counter < 5) {
+                        bw.newLine();
+                    }
+                }
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Menu.CentralPanel.add(endScore);
+            Menu.CentralPanel.setVisible(true);
+            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             gameOver = false;
         }
         if (planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
@@ -405,16 +439,13 @@ public class GameJPanel extends JPanel implements Runnable {
                     continue;
                 } else if (!data.equals("WAVE")) {
                     addWave.add(data);
-
                 }
-
             }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
             System.exit(-1);
         }
-
     }
 
     /**
@@ -423,10 +454,9 @@ public class GameJPanel extends JPanel implements Runnable {
      * methods.
      */
     private class TAdapter extends KeyAdapter {
-
         /**
          * Invoked when a key is pressed
-         * 
+         *
          * @param e the key being pressed
          */
         @Override
@@ -436,7 +466,7 @@ public class GameJPanel extends JPanel implements Runnable {
 
         /**
          * Invoked when a key is being released
-         * 
+         *
          * @param e the key being released
          */
         @Override
@@ -450,10 +480,9 @@ public class GameJPanel extends JPanel implements Runnable {
      * released as well as gathering the mousemove events.
      */
     private class MAdapter extends MouseInputAdapter {
-
         /**
          * This method will pass a Mouseevent to the planeclass to handle shooting.
-         * 
+         *
          * @param e the mousebutton being pressed(left or right)
          */
         public void mousePressed(MouseEvent e) {
@@ -463,7 +492,7 @@ public class GameJPanel extends JPanel implements Runnable {
         /**
          * This method will pass a Mouseevent to the will help prevent the PlaneSprite
          * mass shooting.
-         * 
+         *
          * @param e the mousebutton being released(left or right)
          */
         public void mouseReleased(MouseEvent e) {
@@ -473,7 +502,7 @@ public class GameJPanel extends JPanel implements Runnable {
         /**
          * This method will pass a Mouseevent that will allow the player to move
          * their PlaneSprite using the mouse.
-         * 
+         *
          * @param e the mouse being moved
          */
         @Override
