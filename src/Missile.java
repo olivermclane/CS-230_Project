@@ -38,6 +38,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      */
     private void loadImage2() {
         try {
@@ -50,6 +51,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public BufferedImage getEnemyMissile() {
@@ -57,6 +59,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @return
      */
@@ -66,6 +69,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public boolean isOffScreen2() {
@@ -73,6 +77,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @param r
      */
@@ -83,6 +88,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @param s
      */
     public void doDrawing2(Graphics s) {
@@ -92,6 +98,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @param i
      */
     public void doImageDraw(Graphics i) {
@@ -99,6 +106,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @return
      */
@@ -108,6 +116,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @param newy
      */
     public void setY(int newy) {
@@ -116,6 +125,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public int getX() {
@@ -123,6 +133,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @param newx
      */
@@ -140,6 +151,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public int getHeight() {
@@ -147,6 +159,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @return
      */
@@ -156,6 +169,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public Rectangle getBounds2() {
@@ -163,6 +177,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @return
      */
@@ -180,6 +195,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public int getY2() {
@@ -187,6 +203,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @param newy2
      */
@@ -196,6 +213,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public int getX2() {
@@ -203,6 +221,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @param newx2
      */
@@ -212,6 +231,7 @@ public class Missile implements ImageObserver {
 
     /**
      * 
+     * 
      * @return
      */
     public int getWidth2() {
@@ -219,6 +239,7 @@ public class Missile implements ImageObserver {
     }
 
     /**
+     * 
      * 
      * @return
      */
