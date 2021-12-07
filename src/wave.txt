@@ -1,0 +1,21 @@
+Small Enemy,smallEnemies.png,1
+WAVE
+Small Enemy,smallEnemies.png,1
+Small Enemy,smallEnemies.png,1
+Big Enemy,Enemies.png,2
+WAVE
+Big Enemy,Enemies.png,3
+Big Enemy,Enemies.png,3
+WAVE
+Big Enemy,Enemies.png,2
+Big Enemy,Enemies.png,2
+Big Enemy,Enemies.png,2
+Big Enemy,Enemies.png,2
+Small Enemy,smallEnemies.png,1
+WAVE
+Small Enemy,smallEnemies.png,1
+Small Enemy,smallEnemies.png,1
+Small Enemy,smallEnemies.png,1
+Small Enemy,smallEnemies.png,1
+WAVE
+

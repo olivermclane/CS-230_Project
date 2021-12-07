@@ -27,6 +27,7 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
     private BufferedImage enemy;
     private boolean enemyDestroyed;
     private int y;
+    private int life = 3;
     private int moveSpeedX = ThreadLocalRandom.current().nextInt(1, 4);
 
     /**
@@ -41,9 +42,11 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
      * the sprite.
      * 
      * @param file this is the location of the image file for the sprite
+     * @param life the life of the enemy
      */
-    public EnemySprite(String file) {
+    public EnemySprite(String file, int life) {
         loadImage(file);
+        this.life = life; 
         enemyMissiles = new ArrayList<>();
     }
 
@@ -85,7 +88,21 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
             g.drawImage(enemy, getxPosition(), getyPosition(), this);
         }
     }
+    /**
+     * This method will return the total lifepoints left on the EnemySprite.
+     * 
+     * @return the total life of the EnemySprite
+     */
+    public int getLife(){
+        return life;
+    }
 
+    /**
+     * This method will substract one life from the EnemySprite
+     */
+    public void substractLife(){
+        life--;
+    }
     /**
      * THis method takes care of settings location of the missle location.
      * If the enemy fires it sets a x location for the missle.
@@ -189,7 +206,11 @@ public class EnemySprite extends SpriteSheet implements ImageObserver {
      *          it was hit or not.
      */
     public void setEnemyDestroyed(boolean b) {
-        enemyDestroyed = b;
+        if(life == 0){
+            enemyDestroyed = b;
+        }else if(life > 0){
+            life--;
+        }
     }
 
     /**

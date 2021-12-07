@@ -53,7 +53,7 @@ public class Sound_effects {
     }
 
     /**
-     * This method load and play the noise for when a plane get hit.
+     * This method loads and play the noise for when a plane get hit.
      */
     public void planeHitsound() {
         try {

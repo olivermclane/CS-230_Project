@@ -6,9 +6,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
+/**
+ * This class takes out most of our game's gameplay. This class will create the
+ * enemys and the player sprite. All of our
+ */
 public class GameJPanel extends JPanel implements Runnable {
     public static PlaneSprite plane;
     public static int highScore;
@@ -28,8 +35,6 @@ public class GameJPanel extends JPanel implements Runnable {
     private int enemyCount;
     private Sound_effects back;
     private int explosionCount;
-    // private tankEnemySprite tankEnemy;
-    // private JLabel health;
     private int healthX = 200;
     private int ammoPlacement = 570;
     private Font retroGame;
@@ -44,20 +49,28 @@ public class GameJPanel extends JPanel implements Runnable {
     private BigEnemy bigEnemy2;
     private SmallEnemy smallEnemy2;
     private BigEnemy bigEnemy3;
-    // public List <Powerup> WeaponUpList = new ArrayList<LifePowerup>();
     private SmallEnemy smallEnemy3;
     private String playerName;
-
     /**
      *
+    private String playerName;
+    private List<List> wavesList = new ArrayList<>();
+    private int round = 0;
+    /**
+     * This is the GameJPanel constructor, when created it will load the waves,
+     * and run the initGamePanel.
      */
     public GameJPanel() {
         intiGamePanel();
+        loadWave();
         gameReplay += 1;
     }
 
     /**
-     *
+     * This is the GamePanel initalization, this will set up all the fonts
+     * and other options surroung our game such as enemies and player. Then the
+     * method will
+     * set up some of the JPanel settings.
      */
     private void intiGamePanel() {
         try {
@@ -89,20 +102,6 @@ public class GameJPanel extends JPanel implements Runnable {
         ammo = plane.ammo();
         planeExplosion = new ExplosionSprite();
         enemyExplosion = new ExplosionSprite();
-        bigEnemy = new BigEnemy("Enemies.png");
-        smallEnemy = new SmallEnemy("smallEnemies.png");
-        enemyPlayers.add(bigEnemy);
-        enemyPlayers.add(smallEnemy);
-        bigEnemy2 = new BigEnemy("Enemies.png");
-        smallEnemy2 = new SmallEnemy("smallEnemies.png");
-        enemyPlayers.add(bigEnemy);
-        enemyPlayers.add(smallEnemy);
-        bigEnemy3 = new BigEnemy("Enemies.png");
-        smallEnemy3 = new SmallEnemy("smallEnemies.png");
-        enemyPlayers.add(bigEnemy2);
-        enemyPlayers.add(smallEnemy2);
-        enemyPlayers.add(bigEnemy3);
-        enemyPlayers.add(smallEnemy3);
         if (endScore == null) {
         } else {
             endScore.setVisible(false);
@@ -113,11 +112,48 @@ public class GameJPanel extends JPanel implements Runnable {
     /**
      * This method is extended from JComponent and carrys out much of the code.
      * In this method we manage most of the operations on the sprite, which includes
+     * collision, loading waves, combat methods, and changing enemy and player
+     * properties.
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         back1.loadBackground(g);
-        powerRandom = puDrop.nextInt(8) + 1;
+        if (enemyPlayers.isEmpty()) {
+            round++;
+            if (round > 6) {
+                setVisible(false);
+                Menu.CentralPanel.setVisible(true);
+                Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                if (score > highScore) {
+                    highScore = score;
+                    playerName = Menu.player;
+                }
+                endScore = new JLabel(playerName + " " + "HighScore:" + " " + (highScore));
+                endScore.setFont(Menu.RetroGame);
+                endScore.setAlignmentX(Component.TOP_ALIGNMENT);
+                endScore.setForeground(Color.DARK_GRAY);
+                endScore.setVisible(true);
+                Menu.CentralPanel.add(endScore);
+                gameOver = false;
+            } else {
+                List<String> currentWave;
+                try {
+                    currentWave = wavesList.get(ThreadLocalRandom.current().nextInt(0, wavesList.size()));
+                    for (String e : currentWave) {
+                        String[] enemy = e.split(",", 3);
+                        if (enemy[0].equals("Big Enemy")) {
+                            enemyPlayers.add(new BigEnemy(enemy[1], Integer.parseInt(enemy[2])));
+                        }
+                        if (enemy[0].equals("Small Enemy")) {
+                            enemyPlayers.add(new SmallEnemy(enemy[1], Integer.parseInt(enemy[2])));
+                        }
+
+                    }
+                } catch (Exception e) {
+                    System.out.println("Failed to load wave: Line 127");
+                }
+            }
+        }
         for (Missile missile : ammo) {
             missile.setX2(ammoPlacement);
             missile.setY2(25);
@@ -184,6 +220,9 @@ public class GameJPanel extends JPanel implements Runnable {
                         if (healthX == 50) {
                             healthpercent = "25%";
                         }
+                        if (healthX == 0) {
+                            healthpercent = "0%";
+                        }
                     }
                 } else {
                     p.draw(g);
@@ -199,13 +238,13 @@ public class GameJPanel extends JPanel implements Runnable {
             planeExplosion.setX(plane.getxPosition());
             planeExplosion.setY(plane.getyPosition());
             planeExplosion.doDrawing(g);
-            gameOver = true;
             if (planeExplosion.getExplosionTic() < 8 && explosionCount == 0) {
                 planeExplosion.setExpCount(planeExplosion.getExplosionTic());
                 planeExplosion.plusExplosionTic();
             }
+            gameOver = true;
         }
-        if (gameOver && planeExplosion.getExplosionTic() == 8 || enemyPlayers.isEmpty()) {
+        if (gameOver && planeExplosion.getExplosionTic() == 8) {
             setVisible(false);
             for (int i = 0; i < 5; i++) {
                 Menu.CentralPanel.remove(Menu.highScoreNames);
@@ -217,17 +256,7 @@ public class GameJPanel extends JPanel implements Runnable {
             endScore.setAlignmentX(Component.TOP_ALIGNMENT);
             endScore.setForeground(Color.DARK_GRAY);
             endScore.setVisible(true);
-//            try {
-//                File myObj = new File("src/TextFiles/HighScores.txt");
-//                Scanner myReader = new Scanner(myObj);
-//                while (myReader.hasNextLine()) {
-//                    highScores.add(myReader.nextLine());
-//                }
-//                myReader.close();
-//            } catch (FileNotFoundException e) {
-//                System.out.println("An error occurred.");
-//                e.printStackTrace();
-//            }
+
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("src/TextFiles/HighScores.txt"));
                 for (JLabel score : Menu.highScoreList) {
@@ -251,17 +280,7 @@ public class GameJPanel extends JPanel implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            try {
-//                File myObj = new File("src/TextFiles/HighScores.txt");
-//                Scanner myReader = new Scanner(myObj);
-//                while (myReader.hasNextLine()) {
-//                    highScores.add(myReader.nextLine());
-//                }
-//                myReader.close();
-//            } catch (FileNotFoundException e) {
-//                System.out.println("An error occurred.");
-//                e.printStackTrace();
-//            }
+          
             Menu.CentralPanel.add(endScore);
             Menu.CentralPanel.setVisible(true);
             Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -296,14 +315,18 @@ public class GameJPanel extends JPanel implements Runnable {
                         Rectangle enemyArea = enemies.getBigBoundsX();
                         Rectangle enemyArea2 = enemies.getBigBoundsY();
                         if (misArea.intersects(enemyArea) || misArea.intersects(enemyArea2)) {
-                            collided.add(m);
-                            back.planeHitsound();
-                            if (powerRandom == powerUpRate) {
-                                LifeUpList.add(new LifePowerup(enemies));
+                            if (enemies.getLife() <= 0) {
+                                collided.add(m);
+                                back.planeHitsound();
+                                if (powerRandom == powerUpRate) {
+                                    LifeUpList.add(new LifePowerup(enemies));
+                                }
+                                enemies.setEnemyDestroyed(true);
+                                score += 30;
+                                break;
+                            } else if (enemies.getLife() > 0) {
+                                enemies.substractLife();
                             }
-                            enemies.setEnemyDestroyed(true);
-                            score += 30;
-                            break;
                         }
                     }
                 }
@@ -350,6 +373,7 @@ public class GameJPanel extends JPanel implements Runnable {
                         }
                         if (healthX == 0) {
                             healthpercent = "0%";
+                            gameOver = true;
                         }
                         break;
                     }
@@ -370,6 +394,10 @@ public class GameJPanel extends JPanel implements Runnable {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * This is our run method for GameJPanel, this will keep track of the framerate
+     * and will repaint our images on the canvas.
+     */
     @Override
     public void run() {
         int frameRate = 1000 / 40;
@@ -395,52 +423,98 @@ public class GameJPanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * This method will read in the wave.txt and load
+     * in the waves for the game. Method will pull the file in
+     * and read each line one by one and will break it up into arraylists.
+     */
+    private void loadWave() {
+        File waveFile = new File("src/wave.txt");
+        try {
+            Scanner wave = new Scanner(waveFile);
+            List<String> addWave = new ArrayList<>();
+            while (wave.hasNextLine()) {
+                String data = wave.nextLine();
+                // new wave
+                if (data.equals("WAVE")) {
+                    wavesList.add(addWave);
+                    addWave = new ArrayList<>();
+                    continue;
+                } else if (!data.equals("WAVE")) {
+                    addWave.add(data);
+
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            System.exit(-1);
+        }
+
+    }
+
+    /**
+     * This TAdapter class tracks of our keey presses and will funnel them into the
+     * PlaneSprite class
+     * methods.
+     */
     private class TAdapter extends KeyAdapter {
+
+        /**
+         * Invoked when a key is pressed
+         * 
+         * @param e the key being pressed
+         */
         @Override
         public void keyPressed(KeyEvent e) {
             plane.keyPressed(e);
         }
 
+        /**
+         * Invoked when a key is being released
+         * 
+         * @param e the key being released
+         */
         @Override
         public void keyReleased(KeyEvent e) {
             plane.keyReleased(e);
         }
     }
 
+    /**
+     * This class with manage the mouse presses and mouse
+     * released as well as gathering the mousemove events.
+     */
     private class MAdapter extends MouseInputAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
 
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
-
+        /**
+         * This method will pass a Mouseevent to the planeclass to handle shooting.
+         * 
+         * @param e the mousebutton being pressed(left or right)
+         */
         public void mousePressed(MouseEvent e) {
-            // TODO Auto-generated method stub
             plane.mousePressed(e);
         }
 
+        /**
+         * This method will pass a Mouseevent to the will help prevent the PlaneSprite
+         * mass shooting.
+         * 
+         * @param e the mousebutton being released(left or right)
+         */
         public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
             plane.mouseReleased(e);
         }
 
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            // TODO Auto-generated method stub
-        }
-
+        /**
+         * This method will pass a Mouseevent that will allow the player to move
+         * their PlaneSprite using the mouse.
+         * 
+         * @param e the mouse being moved
+         */
         @Override
         public void mouseMoved(MouseEvent e) {
-            // TODO Auto-generated method stub
             plane.mouseMoved(e);
         }
     }

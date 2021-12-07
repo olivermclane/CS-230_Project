@@ -13,8 +13,8 @@ public class BigEnemy extends EnemySprite {
      * 
      * @param e the location of the image file
      */
-    public BigEnemy(String e) {
-        super(e);
+    public BigEnemy(String e, int life) {
+        super(e,life);
         isBigEnemy = true;
         setX(ThreadLocalRandom.current().nextInt(20, 600));
         setY(ThreadLocalRandom.current().nextInt(10, 400));
