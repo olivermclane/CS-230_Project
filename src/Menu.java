@@ -6,13 +6,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+
 /**
  * This is the menu class, this will hold our main method
- *  and will be used to start the code. In side of this we
+ * and will be used to start the code. In side of this we
  * initialize the menu screen and create a GameJPanel to run the game.
  */
 public class Menu implements ActionListener {
-    //the background color
+    // the background color
     /**
      * This is the creation of the menu for the game.
      * When you called the menu it will create and JFrame
@@ -51,28 +52,21 @@ public class Menu implements ActionListener {
     }
 
     /**
-     * This method will end the process
-     */
-    public static void exitGame() {
-        System.exit(0);
-    }
-
-    /**
      * This method is used to draw the menu. In this buttons are created
-     * and organized in layouts. When this is called yur will create a
-     * Time FitherX menu.333
+     * and organized in layouts. When this is called your it will create and open
+     * Up a JFrame with a menu.
      */
     public void drawMenu() {
         // creating the gameFrame
         JFrame menu = new JFrame("TimeX Fighters -- Main Menu");
         menu.requestFocusInWindow();
-        //creating my buttons
+        // creating my buttons
         JButton quitGButton = new JButton("  Quit Game   ");
         JButton playGButton = new JButton("Play Game");
-        //creating Jlabel Title
-        //name of game
+        // creating Jlabel Title
+        // name of game
         JLabel timeFigtherTitle = new JLabel("<html><center><h1>TimeX Fighters</h1></center></html>");
-        //creating font and appending it to the compents
+        // creating font and appending it to the compents
         try {
             RetroGame = Font.createFont(Font.TRUETYPE_FONT,
                     getClass().getClassLoader().getResourceAsStream("Font/Retro Gaming.ttf"));
@@ -111,7 +105,8 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
         name = new JTextField();
-        JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. A.B.C)</h3></center></html>");
+        JLabel playerName = new JLabel(
+                "<html><center><h3>Enter Initials<br />To Play<br/>(ex. A.B.C)</h3></center></html>");
         JLabel enterName = new JLabel("<html><center><h3>Press Enter To Save</h3></center></html>");
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
         playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -124,7 +119,6 @@ public class Menu implements ActionListener {
         name.setAlignmentX(Component.CENTER_ALIGNMENT);
         name.setForeground(Color.DARK_GRAY);
         name.setVisible(true);
-        /*name.setDocument(new LimitJTextField(5));*/
         /**
          * This will allow the play game button to be pressed, and will lock
          * the players name.
@@ -138,6 +132,7 @@ public class Menu implements ActionListener {
             @Override
             public void keyTyped(KeyEvent e) {
             }
+
             /**
              * This method will check if the enter key is pressed
              * within the main method and then lock the name and open
@@ -158,6 +153,7 @@ public class Menu implements ActionListener {
                     }
                 }
             }
+
             /**
              * This is a basic keyevent method for keys being pressed.
              */
@@ -198,7 +194,7 @@ public class Menu implements ActionListener {
              * This will call the quit game method.
              *
              * @param e this is the action event for the button press
-
+             * 
              */
             public void actionPerformed(ActionEvent e) {
                 exitGame();
