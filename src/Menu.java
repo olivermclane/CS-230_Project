@@ -8,11 +8,8 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-<<<<<<< HEAD
-
-=======
 import java.util.Scanner;
->>>>>>> cea3eadc0784fe3ad617a401f3b12db3632122a5
+
 /**
  * This is the menu class, this will hold our main method
  * and will be used to start the code. In side of this we
@@ -114,13 +111,9 @@ public class Menu implements ActionListener {
         timeFigtherTitle.setVisible(true);
         CentralPanel.add(timeFigtherTitle, menuLayout);
         name = new JTextField();
-<<<<<<< HEAD
-        JLabel playerName = new JLabel(
-                "<html><center><h3>Enter Initials<br />To Play<br/>(ex. A.B.C)</h3></center></html>");
-=======
         // adding player name entered to the JFrame
-        JLabel playerName = new JLabel("<html><center><h3>Enter Initials<br />To Play<br/>(ex. ABC)</h3></center></html>");
->>>>>>> cea3eadc0784fe3ad617a401f3b12db3632122a5
+        JLabel playerName = new JLabel(
+                "<html><center><h3>Enter Initials<br />To Play<br/>(ex. ABC)</h3></center></html>");
         JLabel enterName = new JLabel("<html><center><h3>Press Enter To Save</h3></center></html>");
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
         playerName.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -161,7 +154,7 @@ public class Menu implements ActionListener {
                         name.setText("");
                         playerName.setForeground(Color.RED);
                     } else {
-                        //reset text field to blank and set the label to player name if 3 digits
+                        // reset text field to blank and set the label to player name if 3 digits
                         player = name.getText();
                         name.setText("");
                         playGButton.setEnabled(true);
@@ -194,7 +187,7 @@ public class Menu implements ActionListener {
         highScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         highScoreLabel.setFont(RetroGame);
         CentralPanel.add(highScoreLabel, menuLayout);
-        //Read in file for highscores recorded already and display them on main menu
+        // Read in file for highscores recorded already and display them on main menu
         try {
             File myObj = new File("src/TextFiles/HighScores.txt");
             Scanner myReader = new Scanner(myObj);
@@ -254,6 +247,13 @@ public class Menu implements ActionListener {
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
         playGButton.setEnabled(false);
+    }
+
+    /**
+     * This method will end the process
+     */
+    public static void exitGame() {
+        System.exit(0);
     }
 
     /**
