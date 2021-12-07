@@ -4,13 +4,14 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
-
 /**
  * This class takes out most of our game's gameplay. This class will create the
  * enemys and the player sprite. All of our
@@ -21,6 +22,8 @@ public class GameJPanel extends JPanel implements Runnable {
     private static int gameReplay;
     private static JLabel endScore;
     private final int powerUpRate = 2;
+    private final Random puDrop = new Random();
+    private final List<String> highScores = new ArrayList<String>();
     public JLabel lifeCounter = new JLabel();
     public List<LifePowerup> LifeUpList = new ArrayList<LifePowerup>();
     public boolean gameOver;
@@ -41,10 +44,18 @@ public class GameJPanel extends JPanel implements Runnable {
     private int powerRandom;
     private ExplosionSprite enemyExplosion;
     private ExplosionSprite planeExplosion;
+    private BigEnemy bigEnemy;
+    private SmallEnemy smallEnemy;
+    private BigEnemy bigEnemy2;
+    private SmallEnemy smallEnemy2;
+    private BigEnemy bigEnemy3;
+    private SmallEnemy smallEnemy3;
+    private String playerName;
+    /**
+     *
     private String playerName;
     private List<List> wavesList = new ArrayList<>();
     private int round = 0;
-
     /**
      * This is the GameJPanel constructor, when created it will load the waves,
      * and run the initGamePanel.
@@ -235,18 +246,44 @@ public class GameJPanel extends JPanel implements Runnable {
         }
         if (gameOver && planeExplosion.getExplosionTic() == 8) {
             setVisible(false);
-            Menu.CentralPanel.setVisible(true);
-            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            if (score > highScore) {
-                highScore = score;
-                playerName = Menu.player;
+            for (int i = 0; i < 5; i++) {
+                Menu.CentralPanel.remove(Menu.highScoreNames);
             }
-            endScore = new JLabel(playerName + " " + "HighScore:" + " " + (highScore));
+            highScore = score;
+            playerName = Menu.player;
+            endScore = new JLabel(playerName + " " + "Player HighScore:" + " " + (highScore));
             endScore.setFont(Menu.RetroGame);
             endScore.setAlignmentX(Component.TOP_ALIGNMENT);
             endScore.setForeground(Color.DARK_GRAY);
             endScore.setVisible(true);
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("src/TextFiles/HighScores.txt"));
+                for (JLabel score : Menu.highScoreList) {
+                    String playerScore = score.getText();
+                    if (Integer.parseInt(playerScore.substring(6, 9)) < highScore) {
+                        score.setText(playerName + " : " + highScore);
+                        System.out.println("Successfully wrote to the file.");
+                        highScore = 0;
+                        break;
+                    }
+                }
+                int counter = 0;
+                for (JLabel score : Menu.highScoreList) {
+                    bw.write(score.getText());
+                    counter++;
+                    if (counter < 5) {
+                        bw.newLine();
+                    }
+                }
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          
             Menu.CentralPanel.add(endScore);
+            Menu.CentralPanel.setVisible(true);
+            Menu.CentralPanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             gameOver = false;
         }
         if (planeExplosion.getExplosionTic() == 8 && plane.isDead()) {
