@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
 /**
  * This is the menu class, this will hold our main method
  * and will be used to start the code. In side of this we
@@ -55,6 +54,13 @@ public class Menu implements ActionListener {
      */
     public static void main(String[] args) {
         new Menu();
+    }
+
+    /**
+     * This method will end the process
+     */
+    public static void exitGame() {
+        System.exit(0);
     }
 
     /**
@@ -150,7 +156,7 @@ public class Menu implements ActionListener {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     // If the name entered is longer than 3 digits than it will not take
                     // and set instructions to red
-                    if (name.getText().length() > 3) {
+                    if (name.getText().length() > 3 || name.getText().length() < 3) {
                         name.setText("");
                         playerName.setForeground(Color.RED);
                     } else {
@@ -231,7 +237,7 @@ public class Menu implements ActionListener {
              * This will call the quit game method.
              *
              * @param e this is the action event for the button press
-             * 
+             *
              */
             public void actionPerformed(ActionEvent e) {
                 exitGame();
@@ -247,13 +253,6 @@ public class Menu implements ActionListener {
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);
         playGButton.setEnabled(false);
-    }
-
-    /**
-     * This method will end the process
-     */
-    public static void exitGame() {
-        System.exit(0);
     }
 
     /**

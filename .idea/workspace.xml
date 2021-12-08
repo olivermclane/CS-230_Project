@@ -6,7 +6,11 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="" />
+    <list default="true" id="e5f84d1a-2788-4004-8c3b-b8f3aced40dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TextFiles/HighScores.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextFiles/HighScores.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,6 +92,7 @@
       <list>
         <item itemvalue="Application.Menu" />
         <item itemvalue="Application.Menu" />
+        <item itemvalue="Application.Menu" />
       </list>
     </recent_temporary>
   </component>
@@ -125,21 +130,6 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.util.ConcurrentModificationException" package="java.util" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="Menu.highScoreList" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
