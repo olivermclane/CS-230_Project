@@ -35,6 +35,8 @@ public class Menu implements ActionListener {
     public static JLabel highScoreNames;
     public static java.util.List<JLabel> highScoreList = new java.util.ArrayList<>();
     public static JLabel displayName;
+    public static GridBagConstraints menuLayout;
+    public static JLabel highScoreLabel;
     private JTextField name;
     private String errorName;
 
@@ -100,7 +102,7 @@ public class Menu implements ActionListener {
         CentralPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         CentralPanel.setLayout(new GridBagLayout());
         CentralPanel.setBackground(backGC);
-        GridBagConstraints menuLayout = new GridBagConstraints();
+        menuLayout = new GridBagConstraints();
         menuLayout.gridwidth = GridBagConstraints.REMAINDER;
         menuLayout.anchor = GridBagConstraints.NORTH;
         // temporary placement until I get an Icon
@@ -166,7 +168,9 @@ public class Menu implements ActionListener {
                         playGButton.setEnabled(true);
                         displayName.setFont(RetroGame);
                         displayName.setText("Player Name: " + player);
+                        displayName.setHorizontalAlignment(SwingConstants.CENTER);
                         displayName.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        displayName.setFont(RetroGame);
                         displayName.setForeground(Color.red);
                     }
                 }
@@ -187,30 +191,6 @@ public class Menu implements ActionListener {
         displayName = new JLabel("");
         displayName.setVisible(true);
         CentralPanel.add(displayName, menuLayout);
-        // Highescores label
-        JLabel highScoreLabel = new JLabel("HIGHSCORES");
-        highScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        highScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        highScoreLabel.setFont(RetroGame);
-        CentralPanel.add(highScoreLabel, menuLayout);
-        // Read in file for highscores recorded already and display them on main menu
-        try {
-            File myObj = new File("src/TextFiles/HighScores.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String[] data = myReader.nextLine().split(" : ");
-                highScoreNames = new JLabel(data[0] + " : " + data[1]);
-                highScoreNames.setHorizontalAlignment(SwingConstants.CENTER);
-                highScoreNames.setAlignmentX(Component.CENTER_ALIGNMENT);
-                highScoreNames.setFont(RetroGame);
-                highScoreList.add(highScoreNames);
-                CentralPanel.add(highScoreNames, menuLayout);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
         // Creating play game button
         playGButton.setForeground(Color.WHITE);
         playGButton.setBackground(backGC);
@@ -249,6 +229,30 @@ public class Menu implements ActionListener {
         buttonsPanel.add(quitGButton, menuLayout);
         menuLayout.weighty = 1;
         CentralPanel.add(buttonsPanel, menuLayout);
+        // Highescores label
+        highScoreLabel = new JLabel("HIGHSCORES");
+        highScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        highScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        highScoreLabel.setFont(RetroGame);
+        CentralPanel.add(highScoreLabel, menuLayout);
+        // Read in file for highscores recorded already and display them on main menu
+        try {
+            File myObj = new File("src/TextFiles/HighScores.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String[] data = myReader.nextLine().split(" : ");
+                highScoreNames = new JLabel(data[0] + " : " + data[1]);
+                highScoreNames.setHorizontalAlignment(SwingConstants.CENTER);
+                highScoreNames.setAlignmentX(Component.CENTER_ALIGNMENT);
+                highScoreNames.setFont(RetroGame);
+                highScoreList.add(highScoreNames);
+                CentralPanel.add(highScoreNames, menuLayout);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         menu.add(CentralPanel);
         menu.setLocationRelativeTo(null);
         menu.setVisible(true);

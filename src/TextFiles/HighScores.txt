@@ -1,5 +1,5 @@
-AAA : 180
-AAA : 000
-AAA : 000
-AAA : 000
-AAA : 000
+ttt : 000
+yyy : 000
+hhh : 000
+ppp : 000
+sss : 000

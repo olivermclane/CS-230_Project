@@ -49,6 +49,8 @@ public class GameJPanel extends JPanel implements Runnable {
     private SmallEnemy smallEnemy3;
     private String playerName;
     private int round;
+    private JLabel newNameScore;
+    private JLabel high;
 
     /**
      * private String playerName;
@@ -222,6 +224,8 @@ public class GameJPanel extends JPanel implements Runnable {
                             healthpercent = "0%";
                         }
                     }
+                    LifeUpList.remove(p);
+                    break;
                 } else {
                     p.draw(g);
                 }
@@ -243,7 +247,17 @@ public class GameJPanel extends JPanel implements Runnable {
             gameOver = true;
         }
         if (gameOver && planeExplosion.getExplosionTic() == 8) {
+            for (JLabel score : Menu.highScoreList) {
+                remove(score);
+            }
             setVisible(false);
+            if (endScore != null && newNameScore != null) {
+                remove(endScore);
+                remove(newNameScore);
+            }
+            if (high != null) {
+                remove(high);
+            }
             for (int i = 0; i < 5; i++) {
                 Menu.CentralPanel.remove(Menu.highScoreNames);
             }
@@ -260,8 +274,14 @@ public class GameJPanel extends JPanel implements Runnable {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("src/TextFiles/HighScores.txt"));
                 for (JLabel score : Menu.highScoreList) {
                     String playerScore = score.getText();
-                    if (Integer.parseInt(playerScore.substring(6, 9)) < highScore) {
-                        score.setText(playerName + " : " + highScore);
+                    System.out.println(playerScore.substring(6, score.getText().length()));
+                    if (Integer.parseInt(playerScore.substring(6, score.getText().length())) < highScore) {
+                        newNameScore = new JLabel(playerName + " : " + highScore);
+                        newNameScore.setHorizontalAlignment(SwingConstants.CENTER);
+                        newNameScore.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        newNameScore.setFont(retroGame);
+                        Menu.highScoreList.add(Menu.highScoreList.indexOf(score), newNameScore);
+                        Menu.highScoreList.remove(Menu.highScoreList.size() - 1);
                         System.out.println("Successfully wrote to the file.");
                         highScore = 0;
                         break;
@@ -270,6 +290,7 @@ public class GameJPanel extends JPanel implements Runnable {
                 int counter = 0;
                 for (JLabel score : Menu.highScoreList) {
                     bw.write(score.getText());
+                    Menu.CentralPanel.remove(score);
                     counter++;
                     if (counter < 5) {
                         bw.newLine();
@@ -278,6 +299,15 @@ public class GameJPanel extends JPanel implements Runnable {
                 bw.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+//            high = new JLabel("HIGHSCORES");
+//            high.setHorizontalAlignment(SwingConstants.CENTER);
+//            high.setAlignmentX(Component.CENTER_ALIGNMENT);
+//            high.setFont(retroGame);
+//            Menu.CentralPanel.add(high, Menu.menuLayout);
+            for (JLabel score : Menu.highScoreList) {
+                score.setVisible(true);
+                Menu.CentralPanel.add(score, Menu.menuLayout);
             }
             Menu.CentralPanel.add(endScore);
             Menu.CentralPanel.setVisible(true);
